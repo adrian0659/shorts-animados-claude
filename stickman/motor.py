@@ -201,8 +201,9 @@ ROPAS = ("sudadera", "camiseta", "camisa", "uniforme", "traje", "bata", "vestido
          "overol", "espacial")
 PEINADOS = ("picos", "corto", "largo", "chongo", "calvo")
 SOMBREROS = ("gorra", "corona", "casco_romano", "vaquero", "casco_obra", "chef", "mago", "pirata", "policia",
-             "burbuja", "paja")
-ACCESORIOS = ("lentes", "bigote", "barba", "parche", "corbata", "estetoscopio", "medalla")
+             "burbuja", "paja", "piloto")
+ACCESORIOS = ("lentes", "gafas_sol", "auriculares", "bigote", "barba", "parche", "corbata", "estetoscopio", "medalla",
+              "charreteras", "alas")
 
 CANOSO, NEGRO, RUBIO, PELIRROJO = (0.78, 0.78, 0.8), (0.16, 0.14, 0.14), (0.93, 0.76, 0.35), (0.85, 0.38, 0.16)
 
@@ -234,6 +235,12 @@ VESTUARIOS = {
     "pirata":      dict(ropa="camisa", color=(0.95, 0.93, 0.86), color2=(0.55, 0.12, 0.12), sombrero="pirata",
                         accesorios=("parche", "barba"), pelo=NEGRO),
     "astronauta":  dict(ropa="espacial", color=(0.95, 0.95, 0.96), sombrero="burbuja", peinado="corto"),
+    "piloto":      dict(ropa="traje", color=(0.13, 0.17, 0.30), color2=(0.10, 0.10, 0.12), sombrero="piloto",
+                        accesorios=("charreteras", "alas"), peinado="corto"),
+    "presidente":  dict(ropa="traje", color=(0.16, 0.20, 0.36), color2=(0.20, 0.40, 0.80), peinado="corto",
+                        pelo=CANOSO, accesorios=("medalla",)),
+    "agente":      dict(ropa="traje", color=(0.10, 0.10, 0.12), color2=(0.10, 0.10, 0.12), peinado="corto",
+                        pelo=NEGRO, accesorios=("gafas_sol",)),
     "deportista":  dict(ropa="camiseta", color=(0.90, 0.20, 0.20), sombrero="gorra", color_sombrero=(0.90, 0.20, 0.20)),
     "abuelo":      dict(ropa="camisa", color=(0.62, 0.55, 0.42), peinado="calvo", pelo=CANOSO, accesorios=("lentes", "bigote")),
     "abuela":      dict(ropa="vestido", color=(0.55, 0.62, 0.78), peinado="chongo", pelo=CANOSO, accesorios=("lentes",)),
@@ -304,6 +311,9 @@ class Personaje(Monigote):
         pose["torso"] += math.sin(t * 1.3 + self.semilla) * 1.2
         if clave["pose"] == "saludo":
             pose["ad"] += math.sin(t * 12) * 22
+        if clave.get("temblar"):                                   # nervios: tiembla todo el cuerpo
+            x += math.sin(t * 71) * 4 * s
+            for k2 in ("bi", "ai", "bd", "ad"): pose[k2] += math.sin(t * 63 + len(k2)) * 5
         dy = 0
         if moviendo:
             f = t * 9
@@ -373,6 +383,8 @@ class Personaje(Monigote):
             if cruza(ma):
                 ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s)
                 palo((h, co, ma), 20 + n * 3); mano(co, ma)
+        if clave.get("lleva"):                                     # objeto en la mano derecha (de la pantalla)
+            ctx.save(); ctx.translate(*mand); ctx.scale(s * 0.45, s * 0.45); clave["lleva"](ctx, t, 1.0); ctx.restore()
         self._cabeza(ctx, cab, ang_cab, R, clave, t)
 
     # -- ropa ----------------------------------------------------------------
@@ -533,6 +545,24 @@ class Personaje(Monigote):
             ctx.set_source_rgb(*TINTA); ctx.set_line_width(5 * s); ctx.stroke()
             ctx.arc(30 * s, (top + 108) * s, 11 * s, 0, 2 * math.pi); ctx.set_source_rgb(0.75, 0.77, 0.8)
             ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(4 * s); ctx.stroke()
+        if "charreteras" in self.accesorios:
+            for lado in (-1, 1):
+                ctx.save(); ctx.translate(lado * 58 * s, (top + 14) * s); ctx.rotate(lado * 0.35)
+                ctx.rectangle(-22 * s, -8 * s, 44 * s, 16 * s); ctx.set_source_rgb(0.12, 0.12, 0.16); ctx.fill_preserve()
+                ctx.set_source_rgb(*TINTA); ctx.set_line_width(3.5 * s); ctx.stroke()
+                for k in (-8, 0, 8):
+                    ctx.move_to(k * s, -6 * s); ctx.line_to(k * s, 6 * s)
+                    ctx.set_source_rgb(0.95, 0.78, 0.2); ctx.set_line_width(3.5 * s); ctx.stroke()
+                ctx.restore()
+        if "alas" in self.accesorios:
+            ctx.save(); ctx.translate(-40 * s, (top + 50) * s)
+            for lado in (-1, 1):
+                ctx.move_to(0, 0); ctx.curve_to(lado * 10 * s, -10 * s, lado * 22 * s, -8 * s, lado * 28 * s, -6 * s)
+                ctx.curve_to(lado * 20 * s, 0, lado * 10 * s, 4 * s, 0, 4 * s); ctx.close_path()
+                ctx.set_source_rgb(0.95, 0.78, 0.2); ctx.fill_preserve()
+                ctx.set_source_rgb(*TINTA); ctx.set_line_width(2.5 * s); ctx.stroke()
+            ctx.arc(0, 0, 6 * s, 0, 2 * math.pi); ctx.set_source_rgb(0.95, 0.78, 0.2); ctx.fill_preserve()
+            ctx.set_source_rgb(*TINTA); ctx.stroke(); ctx.restore()
         if "medalla" in self.accesorios:
             ctx.move_to(-46 * s, (top + 30) * s); ctx.line_to(-36 * s, (top + 56) * s); ctx.line_to(-26 * s, (top + 30) * s)
             ctx.set_source_rgb(0.2, 0.4, 0.85); ctx.set_line_width(8 * s); ctx.stroke()
@@ -649,6 +679,29 @@ class Personaje(Monigote):
                 ctx.arc(ox * 1.15 + lado * 0.30 * r, -0.04 * r, 0.2 * r, 0, 2 * math.pi); ctx.stroke()
             ctx.move_to(ox * 1.15 - 0.1 * r, -0.08 * r); ctx.curve_to(ox * 1.15 - 0.03 * r, -0.14 * r, ox * 1.15 + 0.03 * r,
                                                                      -0.14 * r, ox * 1.15 + 0.1 * r, -0.08 * r); ctx.stroke()
+        if "gafas_sol" in ac:
+            for lado in (-1, 1):
+                cx2 = ox * 1.15 + lado * 0.30 * r
+                ctx.move_to(cx2 - 0.2 * r, -0.16 * r); ctx.line_to(cx2 + 0.2 * r, -0.16 * r)
+                ctx.curve_to(cx2 + 0.2 * r, 0.08 * r, cx2 - 0.2 * r, 0.1 * r, cx2 - 0.2 * r, -0.16 * r); ctx.close_path()
+                ctx.set_source_rgb(0.06, 0.06, 0.08); ctx.fill()
+                ctx.set_source_rgba(1, 1, 1, 0.5); ctx.set_line_width(0.03 * r)
+                ctx.move_to(cx2 - 0.1 * r, -0.1 * r); ctx.line_to(cx2 - 0.02 * r, -0.03 * r); ctx.stroke()
+            ctx.set_source_rgb(0.06, 0.06, 0.08); ctx.set_line_width(0.05 * r)
+            ctx.move_to(ox * 1.15 - 0.12 * r, -0.14 * r); ctx.line_to(ox * 1.15 + 0.12 * r, -0.14 * r); ctx.stroke()
+            ctx.move_to(-0.98 * r, -0.12 * r); ctx.line_to(ox * 1.15 - 0.5 * r, -0.15 * r); ctx.stroke()
+            ctx.move_to(0.98 * r, -0.12 * r); ctx.line_to(ox * 1.15 + 0.5 * r, -0.15 * r); ctx.stroke()
+            ctx.set_source_rgb(*TINTA)
+        if "auriculares" in ac:
+            ctx.arc(0, -0.1 * r, 1.08 * r, math.radians(195), math.radians(345))
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(0.16 * r); ctx.stroke_preserve()
+            ctx.set_source_rgb(0.3, 0.32, 0.36); ctx.set_line_width(0.08 * r); ctx.stroke()
+            for lado in (-1, 1):
+                ctx.save(); ctx.translate(lado * 1.0 * r, 0.02 * r); ctx.scale(0.6, 1)
+                ctx.arc(0, 0, 0.26 * r, 0, 2 * math.pi); ctx.restore(); self._trazo(ctx, (0.25, 0.27, 0.3), 5)
+            ctx.move_to(-1.0 * r, 0.15 * r); ctx.curve_to(-0.9 * r, 0.55 * r, -0.6 * r, 0.6 * r, ox - 0.32 * r, 0.42 * r)
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(0.05 * r); ctx.stroke()
+            ctx.arc(ox - 0.3 * r, 0.42 * r, 0.07 * r, 0, 2 * math.pi); self._trazo(ctx, (0.25, 0.27, 0.3), 3)
         if "bigote" in ac:
             for lado in (-1, 1):
                 ctx.move_to(ox, 0.2 * r)
@@ -743,6 +796,19 @@ class Personaje(Monigote):
             ctx.save(); ctx.translate(0.2 * (mira or 1) * r, -0.58 * r); ctx.scale(1, 0.25)
             ctx.arc(0, 0, 0.7 * r, 0, math.pi); ctx.restore(); tr(ctx, (0.1, 0.1, 0.12), 4)
             self._estrella(ctx, 0, -1.0 * r, 0.14 * r, (0.95, 0.78, 0.2))
+        elif tipo == "piloto":
+            c0 = col((0.13, 0.17, 0.30))
+            ctx.move_to(-1.12 * r, -1.0 * r); ctx.curve_to(-0.6 * r, -1.38 * r, 0.6 * r, -1.38 * r, 1.12 * r, -1.0 * r)
+            ctx.line_to(0.84 * r, -0.66 * r); ctx.line_to(-0.84 * r, -0.66 * r); ctx.close_path(); tr(ctx, c0)
+            ctx.rectangle(-0.85 * r, -0.82 * r, 1.7 * r, 0.18 * r); tr(ctx, (0.95, 0.78, 0.2), 4)
+            ctx.save(); ctx.translate(0.15 * (mira or 1) * r, -0.6 * r); ctx.scale(1, 0.25)
+            ctx.arc(0, 0, 0.72 * r, 0, math.pi); ctx.restore(); tr(ctx, (0.08, 0.08, 0.1), 4)
+            ctx.save(); ctx.translate(0, -1.02 * r)
+            for lado in (-1, 1):
+                ctx.move_to(0, 0); ctx.curve_to(lado * 0.12 * r, -0.12 * r, lado * 0.3 * r, -0.1 * r, lado * 0.4 * r, -0.06 * r)
+                ctx.curve_to(lado * 0.28 * r, 0.02 * r, lado * 0.12 * r, 0.06 * r, 0, 0.05 * r); ctx.close_path()
+                tr(ctx, (0.95, 0.78, 0.2), 3)
+            ctx.restore()
         elif tipo == "burbuja":
             ctx.arc(0, -0.05 * r, 1.32 * r, 0, 2 * math.pi)
             ctx.set_source_rgba(0.75, 0.88, 1.0, 0.28); ctx.fill_preserve()
@@ -1004,15 +1070,17 @@ class Subtitulos:
     def __init__(self, lineas, y=430, tam=84, ancho=920):
         self.lineas, self.y, self.tam, self.ancho = lineas, y, tam, ancho
 
+    def _tiempo(self, linea, i):
+        t0, t1, txt = linea[:3]
+        if len(linea) > 3: return linea[3][i]                      # tiempos exactos (de la transcripción)
+        return t0 + (t1 - t0) * 0.85 * i / max(len(txt.split()), 1)
+
     def palabras_tiempos(self):
-        out = []
-        for (t0, t1, txt) in self.lineas:
-            pal = txt.split(); n = len(pal)
-            for i, p in enumerate(pal): out.append(t0 + (t1 - t0) * 0.85 * i / max(n, 1))
-        return out
+        return [self._tiempo(l, i) for l in self.lineas for i in range(len(l[2].split()))]
 
     def dibujar(self, ctx, t):
-        for (t0, t1, txt) in self.lineas:
+        for linea in self.lineas:
+            t0, t1, txt = linea[:3]
             if not (t0 <= t < t1): continue
             pal = txt.split()
             ctx.select_font_face("Inter", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
@@ -1030,7 +1098,7 @@ class Subtitulos:
                 ancho = sum(ctx.text_extents(w.replace("*", "")).x_advance for _, w in ren) + sp * (len(ren) - 1)
                 x = (W - ancho) / 2; y = self.y + r * self.tam * 1.2
                 for i, w in ren:
-                    ti = t0 + (t1 - t0) * 0.85 * i / max(n, 1)
+                    ti = self._tiempo(linea, i)
                     limpio = w.replace("*", "")
                     adv = ctx.text_extents(limpio).x_advance
                     if t >= ti:
@@ -1042,6 +1110,203 @@ class Subtitulos:
                         ctx.set_source_rgb(*((1, 0.85, 0.1) if "*" in w else (1, 1, 1))); ctx.fill()
                         ctx.restore()
                     x += adv + sp
+
+
+def subtitulos_desde_palabras(palabras, resaltar=(), max_palabras=4, cambios=()):
+    """palabras: [{'w','a','b'}] (de la transcripción). Agrupa en renglones cortos con sus tiempos exactos.
+    resaltar: palabras (en minúsculas, sin signos) que salen en amarillo. cambios: {original: corregida}."""
+    cambios = dict(cambios); limpio = lambda w: w.strip(".,¡!¿?;:«»'\"").lower()
+    grupos, act = [], []
+    for i, p in enumerate(palabras):
+        act.append(p)
+        sig = palabras[i + 1] if i + 1 < len(palabras) else None
+        corte = (len(act) >= max_palabras or p["w"][-1:] in ".,?!;:" or sig is None or sig["a"] - p["b"] > 0.35)
+        if corte: grupos.append(act); act = []
+    lineas = []
+    for g, grupo in enumerate(grupos):
+        fin = grupos[g + 1][0]["a"] if g + 1 < len(grupos) else grupo[-1]["b"] + 0.8
+        fin = min(fin, grupo[-1]["b"] + 0.7)
+        pal, tiempos = [], []
+        for p in grupo:
+            for w in cambios.get(p["w"], p["w"]).split():          # una corrección puede dar varias palabras
+                pal.append(f"*{w}*" if limpio(w) in resaltar else w); tiempos.append(p["a"] - 0.05)
+        lineas.append((grupo[0]["a"] - 0.05, fin, " ".join(pal), tiempos))
+    return lineas
+
+
+class Tramo:
+    """Muestra unas capas solo entre t0 y t1 (una escena). Las capas reciben el tiempo global."""
+    def __init__(self, t0, t1, *capas):
+        self.t0, self.t1, self.capas = t0, t1, capas
+
+    def dibujar(self, ctx, t):
+        if self.t0 <= t < self.t1:
+            for c in self.capas: c.dibujar(ctx, t)
+
+
+class Dibujo:
+    """Capa a partir de una función f(ctx, t) (fondos, primeros planos)."""
+    def __init__(self, f): self.f = f
+    def dibujar(self, ctx, t): ctx.save(); self.f(ctx, t); ctx.restore()
+
+
+# ---------------------------------------------------------------- más utilería
+def cielo_noche(ctx, t, alto=H, nubes=True, velocidad=60, semilla=7):
+    g = cairo.LinearGradient(0, 0, 0, alto)
+    g.add_color_stop_rgb(0, 0.03, 0.05, 0.14); g.add_color_stop_rgb(1, 0.13, 0.17, 0.36)
+    ctx.set_source(g); ctx.rectangle(0, 0, W, alto); ctx.fill()
+    rnd = random.Random(semilla)
+    for _ in range(70):
+        sx, sy, sr = rnd.uniform(0, W), rnd.uniform(0, alto), rnd.uniform(1.5, 4)
+        brillo = 0.5 + 0.5 * math.sin(t * rnd.uniform(1, 4) + sx)
+        ctx.set_source_rgba(1, 1, 0.9, 0.35 + 0.55 * brillo); ctx.arc(sx, sy, sr, 0, 2 * math.pi); ctx.fill()
+    ctx.arc(W * 0.8, alto * 0.16, 70, 0, 2 * math.pi); ctx.set_source_rgb(0.97, 0.95, 0.82); ctx.fill()
+    ctx.arc(W * 0.8 + 28, alto * 0.16 - 18, 64, 0, 2 * math.pi); ctx.set_source_rgb(0.05, 0.07, 0.17); ctx.fill()
+    if nubes:
+        for i in range(5):
+            nx = (rnd.uniform(0, W + 600) - t * velocidad * (0.6 + i * 0.15)) % (W + 600) - 300
+            ny = rnd.uniform(alto * 0.3, alto * 0.9)
+            ctx.set_source_rgba(0.55, 0.6, 0.8, 0.22)
+            for (dx, dy, rr) in [(0, 0, 60), (60, -20, 75), (130, 0, 60), (65, 15, 70)]:
+                ctx.arc(nx + dx, ny + dy, rr, 0, 2 * math.pi); ctx.fill()
+
+
+def avion(color=(0.97, 0.97, 0.98), franja=(0.16, 0.30, 0.62), luces=True):
+    """Avión presidencial de perfil, mirando a la derecha (unos 900 px de largo a escala 1)."""
+    def f(ctx, t, k):
+        ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+        # ala lejana
+        ctx.move_to(-40, 10); ctx.line_to(-170, -70); ctx.line_to(-120, -70); ctx.line_to(60, 5); ctx.close_path()
+        contorno(ctx, (0.75, 0.78, 0.84), 8)
+        # cola
+        ctx.move_to(-330, -20); ctx.line_to(-420, -200); ctx.line_to(-360, -200); ctx.line_to(-250, -30); ctx.close_path()
+        contorno(ctx, franja, 9)
+        # fuselaje
+        ctx.move_to(-440, -40); ctx.curve_to(-300, -70, 250, -75, 360, -55)
+        ctx.curve_to(450, -40, 470, 20, 420, 40); ctx.curve_to(250, 70, -300, 60, -420, 20)
+        ctx.curve_to(-445, 5, -450, -25, -440, -40); ctx.close_path()
+        contorno(ctx, color, 10)
+        ctx.save(); ctx.move_to(-440, -40); ctx.curve_to(-300, -70, 250, -75, 360, -55)
+        ctx.curve_to(450, -40, 470, 20, 420, 40); ctx.curve_to(250, 70, -300, 60, -420, 20); ctx.close_path(); ctx.clip()
+        ctx.rectangle(-460, 8, 940, 70); ctx.set_source_rgb(*franja); ctx.fill()
+        ctx.rectangle(-460, 0, 940, 9); ctx.set_source_rgb(0.85, 0.7, 0.25); ctx.fill()
+        ctx.restore()
+        ctx.move_to(-440, -40); ctx.curve_to(-300, -70, 250, -75, 360, -55)
+        ctx.curve_to(450, -40, 470, 20, 420, 40); ctx.curve_to(250, 70, -300, 60, -420, 20); ctx.close_path()
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(10); ctx.stroke()
+        # ventanillas y cabina
+        for i in range(16):
+            ctx.arc(-300 + i * 38, -28, 8, 0, 2 * math.pi); ctx.set_source_rgb(1, 0.88, 0.45); ctx.fill()
+        ctx.move_to(372, -40); ctx.line_to(420, -36); ctx.line_to(430, -22); ctx.line_to(375, -24); ctx.close_path()
+        contorno(ctx, (0.2, 0.25, 0.35), 5)
+        # ala cercana y motores
+        ctx.move_to(-20, 20); ctx.line_to(-200, 150); ctx.line_to(-140, 150); ctx.line_to(90, 25); ctx.close_path()
+        contorno(ctx, (0.85, 0.87, 0.9), 9)
+        for (mx, my) in [(-60, 80), (-140, 125)]:
+            ctx.save(); ctx.translate(mx, my); ctx.scale(1, 0.45); ctx.arc(0, 0, 40, 0, 2 * math.pi); ctx.restore()
+            contorno(ctx, (0.7, 0.73, 0.8), 7)
+        if luces and int(t * 2) % 2 == 0:
+            ctx.arc(-410, -195, 12, 0, 2 * math.pi); ctx.set_source_rgb(1, 0.2, 0.2); ctx.fill()
+            ctx.arc(-200, 150, 10, 0, 2 * math.pi); ctx.set_source_rgb(0.3, 1, 0.4); ctx.fill()
+    return f
+
+
+def telefono(texto_pantalla="LÍNEA PRIVADA", sonando=True, color_pantalla=(0.12, 0.6, 0.35)):
+    def f(ctx, t, k):
+        vib = math.sin(t * 60) * 6 if sonando and (t * 2) % 1 < 0.6 else 0
+        ctx.translate(vib, 0); ctx.rotate(vib * 0.004)
+        if sonando:
+            for i in range(3):
+                ctx.set_source_rgba(*TINTA, 0.9); ctx.set_line_width(9)
+                for lado in (-1, 1):
+                    ctx.arc(0, -40, 150 + i * 35, math.radians(-90 + lado * 50) - 0.3, math.radians(-90 + lado * 50) + 0.3)
+                    ctx.stroke()
+        ctx.move_to(-85, -160); ctx.line_to(85, -160); ctx.curve_to(105, -160, 105, -160, 105, -140)
+        ctx.line_to(105, 160); ctx.curve_to(105, 180, 105, 180, 85, 180); ctx.line_to(-85, 180)
+        ctx.curve_to(-105, 180, -105, 180, -105, 160); ctx.line_to(-105, -140); ctx.curve_to(-105, -160, -105, -160, -85, -160)
+        ctx.close_path(); contorno(ctx, (0.12, 0.12, 0.14), 9)
+        ctx.rectangle(-88, -140, 176, 290); ctx.set_source_rgb(*color_pantalla); ctx.fill()
+        ctx.arc(0, -40, 42, 0, 2 * math.pi); ctx.set_source_rgb(1, 1, 1); ctx.fill()
+        ctx.set_source_rgb(*color_pantalla); ctx.set_line_width(12)               # auricular dibujado
+        ctx.arc(0, -40, 22, math.radians(40), math.radians(220)); ctx.stroke()
+        ctx.select_font_face("Inter", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
+        ctx.set_source_rgb(1, 1, 1)
+        for i, renglon in enumerate(texto_pantalla.split("\n")):
+            ctx.set_font_size(26); e = ctx.text_extents(renglon)
+            ctx.move_to(-e.width / 2 - e.x_bearing, 50 + i * 34); ctx.show_text(renglon)
+    return f
+
+
+def sobre(sello=(0.78, 0.12, 0.14)):
+    def f(ctx, t, k):
+        ctx.rectangle(-150, -95, 300, 190); contorno(ctx, (0.93, 0.86, 0.68), 9)
+        ctx.move_to(-150, -95); ctx.line_to(0, 20); ctx.line_to(150, -95)
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(7); ctx.stroke()
+        ctx.arc(0, 20, 28, 0, 2 * math.pi); contorno(ctx, sello, 6)
+    return f
+
+
+def documento(titulo="ORDEN", sello_txt="CONFIDENCIAL"):
+    def f(ctx, t, k):
+        ctx.rectangle(-170, -230, 340, 460); contorno(ctx, (0.98, 0.97, 0.92), 9)
+        ctx.save(); ctx.translate(0, -165); texto(titulo, 60)(ctx, t, k); ctx.restore()
+        ctx.set_source_rgba(*TINTA, 0.55); ctx.set_line_width(10)
+        for i in range(6):
+            ctx.move_to(-130, -90 + i * 42); ctx.line_to(130 - (60 if i % 3 == 2 else 0), -90 + i * 42); ctx.stroke()
+        ctx.save(); ctx.translate(20, 150); ctx.rotate(-0.2)
+        ctx.rectangle(-150, -38, 300, 76); ctx.set_source_rgb(0.85, 0.1, 0.12); ctx.set_line_width(8); ctx.stroke()
+        texto(sello_txt, 44, (0.85, 0.1, 0.12))(ctx, t, k); ctx.restore()
+    return f
+
+
+def burbuja_dialogo(txt, tam=56, ancho=620, cola=(-1, 1), color=(1, 1, 1), color_txt=TINTA):
+    """Globo de diálogo con el texto partido en renglones; cola = dirección (x, y) hacia quien habla."""
+    def f(ctx, t, k):
+        ctx.select_font_face("Inter", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD); ctx.set_font_size(tam)
+        renglones, act = [], ""
+        for w in txt.split():
+            prueba = (act + " " + w).strip()
+            if ctx.text_extents(prueba).x_advance > ancho and act: renglones.append(act); act = w
+            else: act = prueba
+        renglones.append(act)
+        alto = len(renglones) * tam * 1.25 + 60; anch = ancho + 80
+        ctx.move_to(cola[0] * 60, alto / 2 - 10); ctx.line_to(cola[0] * 160, cola[1] * (alto / 2 + 90))
+        ctx.line_to(cola[0] * 140 + (-cola[0]) * 80, alto / 2 - 10); ctx.close_path(); contorno(ctx, color, 8)
+        x0, y0, rr = -anch / 2, -alto / 2, 50
+        ctx.new_sub_path(); ctx.arc(x0 + anch - rr, y0 + rr, rr, -math.pi / 2, 0)
+        ctx.arc(x0 + anch - rr, y0 + alto - rr, rr, 0, math.pi / 2); ctx.arc(x0 + rr, y0 + alto - rr, rr, math.pi / 2, math.pi)
+        ctx.arc(x0 + rr, y0 + rr, rr, math.pi, 3 * math.pi / 2); ctx.close_path(); contorno(ctx, color, 8)
+        ctx.set_source_rgb(*color); ctx.rectangle(cola[0] * 60 - 50, alto / 2 - 30, 120, 26); ctx.fill()
+        ctx.set_source_rgb(*color_txt)
+        for i, ren in enumerate(renglones):
+            e = ctx.text_extents(ren)
+            ctx.move_to(-e.x_advance / 2, y0 + 30 + tam + i * tam * 1.25 - tam * 0.2); ctx.show_text(ren)
+    return f
+
+
+def reloj_digital(hora="2:00", sufijo="AM"):
+    def f(ctx, t, k):
+        ctx.rectangle(-220, -95, 440, 190); contorno(ctx, (0.1, 0.1, 0.12), 10)
+        txt = hora if (t * 2) % 2 < 1.6 else hora.replace(":", " ")
+        ctx.save(); ctx.translate(-30, 0); texto(txt, 120, (1, 0.25, 0.2))(ctx, t, k); ctx.restore()
+        ctx.save(); ctx.translate(150, 30); texto(sufijo, 46, (1, 0.25, 0.2))(ctx, t, k); ctx.restore()
+    return f
+
+
+def pistola():
+    def f(ctx, t, k):
+        ctx.move_to(-20, -30); ctx.line_to(110, -30); ctx.line_to(110, 0); ctx.line_to(20, 0); ctx.line_to(14, 50)
+        ctx.line_to(-24, 50); ctx.close_path(); contorno(ctx, (0.18, 0.18, 0.2), 6)
+    return f
+
+
+def alerta(titulo="ALERTA", cuerpo="Aeropuerto CERRADO"):
+    def f(ctx, t, k):
+        ctx.rectangle(-260, -150, 520, 300); contorno(ctx, (0.97, 0.97, 0.98), 9)
+        ctx.rectangle(-255, -145, 510, 90); ctx.set_source_rgb(0.85, 0.12, 0.14); ctx.fill()
+        ctx.save(); ctx.translate(0, -100); texto("⚠ " + titulo, 54, (1, 1, 1))(ctx, t, k); ctx.restore()
+        ctx.save(); ctx.translate(0, 40); texto(cuerpo, 46)(ctx, t, k); ctx.restore()
+    return f
 
 
 # ---------------------------------------------------------------- render

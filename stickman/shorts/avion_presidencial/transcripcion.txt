@@ -1,0 +1,20 @@
+[  0.00-  3.28] P.O.B., eres el piloto de un avión presidencial.
+[  4.04-  9.18] Son las 2 de la madrugada y estás a punto de pilotar el avión más importante del país.
+[  9.82- 13.12] Abordo viaja el presidente junto con sus principales asesores.
+[ 13.72- 17.66] Todo parece normal hasta que recibes una llamada desde una línea privada.
+[ 18.22- 19.08] Una voz te dice,
+[ 19.62- 21.06] ¡cambie la ruta inmediatamente!
+[ 21.62- 22.62] No informe a nadie.
+[ 23.22- 26.06] Preguntas quién está hablando, pero la llamada termina.
+[ 27.82- 30.96] Minutos después, tu copiloto recibe una notificación.
+[ 31.60- 35.22] El aeropuerto de destino acaba de cerrar por una emergencia de seguridad.
+[ 35.76- 40.00] Miras hacia atrás y descubres que dos agentes armados están entrando en la cabina.
+[ 40.42- 42.46] Uno de ellos te entrega un sobre y te dice,
+[ 42.98- 46.10] si quiere que todos lleguen vivos, siga estas instrucciones.
+[ 47.28- 49.26] Tus manos comienzan a temblar.
+[ 49.78- 52.10] Tienes miles de metros de altura debajo de ti,
+[ 52.10- 56.92] un presidente detrás de ti y una orden que podría poner en peligro a todo el país.
+[ 57.50- 60.34] Entonces escuchas una última frase por los auriculares.
+[ 60.92- 64.42] Piloto, no confíe en nadie que esté dentro de ese avión.
+[ 65.54- 67.14] Y ahora tienes una pregunta.
+[ 67.88- 68.98] ¿A quién obedecerías?
