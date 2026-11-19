@@ -195,18 +195,106 @@ def _rel(origen, ang, x, y):
     return origen[0] + x * c - y * s, origen[1] + x * s + y * c
 
 
+# Vestuarios listos: elige el más cercano a la historia y cambia lo que haga falta.
+# Claves: ropa, color, color2, pelo, peinado, sombrero, color_sombrero, accesorios, capa.
+ROPAS = ("sudadera", "camiseta", "camisa", "uniforme", "traje", "bata", "vestido", "tunica", "armadura",
+         "overol", "espacial")
+PEINADOS = ("picos", "corto", "largo", "chongo", "calvo")
+SOMBREROS = ("gorra", "corona", "casco_romano", "vaquero", "casco_obra", "chef", "mago", "pirata", "policia",
+             "burbuja", "paja")
+ACCESORIOS = ("lentes", "bigote", "barba", "parche", "corbata", "estetoscopio", "medalla")
+
+CANOSO, NEGRO, RUBIO, PELIRROJO = (0.78, 0.78, 0.8), (0.16, 0.14, 0.14), (0.93, 0.76, 0.35), (0.85, 0.38, 0.16)
+
+VESTUARIOS = {
+    "casual":      dict(ropa="sudadera", color=SUDADERA_BLANCA),
+    "estudiante":  dict(ropa="sudadera", color=(0.30, 0.50, 0.85)),
+    "doctor":      dict(ropa="bata", color=(0.97, 0.97, 0.98), color2=(0.55, 0.78, 0.92), accesorios=("estetoscopio",)),
+    "cientifico":  dict(ropa="bata", color=(0.97, 0.97, 0.98), color2=(0.45, 0.62, 0.45), accesorios=("lentes",),
+                        peinado="picos", pelo=CANOSO),
+    "ejecutivo":   dict(ropa="traje", color=(0.22, 0.25, 0.33), color2=(0.82, 0.16, 0.18), peinado="corto"),
+    "policia":     dict(ropa="uniforme", color=(0.20, 0.32, 0.58), sombrero="policia", peinado="corto"),
+    "soldado":     dict(ropa="uniforme", color=(0.38, 0.45, 0.28), sombrero="casco_obra", color_sombrero=(0.35, 0.42, 0.26),
+                        peinado="corto"),
+    "rey":         dict(ropa="tunica", color=(0.48, 0.20, 0.60), color2=(0.85, 0.65, 0.15), sombrero="corona",
+                        capa=(0.80, 0.12, 0.15), accesorios=("barba",)),
+    "reina":       dict(ropa="vestido", color=(0.48, 0.20, 0.60), color2=(0.85, 0.65, 0.15), sombrero="corona",
+                        peinado="largo", capa=(0.80, 0.12, 0.15)),
+    "romano":      dict(ropa="armadura", color=(0.80, 0.62, 0.30), color2=(0.78, 0.14, 0.14), sombrero="casco_romano",
+                        capa=(0.78, 0.14, 0.14)),
+    "caballero":   dict(ropa="armadura", color=(0.72, 0.74, 0.78), color2=(0.20, 0.35, 0.70), capa=(0.20, 0.35, 0.70)),
+    "griego":      dict(ropa="tunica", color=(0.95, 0.93, 0.86), color2=(0.70, 0.55, 0.25), accesorios=("barba",)),
+    "vaquero":     dict(ropa="camisa", color=(0.78, 0.35, 0.22), sombrero="vaquero", accesorios=("bigote",)),
+    "granjero":    dict(ropa="overol", color=(0.28, 0.42, 0.68), color2=(0.85, 0.25, 0.22), sombrero="paja"),
+    "obrero":      dict(ropa="overol", color=(0.95, 0.55, 0.15), color2=(0.30, 0.45, 0.70), sombrero="casco_obra"),
+    "chef":        dict(ropa="bata", color=(0.98, 0.98, 0.98), color2=(0.98, 0.98, 0.98), sombrero="chef",
+                        accesorios=("bigote",)),
+    "mago":        dict(ropa="tunica", color=(0.22, 0.25, 0.60), color2=(0.85, 0.70, 0.20), sombrero="mago",
+                        pelo=CANOSO, accesorios=("barba",)),
+    "pirata":      dict(ropa="camisa", color=(0.95, 0.93, 0.86), color2=(0.55, 0.12, 0.12), sombrero="pirata",
+                        accesorios=("parche", "barba"), pelo=NEGRO),
+    "astronauta":  dict(ropa="espacial", color=(0.95, 0.95, 0.96), sombrero="burbuja", peinado="corto"),
+    "deportista":  dict(ropa="camiseta", color=(0.90, 0.20, 0.20), sombrero="gorra", color_sombrero=(0.90, 0.20, 0.20)),
+    "abuelo":      dict(ropa="camisa", color=(0.62, 0.55, 0.42), peinado="calvo", pelo=CANOSO, accesorios=("lentes", "bigote")),
+    "abuela":      dict(ropa="vestido", color=(0.55, 0.62, 0.78), peinado="chongo", pelo=CANOSO, accesorios=("lentes",)),
+    "nina":        dict(ropa="vestido", color=(0.95, 0.45, 0.60), peinado="largo"),
+}
+
+
+def habla_desde_audio(ruta, fps=FPS):
+    """Lee un audio (wav, mp3…) y devuelve la apertura de la boca por cuadro (0..1) para sincronizar labios."""
+    crudo = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", ruta, "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+                           capture_output=True, check=True).stdout
+    a = np.frombuffer(crudo, np.int16).astype(np.float32) / 32768
+    paso = 16000 // fps
+    n = len(a) // paso
+    rms = np.sqrt((a[:n * paso].reshape(n, paso) ** 2).mean(axis=1) + 1e-9)
+    ref = np.percentile(rms, 95) or 1
+    env = np.clip((rms / ref - 0.12) / 0.7, 0, 1)
+    return np.convolve(env, [0.25, 0.5, 0.25], mode="same")
+
+
 class Personaje(Monigote):
-    """Monigote estilo «cabezón con sudadera»: cabeza blanca grande con sombreado frío, pelo café en
-    picos, cejas gruesas expresivas, sudadera con capucha, cordones y bolsillo, extremidades de palito,
-    manos y pies negros. Usa las mismas claves y poses que Monigote.
+    """Monigote estilo «cabezón»: cabeza blanca grande con sombreado frío, cejas gruesas expresivas, extremidades
+    de palito, manos y pies negros, y vestuario según la historia. Usa las mismas claves y poses que Monigote.
+
+    vestuario: nombre de VESTUARIOS ("doctor", "rey", "romano"…); los demás parámetros lo ajustan.
+    ropa: una de ROPAS · peinado: uno de PEINADOS · sombrero: uno de SOMBREROS o None
+    accesorios: tupla con ACCESORIOS · capa: color (r,g,b) o None · color/color2: colores de la ropa
+    habla: ruta de audio (sincroniza la boca con la voz) o lista de tramos [(t0, t1), ...] en que habla.
 
     Caras: feliz, picaro (sonrisa de lado, una ceja alzada), sorpresa, triste, serio, pensar, enojado.
     """
-    def __init__(self, claves, escala=1.0, pelo=PELO_CAFE, sudadera=SUDADERA_BLANCA, grosor=11, semilla=1):
-        # con sudadera, «pensar» lleva la mano a la barbilla por delante del cuerpo
+    def __init__(self, claves, escala=1.0, vestuario="casual", ropa=None, color=None, color2=None, pelo=None,
+                 peinado=None, sombrero=None, color_sombrero=None, accesorios=None, capa=None, habla=None,
+                 sudadera=None, grosor=11, semilla=1):
+        # con este personaje «pensar» lleva la mano a la barbilla por delante del cuerpo
         claves = [dict(c, pose="barbilla") if c.get("pose") == "pensar" else c for c in claves]
         super().__init__(claves, escala=escala, grosor=grosor, semilla=semilla)
-        self.pelo, self.sudadera = pelo, sudadera
+        v = dict(VESTUARIOS[vestuario])
+        for k, val in dict(ropa=ropa, color=color or sudadera, color2=color2, pelo=pelo, peinado=peinado,
+                           sombrero=sombrero, color_sombrero=color_sombrero, accesorios=accesorios, capa=capa).items():
+            if val is not None: v[k] = val
+        self.ropa = v.get("ropa", "sudadera")
+        self.color = v.get("color", SUDADERA_BLANCA)
+        self.color2 = v.get("color2", (0.85, 0.2, 0.2))
+        self.pelo = v.get("pelo", PELO_CAFE)
+        self.peinado = v.get("peinado", "picos")
+        self.sombrero = v.get("sombrero")
+        self.color_sombrero = v.get("color_sombrero")
+        self.accesorios = tuple(v.get("accesorios", ()))
+        self.capa = v.get("capa")
+        self.habla = habla_desde_audio(habla) if isinstance(habla, str) else habla
+        self._boca = 0.0
+        assert self.ropa in ROPAS and self.peinado in PEINADOS and (self.sombrero is None or self.sombrero in SOMBREROS)
+
+    def apertura_boca(self, t):
+        if self.habla is None: return 0.0
+        if isinstance(self.habla, np.ndarray):
+            i = int(t * FPS); return float(self.habla[i]) if 0 <= i < len(self.habla) else 0.0
+        for (t0, t1) in self.habla:
+            if t0 <= t < t1: return 0.35 + 0.65 * abs(math.sin(t * 13 + math.sin(t * 5)))
+        return 0.0
 
     def dibujar(self, ctx, t):
         pose, x, y, clave, moviendo = self.estado(t)
@@ -253,6 +341,8 @@ class Personaje(Monigote):
         ctx.fill(); ctx.restore()
 
         ctx.set_line_cap(cairo.LINE_CAP_ROUND); ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+        self._boca = self.apertura_boca(t)
+        if self.capa: self._capa(ctx, cad, tor, T, s)
         j = lambda p, n: (p[0] + temblor((self.semilla, n), t, 0.8)[0], p[1] + temblor((self.semilla, n), t, 0.8)[1])
         palo = lambda pts, n: (ctx.move_to(*j(pts[0], n)), ctx.line_to(*j(pts[1], n + 1)),
                                ctx.line_to(*j(pts[2], n + 2)), ctx.stroke())
@@ -278,7 +368,7 @@ class Personaje(Monigote):
         for n, (h, co, ma) in enumerate(brazos):
             ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s); palo((h, co, ma), 20 + n * 3); mano(co, ma)
 
-        self._sudadera(ctx, cad, tor, T, s)
+        self._ropa(ctx, cad, tor, T, s)
         for n, (h, co, ma) in enumerate(brazos):
             if cruza(ma):
                 ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s)
@@ -286,9 +376,172 @@ class Personaje(Monigote):
         self._cabeza(ctx, cab, ang_cab, R, clave, t)
 
     # -- ropa ----------------------------------------------------------------
+    def _capa(self, ctx, cad, tor, T, s):
+        ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+        ctx.move_to(-58 * s, -T + 30 * s); ctx.curve_to(-90 * s, -T + 90 * s, -118 * s, 20 * s, -122 * s, 105 * s)
+        ctx.curve_to(-40 * s, 118 * s, 40 * s, 118 * s, 122 * s, 105 * s)
+        ctx.curve_to(118 * s, 20 * s, 90 * s, -T + 90 * s, 58 * s, -T + 30 * s); ctx.close_path()
+        ctx.set_source_rgb(*[v * 0.78 for v in self.capa]); ctx.fill_preserve()
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(7 * s); ctx.stroke()
+        ctx.restore()
+
+    def _ropa(self, ctx, cad, tor, T, s):
+        if self.ropa == "sudadera":
+            self._sudadera(ctx, cad, tor, T, s)
+        else:
+            ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+            self._prenda(ctx, T, s)
+            ctx.restore()
+        if self.accesorios:
+            ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+            self._accesorios_cuerpo(ctx, T, s)
+            ctx.restore()
+
+    def _prenda(self, ctx, T, s):
+        T = T / s                      # aquí todas las medidas van sin escala y se multiplican por s al dibujar
+        r, col, col2 = self.ropa, self.color, self.color2
+        claro = tuple(min(1, v * 0.35 + 0.68) for v in col)
+        def tinta(w=7): ctx.set_source_rgb(*TINTA); ctx.set_line_width(w * s); ctx.stroke()
+        def poli(pts, relleno, w=5.5):
+            ctx.move_to(pts[0][0] * s, pts[0][1] * s)
+            for (a, b) in pts[1:]: ctx.line_to(a * s, b * s)
+            ctx.close_path(); ctx.set_source_rgb(*relleno); ctx.fill_preserve(); tinta(w)
+        def linea(pts, w=5, color=TINTA):
+            ctx.move_to(pts[0][0] * s, pts[0][1] * s)
+            for (a, b) in pts[1:]: ctx.line_to(a * s, b * s)
+            ctx.set_source_rgb(*color); ctx.set_line_width(w * s); ctx.stroke()
+        def punto(x, y, rad, relleno):
+            ctx.arc(x * s, y * s, rad * s, 0, 2 * math.pi); ctx.set_source_rgb(*relleno); ctx.fill_preserve(); tinta(3)
+        largo, abajo = dict(bata=82, vestido=108, tunica=100, overol=44, espacial=30, armadura=14).get(r, (14)), \
+            dict(bata=86, vestido=118, tunica=100, overol=72, espacial=82).get(r, 68)
+        top = -T + 24
+        if r == "armadura":   # faldón de tiras debajo de la coraza
+            for i in range(-3, 4):
+                ctx.rectangle((i * 19 - 9) * s, -10 * s, 18 * s, 70 * s)
+                ctx.set_source_rgb(*col2); ctx.fill_preserve(); tinta(4)
+        def cuerpo(dx=0, dy=0):
+            ancho_pecho = 84 if r != "espacial" else 92
+            ctx.move_to((-64 + dx) * s, (top + dy) * s)
+            ctx.curve_to((-ancho_pecho + dx) * s, (-T + 70 + dy) * s, (-max(74, abajo * 0.8) + dx) * s, (-30 + dy) * s,
+                         (-abajo + dx) * s, (largo + dy) * s)
+            if largo > 40:
+                ctx.curve_to((-abajo * 0.4 + dx) * s, (largo + 8 + dy) * s, (abajo * 0.4 + dx) * s, (largo + 8 + dy) * s,
+                             (abajo + dx) * s, (largo + dy) * s)
+            else:
+                ctx.line_to((abajo + dx) * s, (largo + dy) * s)
+            ctx.curve_to((max(74, abajo * 0.8) + dx) * s, (-30 + dy) * s, (ancho_pecho + dx) * s, (-T + 70 + dy) * s,
+                         (64 + dx) * s, (top + dy) * s)
+            ctx.curve_to((30 + dx) * s, (top - 8 + dy) * s, (-30 + dx) * s, (top - 8 + dy) * s, (-64 + dx) * s, (top + dy) * s)
+            ctx.close_path()
+        # cuerpo con sombra a la izquierda y abajo (la tela iluminada se corre arriba a la derecha)
+        cuerpo(); ctx.set_source_rgb(*[v * 0.84 for v in col]); ctx.fill_preserve(); ctx.save(); ctx.clip()
+        cuerpo(12, -10); ctx.set_source_rgb(*col); ctx.fill()
+        if r == "overol":     # camisa debajo del peto
+            ctx.rectangle(-100 * s, -T * s, 200 * s, 92 * s); ctx.set_source_rgb(*col2); ctx.fill()
+            ctx.rectangle(-100 * s, -T * s, 26 * s, 92 * s); ctx.set_source_rgb(*[v * 0.84 for v in col2]); ctx.fill()
+        ctx.restore(); cuerpo(); tinta()
+
+        if r == "camiseta":
+            ctx.save(); ctx.translate(0, (top + 4) * s); ctx.scale(1, 0.4); ctx.arc(0, 0, 36 * s, 0, 2 * math.pi)
+            ctx.restore(); ctx.set_source_rgb(*[v * 0.6 for v in col]); ctx.fill_preserve(); tinta(5)
+            linea([(-50, -T + 90), (-40, -T + 96)], 4); linea([(-66, 2), (66, 2)], 4)
+        if r in ("camisa", "uniforme"):
+            linea([(0, top + 18), (0, 12)], 4)
+            for yy in (-T + 70, -T + 100, -T + 130): punto(0, yy, 4.5, claro)
+            for lado in (-1, 1): poli([(0, top + 22), (lado * 40, top - 4), (lado * 46, top + 22)], claro)
+            if r == "uniforme":
+                for lado in (-1, 1):
+                    poli([(lado * 20, -T + 66), (lado * 52, -T + 66), (lado * 50, -T + 96), (lado * 22, -T + 96)], col, 4)
+                    linea([(lado * 20, -T + 74), (lado * 52, -T + 74)], 3.5)
+                self._estrella(ctx, -36 * s, (-T + 58) * s, 14 * s, (0.95, 0.78, 0.2))
+                ctx.rectangle(-70 * s, -8 * s, 140 * s, 18 * s); ctx.set_source_rgb(0.15, 0.13, 0.12); ctx.fill()
+                ctx.rectangle(-12 * s, -10 * s, 24 * s, 22 * s); ctx.set_source_rgb(0.92, 0.75, 0.25); ctx.fill_preserve(); tinta(3)
+        if r == "traje":
+            poli([(0, -T + 120), (-30, top - 2), (30, top - 2)], (0.97, 0.97, 0.97), 5)
+            self._corbata(ctx, T, s, col2, largo_c=94)
+            for lado in (-1, 1):
+                poli([(lado * 30, top - 2), (lado * 46, top + 30), (lado * 22, top + 40), (0, -T + 120), (lado * 10, -T + 60)],
+                     [v * 0.9 for v in col], 4.5)
+            for yy in (-T + 132, -T + 152): punto(6, yy, 5, [v * 0.6 for v in col])
+            linea([(-58, -T + 110), (-34, -T + 110)], 4); linea([(34, -T + 82), (54, -T + 82)], 4)
+        if r == "bata":
+            poli([(0, -T + 112), (-28, top - 2), (28, top - 2)], col2, 5)
+            for lado in (-1, 1):
+                poli([(lado * 28, top - 2), (lado * 50, top + 26), (lado * 26, top + 34), (lado * 2, -T + 112)], claro, 4.5)
+            linea([(2, -T + 112), (2, largo - 2)], 5)
+            for lado in (-1, 1):
+                poli([(lado * 24, 0), (lado * 62, 0), (lado * 62, 30), (lado * 24, 30)], col, 4)
+            poli([(-56, -T + 74), (-28, -T + 74), (-28, -T + 98), (-56, -T + 98)], col, 4)
+            linea([(-48, -T + 80), (-48, -T + 64)], 5, (0.2, 0.35, 0.8))
+        if r == "vestido":
+            ctx.arc(0, (top - 4) * s, 34 * s, math.radians(20), math.radians(160)); tinta(5)
+            ctx.rectangle(-76 * s, -62 * s, 152 * s, 16 * s); ctx.set_source_rgb(*col2); ctx.fill_preserve(); tinta(4.5)
+            for xx in (-60, -22, 22, 60): linea([(xx * 0.5, -40), (xx, largo - 6)], 3.5, [v * 0.7 for v in col])
+        if r == "tunica":
+            linea([(-26, top + 2), (0, top + 46), (26, top + 2)], 5)
+            ctx.rectangle(-78 * s, -36 * s, 156 * s, 18 * s); ctx.set_source_rgb(*col2); ctx.fill_preserve(); tinta(4.5)
+            punto(0, -27, 9, [min(1, v * 1.2) for v in col2])
+            for xx in (-60, -25, 25, 60): linea([(xx * 0.6, -10), (xx, largo - 6)], 3.5, [v * 0.72 for v in col])
+        if r == "armadura":
+            for yy in (-T + 80, -T + 110, -T + 138, -14):
+                ctx.move_to(-74 * s, yy * s); ctx.curve_to(-30 * s, (yy + 10) * s, 30 * s, (yy + 10) * s, 74 * s, yy * s)
+                tinta(4.5)
+            ctx.rectangle(18 * s, (top + 10) * s, 12 * s, (14 - top - 20) * s)
+            ctx.set_source_rgba(1, 1, 1, 0.45); ctx.fill()
+            for lado in (-1, 1):
+                ctx.arc(lado * 64 * s, (-T + 42) * s, 28 * s, math.pi, 2 * math.pi); ctx.close_path()
+                ctx.set_source_rgb(*col); ctx.fill_preserve(); tinta(5)
+        if r == "overol":
+            poli([(-44, -T + 78), (44, -T + 78), (44, 0), (-44, 0)], col, 5)
+            for lado in (-1, 1):
+                linea([(lado * 38, -T + 80), (lado * 52, top + 2)], 15); linea([(lado * 38, -T + 80), (lado * 52, top + 2)], 7, col)
+                punto(lado * 36, -T + 86, 6, (0.95, 0.78, 0.2))
+            poli([(-22, -T + 100), (22, -T + 100), (20, -T + 130), (-20, -T + 130)], col, 4)
+            linea([(0, 6), (0, largo - 2)], 4)
+        if r == "espacial":
+            poli([(-32, -T + 68), (32, -T + 68), (32, -T + 108), (-32, -T + 108)], (0.62, 0.66, 0.72), 4.5)
+            for i, c in enumerate([(0.9, 0.2, 0.2), (0.2, 0.7, 0.3), (0.2, 0.45, 0.9)]): punto(-18 + i * 18, -T + 88, 6, c)
+            ctx.rectangle(-82 * s, -14 * s, 164 * s, 16 * s); ctx.set_source_rgb(0.62, 0.66, 0.72); ctx.fill_preserve(); tinta(4.5)
+            ctx.save(); ctx.translate(0, (top + 4) * s); ctx.scale(1, 0.38); ctx.arc(0, 0, 70 * s, 0, 2 * math.pi)
+            ctx.restore(); ctx.set_source_rgb(0.62, 0.66, 0.72); ctx.fill_preserve(); tinta(5)
+        if r in ("camisa", "camiseta", "uniforme", "traje") and "corbata" in self.accesorios and r != "traje":
+            self._corbata(ctx, T, s, col2)
+
+    def _corbata(self, ctx, T, s, color, largo_c=100):   # T sin escala
+        top = -T + 24
+        ctx.move_to(-9 * s, (top + 10) * s); ctx.line_to(9 * s, (top + 10) * s); ctx.line_to(6 * s, (top + 24) * s)
+        ctx.line_to(14 * s, (top + largo_c) * s); ctx.line_to(0, (top + largo_c + 14) * s); ctx.line_to(-14 * s, (top + largo_c) * s)
+        ctx.line_to(-6 * s, (top + 24) * s); ctx.close_path()
+        ctx.set_source_rgb(*color); ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(4.5 * s); ctx.stroke()
+
+    def _estrella(self, ctx, x, y, rad, color):
+        for i in range(10):
+            a = -math.pi / 2 + i * math.pi / 5; rr = rad if i % 2 == 0 else rad * 0.45
+            (ctx.move_to if i == 0 else ctx.line_to)(x + math.cos(a) * rr, y + math.sin(a) * rr)
+        ctx.close_path(); ctx.set_source_rgb(*color); ctx.fill_preserve()
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(rad * 0.22); ctx.stroke()
+
+    def _accesorios_cuerpo(self, ctx, T, s):
+        T = T / s
+        top = -T + 24
+        if "estetoscopio" in self.accesorios:
+            ctx.move_to(-34 * s, (top + 2) * s)
+            ctx.curve_to(-30 * s, (top + 90) * s, 30 * s, (top + 90) * s, 30 * s, (top + 2) * s)
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(10 * s); ctx.stroke_preserve()
+            ctx.set_source_rgb(0.35, 0.37, 0.42); ctx.set_line_width(5 * s); ctx.stroke()
+            ctx.move_to(14 * s, (top + 64) * s); ctx.line_to(30 * s, (top + 100) * s)
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(5 * s); ctx.stroke()
+            ctx.arc(30 * s, (top + 108) * s, 11 * s, 0, 2 * math.pi); ctx.set_source_rgb(0.75, 0.77, 0.8)
+            ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(4 * s); ctx.stroke()
+        if "medalla" in self.accesorios:
+            ctx.move_to(-46 * s, (top + 30) * s); ctx.line_to(-36 * s, (top + 56) * s); ctx.line_to(-26 * s, (top + 30) * s)
+            ctx.set_source_rgb(0.2, 0.4, 0.85); ctx.set_line_width(8 * s); ctx.stroke()
+            ctx.arc(-36 * s, (top + 64) * s, 12 * s, 0, 2 * math.pi); ctx.set_source_rgb(0.95, 0.78, 0.2)
+            ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(4 * s); ctx.stroke()
+
     def _sudadera(self, ctx, cad, tor, T, s):
         ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
-        col, sombra = self.sudadera, tuple(v * 0.86 for v in self.sudadera)
+        col, sombra = self.color, tuple(v * 0.86 for v in self.color)
         lw = 7 * s
         def tinta(w=lw): ctx.set_source_rgb(*TINTA); ctx.set_line_width(w); ctx.stroke()
         # cuerpo de la sudadera
@@ -329,14 +582,173 @@ class Personaje(Monigote):
     # -- cabeza ----------------------------------------------------------------
     def _cabeza(self, ctx, c, ang, r, clave, t):
         ctx.save(); ctx.translate(*c); ctx.rotate(math.pi - math.radians(ang))
+        if self.peinado == "largo":                                   # melena detrás de la cabeza
+            ctx.move_to(-0.9 * r, -0.5 * r); ctx.curve_to(-1.15 * r, 0.2 * r, -1.1 * r, 0.8 * r, -1.0 * r, 1.05 * r)
+            ctx.curve_to(-0.4 * r, 1.15 * r, 0.4 * r, 1.15 * r, 1.0 * r, 1.05 * r)
+            ctx.curve_to(1.1 * r, 0.8 * r, 1.15 * r, 0.2 * r, 0.9 * r, -0.5 * r); ctx.close_path()
+            ctx.set_source_rgb(*[v * 0.85 for v in self.pelo]); ctx.fill_preserve()
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(6.5 * self.s); ctx.stroke()
+        if self.peinado == "chongo":
+            ctx.arc(0.1 * r, -1.08 * r, 0.36 * r, 0, 2 * math.pi); ctx.set_source_rgb(*self.pelo); ctx.fill_preserve()
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(6.5 * self.s); ctx.stroke()
         ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.save(); ctx.clip()
         ctx.set_source_rgb(*SOMBRA_FRIA); ctx.paint()                  # sombra fría abajo a la izquierda
         ctx.set_source_rgb(1, 1, 1); ctx.arc(r * 0.13, -r * 0.12, r * 0.96, 0, 2 * math.pi); ctx.fill()
         ctx.restore()
         ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.set_source_rgb(*TINTA); ctx.set_line_width(8 * self.s); ctx.stroke()
-        self._pelo(ctx, r)
-        self._cara2(ctx, r, clave["cara"], clave["mira"] * r * 0.16, t)
+        {"picos": self._pelo, "largo": self._pelo, "corto": self._pelo_corto, "chongo": self._pelo_corto,
+         "calvo": self._pelo_calvo}[self.peinado](ctx, r)
+        ox = clave["mira"] * r * 0.16
+        if "barba" in self.accesorios: self._barba(ctx, r, ox)
+        self._cara2(ctx, r, clave["cara"], ox, t)
+        self._accesorios_cara(ctx, r, ox)
+        if self.sombrero: self._sombrero(ctx, r, clave["mira"])
         ctx.restore()
+
+    def _trazo(self, ctx, relleno, w=6.5):
+        ctx.set_source_rgb(*relleno); ctx.fill_preserve()
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(w * self.s); ctx.stroke()
+
+    def _pelo_corto(self, ctx, r):
+        ctx.move_to(-0.96 * r, -0.25 * r)
+        ctx.curve_to(-1.02 * r, -0.95 * r, -0.4 * r, -1.12 * r, 0.1 * r, -1.08 * r)
+        ctx.curve_to(0.7 * r, -1.05 * r, 1.05 * r, -0.7 * r, 0.97 * r, -0.22 * r)
+        ctx.curve_to(0.85 * r, -0.5 * r, 0.7 * r, -0.6 * r, 0.45 * r, -0.62 * r)
+        ctx.curve_to(0.2 * r, -0.5 * r, -0.05 * r, -0.7 * r, -0.3 * r, -0.6 * r)
+        ctx.curve_to(-0.6 * r, -0.62 * r, -0.85 * r, -0.5 * r, -0.96 * r, -0.25 * r); ctx.close_path()
+        self._trazo(ctx, self.pelo)
+
+    def _pelo_calvo(self, ctx, r):
+        for lado in (-1, 1):
+            ctx.move_to(lado * 0.98 * r, -0.05 * r); ctx.curve_to(lado * 1.12 * r, -0.2 * r, lado * 1.08 * r, -0.45 * r,
+                                                                   lado * 0.9 * r, -0.5 * r)
+            ctx.curve_to(lado * 0.92 * r, -0.35 * r, lado * 0.9 * r, -0.2 * r, lado * 0.98 * r, -0.05 * r); ctx.close_path()
+            self._trazo(ctx, self.pelo, 5)
+        ctx.set_source_rgba(1, 1, 1, 0.9); ctx.arc(0.3 * r, -0.72 * r, 0.1 * r, 0, 2 * math.pi); ctx.fill()
+
+    def _barba(self, ctx, r, ox):
+        ctx.save(); ctx.arc(0, 0, r * 1.02, 0, 2 * math.pi); ctx.clip()
+        ctx.move_to(-0.98 * r, 0.0); ctx.curve_to(-0.6 * r, 0.25 * r, -0.4 * r, 0.22 * r, ox, 0.22 * r)
+        ctx.curve_to(0.4 * r, 0.22 * r, 0.6 * r, 0.25 * r, 0.98 * r, 0.0)
+        ctx.line_to(r * 1.2, r * 1.3); ctx.line_to(-r * 1.2, r * 1.3); ctx.close_path()
+        ctx.set_source_rgb(*self.pelo); ctx.fill()
+        ctx.restore()
+        ctx.move_to(-0.98 * r, 0.0); ctx.curve_to(-0.6 * r, 0.25 * r, -0.4 * r, 0.22 * r, ox, 0.22 * r)
+        ctx.curve_to(0.4 * r, 0.22 * r, 0.6 * r, 0.25 * r, 0.98 * r, 0.0)
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(5 * self.s); ctx.stroke()
+        # hueco claro para que la boca se lea
+        ctx.save(); ctx.translate(ox, 0.37 * r); ctx.scale(1, 0.5); ctx.arc(0, 0, 0.3 * r, 0, 2 * math.pi); ctx.restore()
+        ctx.set_source_rgb(1, 1, 1); ctx.fill()
+
+    def _accesorios_cara(self, ctx, r, ox):
+        ac = self.accesorios
+        ctx.set_source_rgb(*TINTA)
+        if "lentes" in ac:
+            ctx.set_line_width(5 * self.s)
+            for lado in (-1, 1):
+                ctx.arc(ox * 1.15 + lado * 0.30 * r, -0.04 * r, 0.2 * r, 0, 2 * math.pi); ctx.stroke()
+            ctx.move_to(ox * 1.15 - 0.1 * r, -0.08 * r); ctx.curve_to(ox * 1.15 - 0.03 * r, -0.14 * r, ox * 1.15 + 0.03 * r,
+                                                                     -0.14 * r, ox * 1.15 + 0.1 * r, -0.08 * r); ctx.stroke()
+        if "bigote" in ac:
+            for lado in (-1, 1):
+                ctx.move_to(ox, 0.2 * r)
+                ctx.curve_to(ox + lado * 0.15 * r, 0.1 * r, ox + lado * 0.32 * r, 0.14 * r, ox + lado * 0.4 * r, 0.3 * r)
+                ctx.curve_to(ox + lado * 0.28 * r, 0.24 * r, ox + lado * 0.14 * r, 0.3 * r, ox, 0.26 * r); ctx.close_path()
+                self._trazo(ctx, self.pelo, 3.5)
+        if "parche" in ac:
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(4 * self.s)
+            ctx.move_to(-0.9 * r, -0.45 * r); ctx.line_to(0.95 * r, 0.15 * r); ctx.stroke()
+            ctx.save(); ctx.translate(ox + 0.3 * r, -0.04 * r); ctx.scale(1, 0.85); ctx.arc(0, 0, 0.19 * r, 0, 2 * math.pi)
+            ctx.restore(); ctx.fill()
+
+    def _sombrero(self, ctx, r, mira):
+        tipo = self.sombrero
+        def col(defecto): return self.color_sombrero or defecto
+        tr = self._trazo
+        if tipo == "gorra":
+            ctx.move_to(-0.98 * r, -0.4 * r); ctx.curve_to(-0.95 * r, -1.25 * r, 0.95 * r, -1.25 * r, 0.98 * r, -0.4 * r)
+            ctx.curve_to(0.4 * r, -0.52 * r, -0.4 * r, -0.52 * r, -0.98 * r, -0.4 * r); ctx.close_path(); tr(ctx, col((0.85, 0.2, 0.2)))
+            d = mira or 1
+            ctx.save(); ctx.translate(d * 0.85 * r, -0.44 * r); ctx.scale(1, 0.28); ctx.arc(0, 0, 0.55 * r, 0, 2 * math.pi)
+            ctx.restore(); tr(ctx, [v * 0.8 for v in col((0.85, 0.2, 0.2))])
+            ctx.arc(0, -1.07 * r, 0.08 * r, 0, 2 * math.pi); tr(ctx, col((0.85, 0.2, 0.2)), 4)
+        elif tipo == "corona":
+            pts = [(-0.62, -0.72), (-0.66, -1.42), (-0.33, -1.1), (0, -1.5), (0.33, -1.1), (0.66, -1.42), (0.62, -0.72)]
+            ctx.move_to(pts[0][0] * r, pts[0][1] * r)
+            for (a, b) in pts[1:]: ctx.line_to(a * r, b * r)
+            ctx.curve_to(0.3 * r, -0.62 * r, -0.3 * r, -0.62 * r, -0.62 * r, -0.72 * r); ctx.close_path()
+            tr(ctx, col((0.95, 0.75, 0.2)))
+            for (a, b, c2) in [(-0.33, -0.86, (0.85, 0.15, 0.2)), (0, -0.9, (0.2, 0.45, 0.9)), (0.33, -0.86, (0.2, 0.7, 0.3))]:
+                ctx.arc(a * r, b * r, 0.08 * r, 0, 2 * math.pi); tr(ctx, c2, 3)
+        elif tipo == "casco_romano":
+            ctx.move_to(-0.55 * r, -0.95 * r)                          # penacho rojo
+            ctx.curve_to(-0.6 * r, -1.75 * r, 0.6 * r, -1.75 * r, 0.75 * r, -0.95 * r)
+            ctx.curve_to(0.3 * r, -1.35 * r, -0.2 * r, -1.35 * r, -0.55 * r, -0.95 * r); ctx.close_path()
+            tr(ctx, self.color2 if self.ropa == "armadura" else (0.78, 0.14, 0.14))
+            ctx.move_to(-1.0 * r, -0.2 * r); ctx.curve_to(-1.1 * r, -1.3 * r, 1.1 * r, -1.3 * r, 1.0 * r, -0.2 * r)
+            ctx.line_to(0.8 * r, -0.2 * r); ctx.curve_to(0.75 * r, -0.55 * r, -0.75 * r, -0.55 * r, -0.8 * r, -0.2 * r)
+            ctx.close_path(); tr(ctx, col((0.80, 0.62, 0.30)))
+            for lado in (-1, 1):                                      # carrilleras
+                ctx.move_to(lado * 0.98 * r, -0.25 * r); ctx.line_to(lado * 0.98 * r, 0.25 * r)
+                ctx.line_to(lado * 0.72 * r, 0.15 * r); ctx.line_to(lado * 0.78 * r, -0.25 * r); ctx.close_path()
+                tr(ctx, col((0.80, 0.62, 0.30)), 5)
+        elif tipo == "vaquero":
+            c0 = col((0.55, 0.36, 0.2))
+            ctx.save(); ctx.translate(0, -0.72 * r); ctx.scale(1, 0.22); ctx.arc(0, 0, 1.5 * r, 0, 2 * math.pi); ctx.restore()
+            tr(ctx, c0)
+            ctx.move_to(-0.7 * r, -0.75 * r); ctx.curve_to(-0.8 * r, -1.6 * r, -0.3 * r, -1.5 * r, 0, -1.35 * r)
+            ctx.curve_to(0.3 * r, -1.5 * r, 0.8 * r, -1.6 * r, 0.7 * r, -0.75 * r); ctx.close_path(); tr(ctx, c0)
+            ctx.rectangle(-0.72 * r, -0.98 * r, 1.44 * r, 0.16 * r); tr(ctx, [v * 0.55 for v in c0], 4)
+        elif tipo == "paja":
+            c0 = col((0.93, 0.8, 0.45))
+            ctx.save(); ctx.translate(0, -0.7 * r); ctx.scale(1, 0.24); ctx.arc(0, 0, 1.45 * r, 0, 2 * math.pi); ctx.restore()
+            tr(ctx, c0)
+            ctx.move_to(-0.68 * r, -0.74 * r); ctx.curve_to(-0.7 * r, -1.45 * r, 0.7 * r, -1.45 * r, 0.68 * r, -0.74 * r)
+            ctx.close_path(); tr(ctx, c0)
+            ctx.rectangle(-0.69 * r, -0.95 * r, 1.38 * r, 0.14 * r); tr(ctx, (0.85, 0.25, 0.22), 4)
+        elif tipo == "casco_obra":
+            c0 = col((0.98, 0.8, 0.15))
+            ctx.move_to(-0.95 * r, -0.45 * r); ctx.curve_to(-0.95 * r, -1.35 * r, 0.95 * r, -1.35 * r, 0.95 * r, -0.45 * r)
+            ctx.close_path(); tr(ctx, c0)
+            ctx.save(); ctx.translate(0, -0.45 * r); ctx.scale(1, 0.16); ctx.arc(0, 0, 1.18 * r, 0, 2 * math.pi); ctx.restore()
+            tr(ctx, c0)
+            ctx.move_to(0, -1.12 * r); ctx.line_to(0, -0.5 * r); ctx.set_line_width(0.16 * r); ctx.stroke()
+            ctx.move_to(0, -1.12 * r); ctx.line_to(0, -0.5 * r); ctx.set_source_rgb(*c0); ctx.set_line_width(0.1 * r)
+            ctx.stroke()
+        elif tipo == "chef":
+            for (a, b, rr) in [(-0.45, -1.35, 0.38), (0.45, -1.35, 0.38), (0, -1.55, 0.45)]:
+                ctx.arc(a * r, b * r, rr * r, 0, 2 * math.pi); tr(ctx, (0.98, 0.98, 0.98))
+            ctx.rectangle(-0.7 * r, -1.25 * r, 1.4 * r, 0.55 * r); tr(ctx, (0.98, 0.98, 0.98))
+        elif tipo == "mago":
+            c0 = col((0.22, 0.25, 0.6))
+            ctx.move_to(-0.75 * r, -0.75 * r); ctx.curve_to(-0.4 * r, -1.4 * r, 0.1 * r, -1.9 * r, 0.75 * r, -2.25 * r)
+            ctx.curve_to(0.4 * r, -1.7 * r, 0.6 * r, -1.2 * r, 0.75 * r, -0.75 * r); ctx.close_path(); tr(ctx, c0)
+            ctx.save(); ctx.translate(0, -0.72 * r); ctx.scale(1, 0.2); ctx.arc(0, 0, 1.3 * r, 0, 2 * math.pi); ctx.restore()
+            tr(ctx, c0)
+            self._estrella(ctx, 0.05 * r, -1.2 * r, 0.16 * r, (0.95, 0.8, 0.2))
+            self._estrella(ctx, 0.35 * r, -1.65 * r, 0.1 * r, (0.95, 0.8, 0.2))
+        elif tipo == "pirata":
+            c0 = col((0.13, 0.12, 0.14))
+            ctx.move_to(-1.35 * r, -0.65 * r); ctx.curve_to(-0.9 * r, -1.65 * r, 0.9 * r, -1.65 * r, 1.35 * r, -0.65 * r)
+            ctx.curve_to(0.5 * r, -0.95 * r, -0.5 * r, -0.95 * r, -1.35 * r, -0.65 * r); ctx.close_path(); tr(ctx, c0)
+            ctx.arc(0, -1.12 * r, 0.14 * r, 0, 2 * math.pi); ctx.set_source_rgb(1, 1, 1); ctx.fill()
+            ctx.set_source_rgb(1, 1, 1); ctx.set_line_width(0.05 * r)
+            ctx.move_to(-0.18 * r, -0.86 * r); ctx.line_to(0.18 * r, -0.98 * r); ctx.stroke()
+            ctx.move_to(-0.18 * r, -0.98 * r); ctx.line_to(0.18 * r, -0.86 * r); ctx.stroke()
+        elif tipo == "policia":
+            c0 = col((0.18, 0.28, 0.52))
+            ctx.move_to(-1.1 * r, -1.05 * r); ctx.curve_to(-0.6 * r, -1.4 * r, 0.6 * r, -1.4 * r, 1.1 * r, -1.05 * r)
+            ctx.line_to(0.82 * r, -0.66 * r); ctx.line_to(-0.82 * r, -0.66 * r); ctx.close_path(); tr(ctx, c0)
+            ctx.rectangle(-0.84 * r, -0.8 * r, 1.68 * r, 0.2 * r); tr(ctx, (0.12, 0.12, 0.14), 4)
+            ctx.save(); ctx.translate(0.2 * (mira or 1) * r, -0.58 * r); ctx.scale(1, 0.25)
+            ctx.arc(0, 0, 0.7 * r, 0, math.pi); ctx.restore(); tr(ctx, (0.1, 0.1, 0.12), 4)
+            self._estrella(ctx, 0, -1.0 * r, 0.14 * r, (0.95, 0.78, 0.2))
+        elif tipo == "burbuja":
+            ctx.arc(0, -0.05 * r, 1.32 * r, 0, 2 * math.pi)
+            ctx.set_source_rgba(0.75, 0.88, 1.0, 0.28); ctx.fill_preserve()
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(7 * self.s); ctx.stroke()
+            ctx.set_source_rgba(1, 1, 1, 0.75); ctx.set_line_width(0.08 * r)
+            ctx.arc(-0.1 * r, -0.1 * r, 1.08 * r, math.radians(200), math.radians(250)); ctx.stroke()
 
     def _pelo(self, ctx, r):
         # contorno en sentido horario: mechones colgando a la izquierda, copete que barre a la derecha
@@ -411,7 +823,15 @@ class Personaje(Monigote):
                 ctx.fill(); ctx.set_source_rgb(*TINTA)
         mx, my = ox, r * 0.36
         ctx.set_line_width(r * 0.055)
-        if cara == "feliz":
+        if self._boca > 0.08 and cara != "sorpresa":                 # hablando: boca abierta según la voz
+            k = self._boca
+            ctx.save(); ctx.translate(mx, my - r * 0.02); ctx.scale(1, 0.25 + 0.75 * k)
+            ctx.arc(0, 0, r * (0.17 + 0.05 * k), 0, math.pi); ctx.close_path(); ctx.restore()
+            ctx.set_source_rgb(0.35, 0.08, 0.1); ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.stroke()
+            if k > 0.45:
+                ctx.save(); ctx.translate(mx, my + r * 0.09 * k); ctx.scale(1, 0.45); ctx.arc(0, 0, r * 0.09, 0, 2 * math.pi)
+                ctx.restore(); ctx.set_source_rgb(0.9, 0.4, 0.45); ctx.fill(); ctx.set_source_rgb(*TINTA)
+        elif cara == "feliz":
             ctx.move_to(mx - r * 0.32, my - r * 0.06)
             ctx.curve_to(mx - r * 0.15, my + r * 0.16, mx + r * 0.15, my + r * 0.16, mx + r * 0.32, my - r * 0.06)
             ctx.stroke()

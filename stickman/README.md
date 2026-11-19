@@ -24,11 +24,13 @@ python3 ejemplos/pulpo.py           # video final: salida/pulpo.mp4
   - Poses: `parado, saludo, señalar_d, señalar_i, sorpresa, pensar, encoger, festejar, triste`.
   - Caras: `feliz, sorpresa, triste, serio, pensar`.
   - Puedes agregar poses nuevas en `POSES` de `motor.py` (ángulos: 0 = abajo, 90 = derecha, 180 = arriba).
-- **Personaje con sudadera** (`Personaje`, mismo uso que `Monigote`): cabeza blanca grande con sombra fría, pelo
-  café en picos, cejas gruesas, sudadera con capucha, cordones y bolsillo, manos y pies negros.
-  `Personaje(claves, escala=2.2, pelo=(r,g,b), sudadera=(r,g,b))`. Caras extra: `picaro` (sonrisa de lado) y
-  `enojado`; pose extra: `jarras` (manos en la cintura). Prueba: `python3 ejemplos/sudadera.py` (hoja de poses) y
-  `python3 ejemplos/sudadera.py --video`.
+- **Personaje cabezón con vestuario** (`Personaje`, mismo uso que `Monigote`; es el estilo por defecto):
+  cabeza blanca grande con sombra fría, cejas gruesas, manos y pies negros, ropa según la historia.
+  `Personaje(claves, escala=2.2, vestuario="doctor")`; los vestuarios listos están en `VESTUARIOS` y se ajustan con
+  `ropa`, `color`, `color2`, `pelo`, `peinado`, `sombrero`, `accesorios` y `capa`.
+  `habla="voz.wav"` mueve la boca con la voz (o una lista de tramos `[(t0, t1), ...]`).
+  Caras extra: `picaro` y `enojado`; pose extra: `jarras`.
+  Hojas de prueba: `python3 ejemplos/vestuarios.py` y `python3 ejemplos/sudadera.py` (`--video` para un clip).
 - **Elementos** (`Elemento(dibujo, t0, t1, x, y, escala)`): aparecen con un "pop". Incluidos: `corazon`,
   `texto`, `burbuja_pensamiento`, `gota`, `pulpo`, `burbujas_agua`. Para un dato nuevo, dibuja tu objeto
   con formas simples (círculos, curvas) y `contorno()`.
