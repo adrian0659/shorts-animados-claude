@@ -1,0 +1,459 @@
+{
+ "title": "El oso que fue soldado",
+ "duration": 68.28,
+ "shots": [
+  {
+   "id": "s01",
+   "start": 0.0,
+   "end": 2.1,
+   "line": "En plena Segunda Guerra Mundial,",
+   "scene": "Toma abierta nocturna del frente: colinas con el monasterio, explosiones naranjas en el horizonte, una silueta enorme camina a contraluz cargando una caja; acercamiento lento",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s02",
+   "start": 2.1,
+   "end": 4.2,
+   "line": "un soldado cargó proyectiles de artillería",
+   "scene": "Detalle: caja de madera con proyectiles de latón brillando, sostenida por zarpas oscuras; vaivén al caminar, chispas",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s03",
+   "start": 4.2,
+   "end": 6.19,
+   "line": "bajo el fuego enemigo.",
+   "scene": "Toma media: la silueta pasa junto a un cañón, explosión detrás, temblor de cámara, escombros y polvo",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s04",
+   "start": 6.19,
+   "end": 8.49,
+   "line": "Medía casi dos metros.",
+   "scene": "Contraluz: la silueta alta junto a dos soldados más bajos; flecha de medida \"2 m\"",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s05",
+   "start": 8.49,
+   "end": 10.0,
+   "line": "Y era un oso.",
+   "scene": "Revelación: primer plano gigante de Wojtek iluminado por una explosión, ojos abiertos; congelado breve",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "flash",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s06",
+   "start": 10.0,
+   "end": 12.09,
+   "line": "1942.",
+   "scene": "Tarjeta de título \"EL OSO QUE FUE SOLDADO\" sobre el desierto al atardecer; aparece \"1942\" dorado",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "dip",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": "",
+   "captions": false
+  },
+  {
+   "id": "s07",
+   "start": 12.09,
+   "end": 14.0,
+   "line": "En Irán, unos soldados polacos",
+   "scene": "Toma abierta del campamento en Irán: dunas, tiendas, camión; tres soldados polacos caminan; etiqueta IRÁN",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s08",
+   "start": 14.0,
+   "end": 16.81,
+   "line": "le compran a un niño un osezno huérfano.",
+   "scene": "Toma media: el niño sostiene al osezno, Piotr le da monedas; el osezno triste",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s09",
+   "start": 16.81,
+   "end": 20.17,
+   "line": "Lo llaman Wojtek y crece entre ellos como uno más.",
+   "scene": "Fogata: Piotr da biberón al osezno; etiqueta WOJTEK; el oso crece entre los soldados",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s10",
+   "start": 20.17,
+   "end": 21.5,
+   "line": "Lucha con los soldados,",
+   "scene": "Wojtek lucha en broma con un soldado, polvo, risas",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s11",
+   "start": 21.5,
+   "end": 22.45,
+   "line": "toma cerveza y",
+   "scene": "Detalle: zarpas de Wojtek inclinando una botella de cerveza, espuma",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s12",
+   "start": 22.45,
+   "end": 24.07,
+   "line": "hasta se come los cigarrillos.",
+   "scene": "Wojtek mastica un cigarrillo; Piotr sorprendido; volutas de humo",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s13",
+   "start": 24.07,
+   "end": 25.75,
+   "line": "Pero hay un problema.",
+   "scene": "Primer plano gigante de Piotr preocupado, el atardecer se oscurece",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s14",
+   "start": 25.75,
+   "end": 28.71,
+   "line": "Para viajar al frente de Italia, los animales están prohibidos.",
+   "scene": "Plano técnico: ruta de Irán a Italia con barco; sello rojo \"PROHIBIDO: ANIMALES\" al decir prohibidos",
+   "set": "plano",
+   "bars": null,
+   "in": {
+    "type": "zoom",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s15",
+   "start": 28.71,
+   "end": 30.23,
+   "line": "¿La solución?",
+   "scene": "Primer plano gigante de Piotr pensando, luego sonrisa pícara con chispa de idea",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s16",
+   "start": 30.23,
+   "end": 32.19,
+   "line": "Alistarlo oficialmente.",
+   "scene": "Detalle macro: un sello cae sobre la hoja de ALISTAMIENTO junto a una huella de oso",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s17",
+   "start": 32.19,
+   "end": 35.77,
+   "line": "Wojtek recibe rango, número de soldado y raciones.",
+   "scene": "Formación: Wojtek en fila con los soldados saludando; lista RANGO / NÚMERO / RACIONES se marca con las palabras",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s18",
+   "start": 35.77,
+   "end": 37.51,
+   "line": "1944.",
+   "scene": "Fundido: montañas de Italia de noche, \"1944\" dorado gigante",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "dip",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s19",
+   "start": 37.51,
+   "end": 39.29,
+   "line": "Batalla de Montecassino.",
+   "scene": "3D low-poly: órbita sobre el campo de Montecassino, monasterio en la colina, cañones y fogonazos; etiqueta MONTECASSINO",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s20",
+   "start": 39.29,
+   "end": 41.0,
+   "line": "Entre explosiones, Wojtek carga",
+   "scene": "Wojtek camina erguido con una caja entre explosiones, temblor, escombros",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s21",
+   "start": 41.0,
+   "end": 43.07,
+   "line": "cajas de proyectiles hasta los cañones,",
+   "scene": "Wojtek entrega la caja a los artilleros junto al cañón; el cañón dispara",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s22",
+   "start": 43.07,
+   "end": 45.05,
+   "line": "sin soltar ni una sola.",
+   "scene": "Congelado: explosión suspendida, escombros quietos, tono frío, Wojtek abraza la caja firme; insignia NI UNA SOLA",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "flash",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s23",
+   "start": 45.05,
+   "end": 46.12,
+   "line": "Lo ascienden a cabo,",
+   "scene": "Un oficial cose galones de cabo en el brazo de Wojtek; Wojtek saluda; etiqueta CABO",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s24",
+   "start": 46.12,
+   "end": 50.23,
+   "line": "y su compañía adopta como emblema a un oso con un proyectil en brazos.",
+   "scene": "El emblema se dibuja en líneas de plano y se vuelve dorado: oso con un proyectil en brazos",
+   "set": "plano",
+   "bars": null,
+   "in": {
+    "type": "fade",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s25",
+   "start": 50.23,
+   "end": 53.91,
+   "line": "Al terminar la guerra, sus compañeros no pueden volver a casa.",
+   "scene": "Fin de la guerra: campo en ruinas al atardecer, soldados sentados tristes, Wojtek entre ellos",
+   "set": "frente",
+   "bars": null,
+   "in": {
+    "type": "dip",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s26",
+   "start": 53.91,
+   "end": 57.57,
+   "line": "Wojtek pasa el resto de su vida en el zoológico de Edimburgo, en Escocia.",
+   "scene": "Zoológico de Edimburgo con lluvia: castillo en la colina, Wojtek solo en su recinto; etiqueta EDIMBURGO, ESCOCIA",
+   "set": "zoologico",
+   "bars": null,
+   "in": {
+    "type": "dip",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s27",
+   "start": 57.57,
+   "end": 59.65,
+   "line": "Cuando alguien le habla en polaco,",
+   "scene": "Piotr, ya mayor, en la reja le habla (anillos de voz); Wojtek de espaldas",
+   "set": "zoologico",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s28",
+   "start": 59.65,
+   "end": 61.41,
+   "line": "el oso levanta la cabeza.",
+   "scene": "Primer plano gigante de Wojtek levantando la cabeza, ojos brillantes, luz cálida",
+   "set": "zoologico",
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s29",
+   "start": 61.41,
+   "end": 65.77,
+   "line": "¿Crees que Wojtek sabía que era un soldado o solo seguía a su familia?",
+   "scene": "Recuerdo cálido: Wojtek entre los soldados junto a la fogata, acercamiento lento",
+   "set": "campamento",
+   "bars": null,
+   "in": {
+    "type": "fade",
+    "dur": 0.3
+   },
+   "sfx": [],
+   "notes": ""
+  },
+  {
+   "id": "s30",
+   "start": 65.77,
+   "end": 68.28,
+   "line": "Te leo en los comentarios.",
+   "scene": "Pantalla final: pregunta, burbuja, botón Suscríbete y el reparto",
+   "set": null,
+   "bars": null,
+   "in": {
+    "type": "cut",
+    "dur": 0
+   },
+   "sfx": [],
+   "notes": "",
+   "captions": false
+  }
+ ],
+ "music": []
+}
