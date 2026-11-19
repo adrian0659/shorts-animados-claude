@@ -44,6 +44,8 @@ POSES = {
     "encoger":   dict(torso=180, cabeza=10, bi=-60, ai=-140, bd=60, ad=140, mi=-8, pi=-4, md=8, pd=4),
     "festejar":  dict(torso=180, cabeza=0, bi=-150, ai=-175, bd=150, ad=175, mi=-25, pi=-5, md=25, pd=5),
     "triste":    dict(torso=172, cabeza=-25, bi=-6, ai=-2, bd=6, ad=2, mi=-6, pi=-3, md=6, pd=3),
+    "barbilla":  dict(torso=178, cabeza=-10, bi=-14, ai=-6, bd=-8, ad=-158, mi=-8, pi=-4, md=8, pd=4),
+    "jarras":    dict(torso=180, cabeza=4, bi=-62, ai=48, bd=62, ad=-48, mi=-10, pi=-6, md=10, pd=6),
 }
 ARTIC = list(POSES["parado"].keys())
 
@@ -175,6 +177,262 @@ class Monigote:
             ctx.arc(mx, my + r * 0.15, r * 0.25, math.radians(205), math.radians(335)); ctx.stroke()
         elif cara == "pensar":
             ctx.move_to(mx - r * 0.2, my); ctx.curve_to(mx - r * 0.05, my - r * 0.1, mx + r * 0.05, my + r * 0.1, mx + r * 0.22, my - r * 0.02); ctx.stroke()
+        else:
+            ctx.move_to(mx - r * 0.2, my); ctx.line_to(mx + r * 0.2, my); ctx.stroke()
+
+
+# ---------------------------------------------------------------- personaje con sudadera
+SOMBRA_FRIA = (0.80, 0.85, 0.92)   # sombreado gris azulado de la cabeza y la ropa
+PELO_CAFE = (0.47, 0.29, 0.16)
+SUDADERA_BLANCA = (0.93, 0.94, 0.95)
+
+
+def _rel(origen, ang, x, y):
+    """Punto (x, y) en el marco local de una pieza girada 'ang' (0 = abajo, 180 = arriba).
+    En el marco local, -y apunta hacia 'ang + 180°'... es decir, 'arriba' de la pieza."""
+    a = math.pi - math.radians(ang)
+    c, s = math.cos(a), math.sin(a)
+    return origen[0] + x * c - y * s, origen[1] + x * s + y * c
+
+
+class Personaje(Monigote):
+    """Monigote estilo «cabezón con sudadera»: cabeza blanca grande con sombreado frío, pelo café en
+    picos, cejas gruesas expresivas, sudadera con capucha, cordones y bolsillo, extremidades de palito,
+    manos y pies negros. Usa las mismas claves y poses que Monigote.
+
+    Caras: feliz, picaro (sonrisa de lado, una ceja alzada), sorpresa, triste, serio, pensar, enojado.
+    """
+    def __init__(self, claves, escala=1.0, pelo=PELO_CAFE, sudadera=SUDADERA_BLANCA, grosor=11, semilla=1):
+        # con sudadera, «pensar» lleva la mano a la barbilla por delante del cuerpo
+        claves = [dict(c, pose="barbilla") if c.get("pose") == "pensar" else c for c in claves]
+        super().__init__(claves, escala=escala, grosor=grosor, semilla=semilla)
+        self.pelo, self.sudadera = pelo, sudadera
+
+    def dibujar(self, ctx, t):
+        pose, x, y, clave, moviendo = self.estado(t)
+        s = self.s
+        pose = dict(pose)
+        resp = math.sin(t * 2.2 + self.semilla) * 1.5
+        pose["torso"] += math.sin(t * 1.3 + self.semilla) * 1.2
+        if clave["pose"] == "saludo":
+            pose["ad"] += math.sin(t * 12) * 22
+        dy = 0
+        if moviendo:
+            f = t * 9
+            pose["mi"] = math.sin(f) * 28; pose["pi"] = pose["mi"] + max(0, math.sin(f - 1.2)) * -30
+            pose["md"] = -math.sin(f) * 28; pose["pd"] = pose["md"] + max(0, -math.sin(f - 1.2)) * -30
+            pose["bi"] = -10 - math.sin(f) * 22; pose["ai"] = pose["bi"] - 12
+            pose["bd"] = 10 + math.sin(f) * 22; pose["ad"] = pose["bd"] + 12
+            dy = -abs(math.sin(f)) * 10 * s
+        if clave["saltar"]:
+            dy = -abs(math.sin(t * 7)) * 70 * s
+
+        T, R = 165 * s, 92 * s                       # largo del torso y radio de la cabeza
+        L = dict(brazo=78 * s, ante=72 * s, muslo=92 * s, pierna=88 * s)
+
+        def cadena(o, a1, l1, a2, l2):
+            p1 = (o[0] + vec(a1, l1)[0], o[1] + vec(a1, l1)[1])
+            return p1, (p1[0] + vec(a2, l2)[0], p1[1] + vec(a2, l2)[1])
+        rodi, pie_i = cadena((0, 0), pose["mi"], L["muslo"], pose["pi"], L["pierna"])
+        rodd, pie_d = cadena((0, 0), pose["md"], L["muslo"], pose["pd"], L["pierna"])
+        baja = max(pie_i[1], pie_d[1]) + 12 * s
+        cad = (x, y + dy + resp - baja)
+        tor = pose["torso"]
+        cad_i, cad_d = _rel(cad, tor, -22 * s, 0), _rel(cad, tor, 22 * s, 0)
+        rodi = (cad_i[0] + rodi[0], cad_i[1] + rodi[1]); pie_i = (cad_i[0] + pie_i[0], cad_i[1] + pie_i[1])
+        rodd = (cad_d[0] + rodd[0], cad_d[1] + rodd[1]); pie_d = (cad_d[0] + pie_d[0], cad_d[1] + pie_d[1])
+        hom_i, hom_d = _rel(cad, tor, -60 * s, -T + 45 * s), _rel(cad, tor, 60 * s, -T + 45 * s)
+        codi, mani = cadena(hom_i, pose["bi"], L["brazo"], pose["ai"], L["ante"])
+        codd, mand = cadena(hom_d, pose["bd"], L["brazo"], pose["ad"], L["ante"])
+        ang_cab = tor + pose["cabeza"]
+        cab = _rel(_rel(cad, tor, 0, -T + 8 * s), ang_cab, 0, -R * 0.82)
+
+        # sombra en el suelo
+        ctx.save(); ctx.set_source_rgba(0, 0, 0, 0.13)
+        ctx.translate(x, y); ctx.scale(1, 0.16); ctx.arc(0, 0, 95 * s * (1 - min(-dy, 80) / 200), 0, 2 * math.pi)
+        ctx.fill(); ctx.restore()
+
+        ctx.set_line_cap(cairo.LINE_CAP_ROUND); ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+        j = lambda p, n: (p[0] + temblor((self.semilla, n), t, 0.8)[0], p[1] + temblor((self.semilla, n), t, 0.8)[1])
+        palo = lambda pts, n: (ctx.move_to(*j(pts[0], n)), ctx.line_to(*j(pts[1], n + 1)),
+                               ctx.line_to(*j(pts[2], n + 2)), ctx.stroke())
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s)
+        # piernas y pies (los pies apuntan hacia afuera, o hacia donde mira)
+        for n, (c0, ro, pie, lado) in enumerate([(cad_i, rodi, pie_i, -1), (cad_d, rodd, pie_d, 1)]):
+            palo((c0, ro, pie), 10 + n * 3)
+            hacia = clave["mira"] or lado
+            ctx.save(); ctx.translate(pie[0] + hacia * 14 * s, pie[1] + 2 * s); ctx.scale(1, 0.5)
+            ctx.arc(0, 0, 25 * s, 0, 2 * math.pi); ctx.restore(); ctx.fill()
+        # brazos y manos; si la mano cruza el cuerpo (p. ej. «pensar»), el brazo va encima de la sudadera
+        brazos = [(hom_i, codi, mani), (hom_d, codd, mand)]
+        a_t = math.pi - math.radians(tor)
+        def cruza(ma):
+            dx, dy2 = ma[0] - cad[0], ma[1] - cad[1]
+            lx = dx * math.cos(a_t) + dy2 * math.sin(a_t)
+            ly = -dx * math.sin(a_t) + dy2 * math.cos(a_t)
+            return abs(lx) < 58 * s and -T - 20 * s < ly < 20 * s
+        def mano(co, ma):
+            ang = math.degrees(math.atan2(ma[0] - co[0], ma[1] - co[1]))
+            ctx.save(); ctx.translate(*_rel(ma, ang, 0, 6 * s)); ctx.rotate(math.pi - math.radians(ang))
+            ctx.scale(0.8, 1); ctx.arc(0, 0, 15 * s, 0, 2 * math.pi); ctx.restore(); ctx.fill()
+        for n, (h, co, ma) in enumerate(brazos):
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s); palo((h, co, ma), 20 + n * 3); mano(co, ma)
+
+        self._sudadera(ctx, cad, tor, T, s)
+        for n, (h, co, ma) in enumerate(brazos):
+            if cruza(ma):
+                ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s)
+                palo((h, co, ma), 20 + n * 3); mano(co, ma)
+        self._cabeza(ctx, cab, ang_cab, R, clave, t)
+
+    # -- ropa ----------------------------------------------------------------
+    def _sudadera(self, ctx, cad, tor, T, s):
+        ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+        col, sombra = self.sudadera, tuple(v * 0.86 for v in self.sudadera)
+        lw = 7 * s
+        def tinta(w=lw): ctx.set_source_rgb(*TINTA); ctx.set_line_width(w); ctx.stroke()
+        # cuerpo de la sudadera
+        def cuerpo():
+            ctx.move_to(-64 * s, -T + 24 * s)
+            ctx.curve_to(-84 * s, -T + 70 * s, -74 * s, -40 * s, -68 * s, 14 * s)
+            ctx.line_to(68 * s, 14 * s)
+            ctx.curve_to(74 * s, -40 * s, 84 * s, -T + 70 * s, 64 * s, -T + 24 * s); ctx.close_path()
+        cuerpo(); ctx.set_source_rgb(*col); ctx.fill_preserve(); ctx.save(); ctx.clip()
+        ctx.set_source_rgb(*sombra)                      # sombreado lateral, como en el dibujo
+        ctx.rectangle(-90 * s, -T, 30 * s, T + 30 * s); ctx.fill()
+        ctx.move_to(-60 * s, -T + 60 * s); ctx.curve_to(-20 * s, -T + 48 * s, 20 * s, -T + 48 * s, 60 * s, -T + 60 * s)
+        ctx.line_to(60 * s, -T + 30 * s); ctx.line_to(-60 * s, -T + 30 * s); ctx.close_path(); ctx.fill()
+        ctx.restore(); cuerpo(); tinta()
+        # resorte de abajo
+        ctx.rectangle(-69 * s, 2 * s, 138 * s, 18 * s); ctx.set_source_rgb(*col); ctx.fill_preserve(); tinta(6 * s)
+        # bolsillo canguro
+        ctx.move_to(-38 * s, -6 * s); ctx.line_to(-30 * s, -50 * s); ctx.line_to(30 * s, -50 * s)
+        ctx.line_to(38 * s, -6 * s); tinta(5.5 * s)
+        ctx.set_source_rgba(*SOMBRA_FRIA, 0.9); ctx.rectangle(-30 * s, -48 * s, 60 * s, 8 * s); ctx.fill()
+        # capucha (rodea el cuello)
+        ctx.save(); ctx.translate(0, -T + 22 * s); ctx.scale(1, 0.48)
+        ctx.arc(0, 0, 76 * s, 0, 2 * math.pi); ctx.restore()
+        ctx.set_source_rgb(*col); ctx.fill_preserve(); tinta()
+        ctx.save(); ctx.translate(0, -T + 16 * s); ctx.scale(1, 0.42); ctx.arc(0, 0, 42 * s, 0, 2 * math.pi); ctx.restore()
+        ctx.set_source_rgb(*SOMBRA_FRIA); ctx.fill_preserve(); tinta(5 * s)
+        # cordones con puntas
+        for lado in (-1, 1):
+            ctx.move_to(lado * 16 * s, -T + 32 * s)
+            ctx.curve_to(lado * 19 * s, -T + 55 * s, lado * 14 * s, -T + 75 * s, lado * 17 * s, -T + 92 * s)
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(9 * s); ctx.stroke_preserve()
+            ctx.set_source_rgb(*col); ctx.set_line_width(4.5 * s); ctx.stroke()
+            ctx.save(); ctx.translate(lado * 17 * s, -T + 98 * s); ctx.scale(0.75, 1)
+            ctx.arc(0, 0, 7 * s, 0, 2 * math.pi); ctx.restore()
+            ctx.set_source_rgb(*col); ctx.fill_preserve(); tinta(3.5 * s)
+        ctx.restore()
+
+    # -- cabeza ----------------------------------------------------------------
+    def _cabeza(self, ctx, c, ang, r, clave, t):
+        ctx.save(); ctx.translate(*c); ctx.rotate(math.pi - math.radians(ang))
+        ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.save(); ctx.clip()
+        ctx.set_source_rgb(*SOMBRA_FRIA); ctx.paint()                  # sombra fría abajo a la izquierda
+        ctx.set_source_rgb(1, 1, 1); ctx.arc(r * 0.13, -r * 0.12, r * 0.96, 0, 2 * math.pi); ctx.fill()
+        ctx.restore()
+        ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.set_source_rgb(*TINTA); ctx.set_line_width(8 * self.s); ctx.stroke()
+        self._pelo(ctx, r)
+        self._cara2(ctx, r, clave["cara"], clave["mira"] * r * 0.16, t)
+        ctx.restore()
+
+    def _pelo(self, ctx, r):
+        # contorno en sentido horario: mechones colgando a la izquierda, copete que barre a la derecha
+        # y fleco con dos puntas sobre la frente. Las puntas quedan filosas y los tramos se curvan hacia afuera.
+        pts = [(-0.97, -0.02), (-0.86, -0.30), (-1.10, -0.44), (-0.90, -0.58), (-0.98, -0.90),
+               (-0.62, -0.92), (-0.30, -1.14), (0.20, -1.12), (0.60, -1.06), (1.20, -0.96),
+               (0.90, -0.76), (1.10, -0.56), (0.84, -0.52), (0.58, -0.72), (0.30, -0.54),
+               (0.08, -0.74), (-0.26, -0.52), (-0.44, -0.70), (-0.72, -0.34)]
+        cx0, cy0 = 0.0, -0.35
+        ctx.move_to(pts[0][0] * r, pts[0][1] * r)
+        for i in range(len(pts)):
+            (x0, y0), (x1, y1) = pts[i], pts[(i + 1) % len(pts)]
+            mx, my = (x0 + x1) / 2 - cx0, (y0 + y1) / 2 - cy0
+            d = math.hypot(mx, my) or 1; seg = math.hypot(x1 - x0, y1 - y0)
+            fuera = 1 if i < 12 else -0.6                      # el fleco se curva hacia adentro
+            ox, oy = mx / d * seg * 0.12 * fuera, my / d * seg * 0.12 * fuera
+            ctx.curve_to((x0 + (x1 - x0) / 3 + ox) * r, (y0 + (y1 - y0) / 3 + oy) * r,
+                         (x0 + 2 * (x1 - x0) / 3 + ox) * r, (y0 + 2 * (y1 - y0) / 3 + oy) * r, x1 * r, y1 * r)
+        ctx.close_path()
+        ctx.set_source_rgb(*self.pelo); ctx.fill_preserve(); ctx.save(); ctx.clip()
+        ctx.set_source_rgba(*[v * 0.55 for v in self.pelo], 0.85); ctx.set_line_width(3.2 * self.s)
+        for (a, b, c2) in [((-0.7, -0.75), (-0.4, -0.95), (0.0, -0.98)), ((-0.2, -0.8), (0.2, -0.95), (0.7, -0.92)),
+                           ((-0.85, -0.45), (-0.8, -0.6), (-0.65, -0.75)), ((0.3, -0.72), (0.6, -0.8), (0.95, -0.8))]:
+            ctx.move_to(a[0] * r, a[1] * r); ctx.curve_to(b[0] * r, b[1] * r, b[0] * r, b[1] * r, c2[0] * r, c2[1] * r)
+            ctx.stroke()
+        ctx.restore()
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(6.5 * self.s)
+        # repetir el trazo para el contorno
+        ctx.move_to(pts[0][0] * r, pts[0][1] * r)
+        for i in range(len(pts)):
+            (x0, y0), (x1, y1) = pts[i], pts[(i + 1) % len(pts)]
+            mx, my = (x0 + x1) / 2 - cx0, (y0 + y1) / 2 - cy0
+            d = math.hypot(mx, my) or 1; seg = math.hypot(x1 - x0, y1 - y0)
+            fuera = 1 if i < 12 else -0.6
+            ox, oy = mx / d * seg * 0.12 * fuera, my / d * seg * 0.12 * fuera
+            ctx.curve_to((x0 + (x1 - x0) / 3 + ox) * r, (y0 + (y1 - y0) / 3 + oy) * r,
+                         (x0 + 2 * (x1 - x0) / 3 + ox) * r, (y0 + 2 * (y1 - y0) / 3 + oy) * r, x1 * r, y1 * r)
+        ctx.close_path(); ctx.stroke()
+
+    def _cara2(self, ctx, r, cara, ox, t):
+        ctx.set_source_rgb(*TINTA)
+        parpadeo = (t + self.semilla * 0.7) % 3.4 < 0.12
+        # cejas: (alto de la punta interior, alto de la punta exterior) por lado; negativo = más arriba
+        cejas = dict(feliz=((-0.32, -0.36), (-0.32, -0.36)), picaro=((-0.27, -0.31), (-0.36, -0.47)),
+                     sorpresa=((-0.50, -0.50), (-0.50, -0.50)), triste=((-0.44, -0.30), (-0.44, -0.30)),
+                     serio=((-0.33, -0.36), (-0.33, -0.36)), pensar=((-0.32, -0.34), (-0.46, -0.50)),
+                     enojado=((-0.24, -0.40), (-0.24, -0.40))).get(cara, ((-0.36, -0.40), (-0.36, -0.40)))
+        for n, lado in enumerate((-1, 1)):
+            ex, ey = ox + lado * r * 0.30, -r * 0.04
+            yi, ye = cejas[n]
+            # ceja gruesa con arco
+            xi, xe = ex - lado * r * 0.13, ex + lado * r * 0.20
+            ctx.set_line_width(r * 0.095); ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+            ctx.move_to(xi, yi * r)
+            ctx.curve_to(ex - lado * r * 0.02, (yi + ye) / 2 * r - r * 0.09, ex + lado * r * 0.1, ye * r - r * 0.04, xe, ye * r + r * 0.03)
+            ctx.stroke()
+            ex2 = ex + ox * 0.15
+            if parpadeo and cara != "sorpresa":
+                ctx.set_line_width(r * 0.05); ctx.move_to(ex2 - r * 0.08, ey); ctx.line_to(ex2 + r * 0.08, ey); ctx.stroke()
+                continue
+            alto = 0.16 if cara == "sorpresa" else 0.125
+            ctx.save()
+            if cara in ("picaro", "serio", "enojado"):            # párpado a media asta: corta la parte de arriba
+                ctx.rectangle(ex2 - r * 0.2, ey - r * 0.045, r * 0.4, r * 0.4); ctx.clip()
+            ctx.translate(ex2, ey); ctx.scale(0.66, 1); ctx.arc(0, 0, r * alto, 0, 2 * math.pi); ctx.restore(); ctx.fill()
+            if cara in ("picaro", "serio", "enojado"):
+                ctx.set_line_width(r * 0.045); ctx.set_line_cap(cairo.LINE_CAP_BUTT)
+                ctx.move_to(ex2 - r * 0.095, ey - r * 0.045); ctx.line_to(ex2 + r * 0.095, ey - r * 0.045); ctx.stroke()
+                ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+            else:
+                ctx.set_source_rgb(1, 1, 1); ctx.arc(ex2 + r * 0.025, ey - r * 0.055, r * 0.025, 0, 2 * math.pi)
+                ctx.fill(); ctx.set_source_rgb(*TINTA)
+        mx, my = ox, r * 0.36
+        ctx.set_line_width(r * 0.055)
+        if cara == "feliz":
+            ctx.move_to(mx - r * 0.32, my - r * 0.06)
+            ctx.curve_to(mx - r * 0.15, my + r * 0.16, mx + r * 0.15, my + r * 0.16, mx + r * 0.32, my - r * 0.06)
+            ctx.stroke()
+        elif cara == "picaro":                                    # sonrisa de lado
+            ctx.move_to(mx - r * 0.34, my - r * 0.04)
+            ctx.curve_to(mx - r * 0.18, my + r * 0.12, mx + r * 0.2, my + r * 0.08, mx + r * 0.40, my - r * 0.14)
+            ctx.stroke()
+            ctx.move_to(mx - r * 0.38, my - r * 0.09); ctx.line_to(mx - r * 0.33, my - r * 0.02); ctx.stroke()
+        elif cara == "sorpresa":
+            ctx.save(); ctx.translate(mx, my + r * 0.04); ctx.scale(0.8, 1); ctx.arc(0, 0, r * 0.12, 0, 2 * math.pi)
+            ctx.restore(); ctx.fill()
+        elif cara == "triste":
+            ctx.move_to(mx - r * 0.25, my + r * 0.08)
+            ctx.curve_to(mx - r * 0.1, my - r * 0.06, mx + r * 0.1, my - r * 0.06, mx + r * 0.25, my + r * 0.08)
+            ctx.stroke()
+        elif cara == "pensar":
+            ctx.move_to(mx - r * 0.2, my); ctx.curve_to(mx - r * 0.05, my - r * 0.08, mx + r * 0.05, my + r * 0.08,
+                                                        mx + r * 0.22, my - r * 0.02); ctx.stroke()
+        elif cara == "enojado":
+            ctx.move_to(mx - r * 0.22, my + r * 0.05); ctx.curve_to(mx - r * 0.1, my - r * 0.03, mx + r * 0.1, my - r * 0.03,
+                                                                    mx + r * 0.22, my + r * 0.05); ctx.stroke()
         else:
             ctx.move_to(mx - r * 0.2, my); ctx.line_to(mx + r * 0.2, my); ctx.stroke()
 
