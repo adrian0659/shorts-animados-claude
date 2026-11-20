@@ -114,3 +114,15 @@ Referencia: `cuadros/referencia_comic_pov.jpg` · resultado con código: `comic_
   guante, frasco con cristales, fajos de billetes, lentes). Combínalo con los escenarios de `escenarios.py`.
 - Personajes siempre **originales**: no copies caras, ropa ni nombres de series o películas.
 - Demo: `python3 comic.py --video` → `salida/comic_demo.png` y `salida/comic_demo.mp4`.
+
+## Personajes (monigote con ropa) — referencia `cuadros/referencia_personajes.jpg`, resultado `personajes_demo.png`
+`Actor` de `motor_pov.py` ya dibuja así a todos los personajes:
+- Cabeza blanca **un poco ovalada**, ojos ovalados negros con brillo, **cejas gruesas siempre** (cambian con la cara),
+  boca pequeña. Pelo `picos` (negro alborotado con fleco en picos) o `raya` (café con volumen y patillas).
+- **Camisa de verdad:** cuello con puntas (color propio con `cuello=`), tapeta con botones, bolsillo, **parche con
+  nombre** (`parche="MECÁNICO"`), ribete de manga (`puno=`), corbata (`corbata=`), pliegues.
+- Antebrazos y piernas de palito negro; **manos blancas de caricatura** (guante con pulgar); **zapatos grandes**
+  con suela, agujetas y brillo.
+- **Objeto en la mano** con la clave `objeto`: `telefono`, `tablet` (presupuesto), `llave`, `linterna`, `dinero`.
+- Trajes listos: `mecanico` (azul marino, cuello y ribete rojos, parche) y `cliente` (camisa gris, corbata vino, pelo café).
+- Ejemplo: `python3 videos/demo_personajes.py`.

@@ -141,7 +141,10 @@ TRAJES = {
     "socio":   dict(camisa=(0.85, 0.82, 0.74), largo=True, pelo="raya", color_pelo=(0.12, 0.1, 0.1), bigote=True),
     "socio2":  dict(camisa=(0.2, 0.32, 0.3), largo=False, pelo="corto", color_pelo=(0.1, 0.08, 0.06)),
     "amigo":   dict(camisa=(0.95, 0.65, 0.2), largo=False, pelo="corto", color_pelo=(0.1, 0.08, 0.06)),
-    "mecanico": dict(camisa=(0.13, 0.17, 0.32), largo=False, pelo="picos"),
+    "mecanico": dict(camisa=(0.15, 0.2, 0.36), largo=False, pelo="picos", cuello=(0.8, 0.12, 0.12), puno=(0.8, 0.12, 0.12),
+                     parche="MECÁNICO", bolsillo=True),
+    "cliente": dict(camisa=(0.82, 0.83, 0.86), largo=True, pelo="raya", color_pelo=(0.42, 0.26, 0.15),
+                    corbata=(0.55, 0.12, 0.2), cuello=(0.9, 0.9, 0.92), bolsillo=False),
     "oficinista": dict(camisa=(0.92, 0.92, 0.95), largo=True, corbata=(0.6, 0.12, 0.15), saco=False, pelo="raya",
                        color_pelo=(0.35, 0.22, 0.12)),
     "amiga":   dict(camisa=(0.35, 0.6, 0.85), largo=False, pelo="largo", color_pelo=(0.3, 0.18, 0.1)),
@@ -217,6 +220,7 @@ class Actor:
         ctx.set_source(g); ctx.arc(0, 0, 120 * s, 0, 2 * math.pi); ctx.fill(); ctx.restore()
 
         g_ = 10 * s
+        self._obj = cl.get("objeto")
         self._pierna(ctx, cad0, ri, fi, g_, f, s)
         self._brazo(ctx, hb, ci, mi_, g_, s, atras=True)
         self._torso(ctx, cad0, hom, f, s, pose)
@@ -227,11 +231,7 @@ class Actor:
     # -- partes
     def _pierna(self, ctx, c, r, p, g, f, s):
         linea(ctx, [c, r, p], g)
-        ctx.save(); ctx.translate(p[0] + 14 * s * f, p[1] + 2 * s); ctx.scale(1, 0.55)
-        ctx.arc(0, 0, 30 * s, 0, 2 * math.pi); ctx.restore()
-        relleno(ctx, (0.1, 0.1, 0.11), 3 * s)
-        ctx.set_source_rgba(1, 1, 1, 0.25); ctx.set_line_width(3 * s)
-        ctx.arc(p[0] + 8 * s * f, p[1] - 4 * s, 14 * s, math.pi * 1.15, math.pi * 1.6); ctx.stroke()
+        zapato(ctx, p[0], p[1] + 4 * s, s, f, self.tr.get("zapato", (0.1, 0.1, 0.11)))
 
     def _brazo(self, ctx, h, c, m, g, s, atras=False):
         tr = self.tr; col = osc(tr["camisa"], 0.82 if atras else 1.0)
@@ -244,8 +244,14 @@ class Actor:
                 linea(ctx, [q, p], 27 * s, (0.95, 0.95, 0.95)); linea(ctx, [q, p], 3 * s, TINTA, 0.5)
         else:
             linea(ctx, [c, m], g)
-            linea(ctx, [h, fin], 36 * s); linea(ctx, [h, fin], 27 * s, col)
-        ctx.arc(m[0], m[1], 15 * s, 0, 2 * math.pi); relleno(ctx, PIEL, 4 * s)
+            linea(ctx, [h, fin], 40 * s); linea(ctx, [h, fin], 31 * s, col)
+            if tr.get("puno"):
+                q = (lerp(h[0], fin[0], 0.8), lerp(h[1], fin[1], 0.8))
+                linea(ctx, [q, fin], 31 * s, tr["puno"] if not atras else osc(tr["puno"], 0.8))
+        ang = math.degrees(math.atan2(m[1] - c[1], m[0] - c[0]))
+        guante(ctx, m[0], m[1], ang, s, atras)
+        if not atras and getattr(self, "_obj", None):
+            objeto_mano(ctx, self._obj, m[0], m[1], ang, s)
 
     def _torso(self, ctx, c, h, f, s, pose):
         tr = self.tr
@@ -292,11 +298,7 @@ class Actor:
                 relleno(ctx, osc(tr["chaleco"], 0.8), 2 * s)
             ctx.restore()
         else:
-            ctx.move_to(mid[0] - px * 20 * s, mid[1] - py * 20 * s)
-            ctx.line_to(lerp(mid[0], bot[0], 0.18), lerp(mid[1], bot[1], 0.18))
-            ctx.line_to(mid[0] + px * 20 * s, mid[1] + py * 20 * s)
-            linea_ = ctx.copy_path(); ctx.new_path()
-            ctx.append_path(linea_); ctx.set_source_rgb(*TINTA); ctx.set_line_width(3.5 * s); ctx.stroke()
+            camisa_detalles(ctx, tr, mid, bot, px, py, ux, uy, s, f)
 
     def _cabeza(self, ctx, c, r, f, cl, mira, t, pose):
         tr = self.tr; cara = cl["cara"]
@@ -307,34 +309,16 @@ class Actor:
             ctx.line_to(r * 0.4, r * 1.3); ctx.curve_to(r * 0.8, r * 1.4, r * 1.2, r * 0.9, r * 1.05, -r * 0.2)
             ctx.close_path(); relleno(ctx, cp, 4)
         # cabeza
-        ctx.save(); ctx.scale(1, 0.97); ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.restore()
-        g = cairo.RadialGradient(-r * 0.3, -r * 0.35, r * 0.2, 0, 0, r * 1.1)
-        g.add_color_stop_rgb(0, *PIEL); g.add_color_stop_rgb(1, 0.86, 0.86, 0.88)
+        ctx.save(); ctx.scale(0.95, 1.05); ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.restore()
+        g = cairo.RadialGradient(-r * 0.35, -r * 0.4, r * 0.2, 0, 0, r * 1.15)
+        g.add_color_stop_rgb(0, *PIEL); g.add_color_stop_rgb(0.75, 0.95, 0.95, 0.96); g.add_color_stop_rgb(1, 0.82, 0.83, 0.86)
         relleno(ctx, g, max(4, 6.5 * self.s))
         ox = mira * r * 0.32
         # pelo
         if pelo == "picos":
-            rnd = random.Random(self.sem)
-            ctx.move_to(-r * 1.02, -r * 0.05)
-            n = 11
-            for i in range(n + 1):
-                a = math.pi + i * math.pi / n
-                rr = r * (1.05 + rnd.uniform(0.12, 0.42))
-                aa = a + rnd.uniform(-0.12, 0.12)
-                ctx.line_to(math.cos(aa) * rr, math.sin(aa) * rr - r * 0.05)
-                if i < n:
-                    a2 = a + math.pi / n / 2
-                    ctx.line_to(math.cos(a2) * r * 0.96, math.sin(a2) * r * 0.9 - r * 0.05)
-            ctx.line_to(r * 1.02, -r * 0.05)
-            ctx.curve_to(r * 0.6, -r * 0.42, r * 0.2, -r * 0.18, -r * 0.05 + ox * 0.3, -r * 0.5)
-            ctx.curve_to(-r * 0.3, -r * 0.2, -r * 0.6, -r * 0.4, -r * 1.02, -r * 0.05)
-            ctx.close_path(); relleno(ctx, cp, 3)
+            pelo_picos(ctx, r, cp, self.sem, ox)
         elif pelo in ("raya", "corto", "largo"):
-            ctx.move_to(-r * 1.0, -r * 0.05)
-            ctx.curve_to(-r * 1.1, -r * 1.2, r * 1.1, -r * 1.25, r * 1.0, -r * 0.05)
-            ctx.curve_to(r * 0.7, -r * 0.55, r * 0.1, -r * 0.45, -r * 0.2 + ox * 0.3, -r * 0.62)
-            ctx.curve_to(-r * 0.5, -r * 0.35, -r * 0.8, -r * 0.4, -r * 1.0, -r * 0.05)
-            ctx.close_path(); relleno(ctx, cp, 3)
+            pelo_raya(ctx, r, cp, ox, f, corto=pelo == "corto")
         elif pelo == "sombrero":
             ctx.save(); ctx.translate(0, -r * 0.55)
             ctx.move_to(-r * 1.75, r * 0.05); ctx.curve_to(-r * 1.2, r * 0.4, r * 1.2, r * 0.4, r * 1.75, r * 0.05)
@@ -372,18 +356,19 @@ class Actor:
                 ctx.arc(ex + mira * r * 0.04, ey, r * 0.075, 0, 7); ctx.set_source_rgb(*TINTA); ctx.fill()
             elif parp:
                 linea(ctx, [(ex - r * 0.1, ey), (ex + r * 0.1, ey)], r * 0.07)
-            elif cara == "lado":
-                ctx.arc(ex + r * 0.05 * (1 if mira >= 0 else -1), ey, r * 0.085, 0, 7); ctx.fill()
             else:
-                ctx.arc(ex, ey, r * 0.09, 0, 7); ctx.fill()
+                dx_ = (r * 0.06 * (1 if mira >= 0 else -1)) if cara == "lado" else mira * r * 0.03
+                ctx.save(); ctx.translate(ex + dx_, ey); ctx.scale(0.72, 1); ctx.arc(0, 0, r * 0.13, 0, 7); ctx.restore()
+                ctx.set_source_rgb(*TINTA); ctx.fill()
+                ctx.arc(ex + dx_ - r * 0.03, ey - r * 0.05, r * 0.03, 0, 7); ctx.set_source_rgb(1, 1, 1); ctx.fill()
             # cejas
             cejas = {"serio": (0.0, 0.0), "enojado": (0.12, -0.04), "preocupado": (-0.12, 0.0), "miedo": (-0.16, -0.08),
                      "sorpresa": (0.0, -0.12), "triste": (-0.14, 0.02), "pensar": (0.05 * lado, -0.03), "lado": (0.06, 0.0)}
-            if cara in cejas:
-                inc, sube = cejas[cara]
-                y0 = ey - r * 0.27 + sube * r
-                linea(ctx, [(ex - r * 0.13, y0 - inc * r * lado * -1 * 1.0), (ex + r * 0.13, y0 + inc * r * lado * -1 * -1.0)],
-                      r * 0.07)
+            inc, sube = cejas.get(cara, (0.03, 0.0))
+            y0 = ey - r * 0.3 + sube * r
+            a_ = (ex - r * 0.15, y0 - inc * r * lado * -1); b_ = (ex + r * 0.15, y0 + inc * r * lado * -1)
+            ctx.move_to(*a_); ctx.curve_to(a_[0] + r * 0.08, a_[1] - r * 0.05, b_[0] - r * 0.08, b_[1] - r * 0.05, *b_)
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(r * 0.085); ctx.set_line_cap(cairo.LINE_CAP_ROUND); ctx.stroke()
         mx, my = ox * 1.05, r * 0.42
         lw = r * 0.075
         if tr.get("bigote"):
@@ -413,6 +398,138 @@ class Actor:
             ctx.curve_to(sx - r * 0.1, sy + r * 0.13, sx - r * 0.12, sy, sx, sy - r * 0.2)
             relleno(ctx, (0.55, 0.8, 1.0), 2.5, alfa=1 - k * 0.6)
         ctx.restore()
+
+
+
+# ------------------------------------------------------------------ partes del monigote (estilo referencia de personajes)
+def zapato(ctx, x, y, s, f, color=(0.1, 0.1, 0.11)):
+    """Zapato grande de caricatura: suela, puntera redonda, agujetas y brillo. (x,y) = tobillo sobre el suelo."""
+    ctx.save(); ctx.translate(x, y); ctx.scale(s * f, s)
+    ctx.move_to(-26, -30); ctx.curve_to(-30, -8, -32, 0, -30, 6); ctx.line_to(58, 6)
+    ctx.curve_to(70, 6, 72, -6, 64, -14); ctx.curve_to(52, -26, 30, -26, 18, -34); ctx.curve_to(6, -42, -16, -42, -26, -30)
+    ctx.close_path()
+    relleno(ctx, degradado(-40, 6, osc(color, 2.6), color), 3.2)
+    ctx.move_to(-31, 2); ctx.line_to(60, 2); ctx.curve_to(70, 2, 72, 6, 70, 10); ctx.line_to(-30, 10); ctx.close_path()
+    relleno(ctx, (0.22, 0.22, 0.24), 2.4)
+    for k in range(3):
+        linea(ctx, [(6 + k * 9, -32 + k * 3), (14 + k * 9, -26 + k * 3)], 2.4, (0.75, 0.75, 0.78))
+    ctx.set_source_rgba(1, 1, 1, 0.35); ctx.set_line_width(3)
+    ctx.move_to(40, -20); ctx.curve_to(50, -20, 58, -16, 62, -10); ctx.stroke()
+    ctx.restore()
+
+
+def guante(ctx, x, y, ang, s, atras=False):
+    """Mano blanca de caricatura (guante con pulgar y dedos marcados), orientada según el antebrazo."""
+    ctx.save(); ctx.translate(x, y); ctx.rotate(math.radians(ang)); ctx.scale(s, s)
+    col = (0.97, 0.97, 0.98) if not atras else (0.88, 0.88, 0.9)
+    ctx.move_to(-2, -9); ctx.curve_to(10, -17, 30, -16, 34, -6); ctx.curve_to(37, 2, 34, 12, 26, 15)
+    ctx.curve_to(16, 18, 4, 16, -2, 9); ctx.close_path(); relleno(ctx, col, 3)
+    ctx.move_to(8, -12); ctx.curve_to(12, -26, 22, -28, 24, -22); ctx.curve_to(25, -17, 20, -13, 16, -10)
+    relleno(ctx, col, 2.8)
+    for k in (-2, 5):
+        linea(ctx, [(22, k), (32, k + 1)], 1.8, TINTA, 0.6)
+    linea(ctx, [(-3, -9), (-3, 9)], 3, TINTA, 0.8)
+    ctx.restore()
+
+
+def objeto_mano(ctx, obj, x, y, ang, s):
+    """Objeto en la mano de adelante: telefono, tablet, llave, linterna, dinero."""
+    ctx.save(); ctx.translate(x, y); ctx.rotate(math.radians(ang)); ctx.scale(s, s)
+    if obj == "telefono":
+        ctx.rotate(-math.pi / 2); ctx.scale(1.5, 1.5); rrect(ctx, -8, 2, 28, 52, 6); relleno(ctx, (0.25, 0.26, 0.3), 2.5)
+        rrect(ctx, -4, 7, 20, 40, 3); relleno(ctx, (0.55, 0.65, 0.75), 0)
+    elif obj == "tablet":
+        ctx.rotate(-math.radians(ang)); ctx.rotate(-0.25)
+        rrect(ctx, 6, -48, 130, 92, 9); relleno(ctx, (0.18, 0.18, 0.2), 3)
+        rrect(ctx, 14, -40, 114, 76, 4); relleno(ctx, (0.93, 0.95, 0.96), 0)
+        texto(ctx, "PRESUPUESTO", 71, -24, 13, TINTA, "Inter", peso=cairo.FONT_WEIGHT_BOLD)
+        texto(ctx, "APROBADO", 71, -8, 12, TINTA, "Inter", peso=cairo.FONT_WEIGHT_BOLD)
+        texto(ctx, "USD 1.200", 71, 18, 18, TINTA, "Inter", peso=cairo.FONT_WEIGHT_BOLD)
+    elif obj == "llave":
+        linea(ctx, [(20, 0), (90, 0)], 9, (0.75, 0.77, 0.8)); ctx.arc(95, 0, 11, 0, 7); relleno(ctx, (0.75, 0.77, 0.8), 2.5)
+    elif obj == "linterna":
+        rrect(ctx, 14, -9, 60, 18, 5); relleno(ctx, (0.85, 0.75, 0.2), 2.5)
+        g = cairo.LinearGradient(74, 0, 260, 0); g.add_color_stop_rgba(0, 1, 1, 0.8, 0.6); g.add_color_stop_rgba(1, 1, 1, 0.8, 0)
+        ctx.set_source(g); ctx.move_to(74, -8); ctx.line_to(260, -50); ctx.line_to(260, 50); ctx.line_to(74, 8); ctx.close_path(); ctx.fill()
+    elif obj == "dinero":
+        for k in range(3): billete(ctx, 40 + k * 4, -10 - k * 6, 0.8, -0.3 + k * 0.15)
+    ctx.restore()
+
+
+def camisa_detalles(ctx, tr, mid, bot, px, py, ux, uy, s, f):
+    """Cuello con puntas, tapeta con botones, bolsillo, parche con nombre, corbata y pliegues."""
+    cuello = tr.get("cuello", osc(tr["camisa"], 0.85))
+    for lado in (-1, 1):
+        a = (mid[0] + px * lado * 4 * s, mid[1] + py * lado * 4 * s + 6 * s)
+        b = (mid[0] + px * lado * 30 * s, mid[1] + py * lado * 30 * s - 2 * s)
+        cpt = (lerp(mid[0], bot[0], 0.14) + px * lado * 13 * s, lerp(mid[1], bot[1], 0.14) + py * lado * 13 * s)
+        ctx.move_to(*a); ctx.line_to(*b); ctx.line_to(*cpt); ctx.close_path(); relleno(ctx, cuello, 3 * s)
+    linea(ctx, [(lerp(mid[0], bot[0], 0.14), lerp(mid[1], bot[1], 0.14)), (lerp(mid[0], bot[0], 0.97), lerp(mid[1], bot[1], 0.97))],
+          2.5 * s, TINTA, 0.55)
+    if not tr.get("corbata"):
+        for k in (0.3, 0.5, 0.7, 0.88):
+            ctx.arc(lerp(mid[0], bot[0], k) + px * 5 * s, lerp(mid[1], bot[1], k) + py * 5 * s, 3.2 * s, 0, 7)
+            ctx.set_source_rgb(*osc(tr["camisa"], 0.55)); ctx.fill()
+    if tr.get("bolsillo", True):
+        cx, cy = lerp(mid[0], bot[0], 0.38) + px * 26 * s, lerp(mid[1], bot[1], 0.38) + py * 26 * s
+        rrect(ctx, cx - 15 * s, cy - 6 * s, 30 * s, 34 * s, 4 * s); ctx.set_source_rgb(*TINTA); ctx.set_line_width(2.4 * s); ctx.stroke()
+        linea(ctx, [(cx - 15 * s, cy + 4 * s), (cx + 15 * s, cy + 4 * s)], 2 * s, TINTA, 0.7)
+    if tr.get("parche"):
+        cx, cy = lerp(mid[0], bot[0], 0.32) - px * 28 * s, lerp(mid[1], bot[1], 0.32) - py * 28 * s
+        rrect(ctx, cx - 27 * s, cy - 8 * s, 54 * s, 16 * s, 3 * s); relleno(ctx, (0.97, 0.97, 0.95), 2 * s)
+        texto(ctx, tr["parche"], cx, cy, 9 * s, TINTA, "Inter", peso=cairo.FONT_WEIGHT_BOLD)
+    if tr.get("corbata"):
+        t0 = (mid[0], mid[1] + 10 * s); v = (lerp(mid[0], bot[0], 0.78), lerp(mid[1], bot[1], 0.78))
+        ctx.move_to(t0[0] - 9 * s, t0[1]); ctx.line_to(t0[0] + 9 * s, t0[1]); ctx.line_to(t0[0] + 6 * s, t0[1] + 13 * s)
+        ctx.line_to(t0[0] - 6 * s, t0[1] + 13 * s); ctx.close_path(); relleno(ctx, osc(tr["corbata"], 0.85), 2.5 * s)
+        ctx.move_to(t0[0] - 6 * s, t0[1] + 13 * s); ctx.line_to(t0[0] + 6 * s, t0[1] + 13 * s)
+        ctx.line_to(v[0] + 12 * s, v[1] - 12 * s); ctx.line_to(v[0], v[1] + 6 * s); ctx.line_to(v[0] - 12 * s, v[1] - 12 * s)
+        ctx.close_path(); relleno(ctx, tr["corbata"], 2.5 * s)
+    for k in (0.55, 0.8):
+        a = (lerp(mid[0], bot[0], k) - px * 40 * s, lerp(mid[1], bot[1], k) - py * 40 * s)
+        linea(ctx, [a, (a[0] + px * 14 * s + ux * 10 * s, a[1] + py * 14 * s - uy * 10 * s)], 2 * s, TINTA, 0.35)
+
+
+def pelo_picos(ctx, r, cp, sem, ox):
+    """Pelo negro alborotado: picos hacia arriba y a los lados, con fleco en picos sobre la frente."""
+    rnd = random.Random(sem)
+    ctx.move_to(-r * 0.98, r * 0.05)
+    n = 13
+    for i in range(n + 1):
+        a = math.pi * 0.97 + i * math.pi * 1.06 / n
+        rr = r * (1.12 + rnd.uniform(0.1, 0.42))
+        aa = a + rnd.uniform(-0.1, 0.1)
+        ctx.line_to(math.cos(aa) * rr, math.sin(aa) * rr * 1.02 - r * 0.02)
+        if i < n:
+            a2 = a + math.pi / n / 2
+            ctx.line_to(math.cos(a2) * r * 0.98, math.sin(a2) * r * 1.0)
+    ctx.line_to(r * 0.98, r * 0.02)
+    pts = [(0.85, -0.2), (0.62, -0.44), (0.55, -0.16), (0.3, -0.48), (0.18, -0.12), (-0.05, -0.46), (-0.2, -0.14),
+           (-0.38, -0.48), (-0.55, -0.18), (-0.66, -0.44), (-0.9, -0.14)]
+    for (px_, py_) in pts:
+        ctx.line_to(px_ * r + ox * 0.25, py_ * r)
+    ctx.close_path(); relleno(ctx, cp, 3.5)
+    for i in range(6):
+        a = math.pi * 1.15 + i * 0.13
+        ctx.move_to(math.cos(a) * r * 0.65, math.sin(a) * r * 0.68)
+        ctx.line_to(math.cos(a) * r * 1.05, math.sin(a) * r * 1.07)
+    ctx.set_source_rgba(1, 1, 1, 0.22); ctx.set_line_width(r * 0.04); ctx.stroke()
+
+
+def pelo_raya(ctx, r, cp, ox, f, corto=False):
+    """Pelo con raya de lado y volumen, con patillas."""
+    k = 0.85 if corto else 1.0
+    ctx.move_to(-r * 0.97, r * 0.1)
+    ctx.curve_to(-r * 1.08, -r * 0.6, -r * 0.75, -r * 1.25 * k, r * 0.05, -r * 1.22 * k)
+    ctx.curve_to(r * 0.8, -r * 1.2 * k, r * 1.1, -r * 0.7, r * 0.97, r * 0.1)
+    ctx.line_to(r * 0.88, r * 0.12); ctx.curve_to(r * 0.86, -r * 0.2, r * 0.75, -r * 0.4, r * 0.55, -r * 0.5)
+    ctx.curve_to(r * 0.2, -r * 0.62, -r * 0.3 * f + ox * 0.3, -r * 0.6, -r * 0.55, -r * 0.4)
+    ctx.curve_to(-r * 0.75, -r * 0.3, -r * 0.86, -r * 0.1, -r * 0.88, r * 0.12)
+    ctx.close_path(); relleno(ctx, degradado(-r * 1.2, 0, osc(cp, 1.25), cp), 3.5)
+    ctx.move_to(-r * 0.3, -r * 1.15 * k); ctx.curve_to(-r * 0.1, -r * 0.9, r * 0.3, -r * 0.8, r * 0.7, -r * 0.75)
+    ctx.set_source_rgba(1, 1, 1, 0.25); ctx.set_line_width(r * 0.05); ctx.stroke()
+    ctx.move_to(-r * 0.15, -r * 1.2 * k); ctx.curve_to(-r * 0.3, -r * 0.9, -r * 0.4, -r * 0.7, -r * 0.5, -r * 0.45)
+    ctx.set_source_rgba(*TINTA, 0.5); ctx.set_line_width(r * 0.03); ctx.stroke()
 
 
 # ------------------------------------------------------------------ escenarios (fondos)
