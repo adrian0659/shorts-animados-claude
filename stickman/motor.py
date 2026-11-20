@@ -185,6 +185,10 @@ class Monigote:
 SOMBRA_FRIA = (0.80, 0.85, 0.92)   # sombreado gris azulado de la cabeza y la ropa
 PELO_CAFE = (0.47, 0.29, 0.16)
 SUDADERA_BLANCA = (0.93, 0.94, 0.95)
+PIEL = (0.98, 0.98, 0.99)          # los personajes son blancos, como en la referencia
+ANCHO_ROPA = 0.8                   # la ropa se dibuja un poco más angosta que el diseño original
+JEANS, ZAPATO = (0.28, 0.36, 0.55), (0.16, 0.14, 0.14)
+OJOS_CAFE, OJOS_AZUL = (0.42, 0.27, 0.15), (0.25, 0.62, 0.88)
 
 
 def _rel(origen, ang, x, y):
@@ -198,10 +202,10 @@ def _rel(origen, ang, x, y):
 # Vestuarios listos: elige el más cercano a la historia y cambia lo que haga falta.
 # Claves: ropa, color, color2, pelo, peinado, sombrero, color_sombrero, accesorios, capa.
 ROPAS = ("sudadera", "camiseta", "camisa", "uniforme", "traje", "bata", "vestido", "tunica", "armadura",
-         "overol", "espacial")
+         "overol", "espacial", "gi")
 PEINADOS = ("picos", "corto", "largo", "chongo", "calvo")
 SOMBREROS = ("gorra", "corona", "casco_romano", "vaquero", "casco_obra", "chef", "mago", "pirata", "policia",
-             "burbuja", "paja", "piloto")
+             "burbuja", "paja", "piloto", "cinta")
 ACCESORIOS = ("lentes", "gafas_sol", "auriculares", "bigote", "barba", "parche", "corbata", "estetoscopio", "medalla",
               "charreteras", "alas")
 
@@ -235,6 +239,9 @@ VESTUARIOS = {
     "pirata":      dict(ropa="camisa", color=(0.95, 0.93, 0.86), color2=(0.55, 0.12, 0.12), sombrero="pirata",
                         accesorios=("parche", "barba"), pelo=NEGRO),
     "astronauta":  dict(ropa="espacial", color=(0.95, 0.95, 0.96), sombrero="burbuja", peinado="corto"),
+    "ninja":       dict(ropa="gi", color=(0.62, 0.63, 0.66), color2=(0.22, 0.23, 0.25), pelo=RUBIO, peinado="picos",
+                        sombrero="cinta", color_sombrero=(0.22, 0.23, 0.25), zapatos=PIEL, ojos=OJOS_AZUL,
+                        vendas=(0.24, 0.25, 0.27)),
     "piloto":      dict(ropa="traje", color=(0.13, 0.17, 0.30), color2=(0.10, 0.10, 0.12), sombrero="piloto",
                         accesorios=("charreteras", "alas"), peinado="corto"),
     "presidente":  dict(ropa="traje", color=(0.16, 0.20, 0.36), color2=(0.20, 0.40, 0.80), peinado="corto",
@@ -262,8 +269,11 @@ def habla_desde_audio(ruta, fps=FPS):
 
 
 class Personaje(Monigote):
-    """Monigote estilo «cabezón»: cabeza blanca grande con sombreado frío, cejas gruesas expresivas, extremidades
-    de palito, manos y pies negros, y vestuario según la historia. Usa las mismas claves y poses que Monigote.
+    """Personaje del estilo del usuario: cabeza blanca redonda con sombra fría, ojos con iris de color, cejas del
+    color del pelo, cuello blanco, brazos y piernas con volumen que llevan la ropa (mangas y pantalón), manos
+    blancas con pulgar y zapatos, y vestuario según la historia. Usa las mismas claves y poses que Monigote.
+    Extra: pantalon, zapatos y ojos (colores) ajustan el vestuario; "vendas" en VESTUARIOS envuelve antebrazos y
+    pantorrillas (ninja).
 
     vestuario: nombre de VESTUARIOS ("doctor", "rey", "romano"…); los demás parámetros lo ajustan.
     ropa: una de ROPAS · peinado: uno de PEINADOS · sombrero: uno de SOMBREROS o None
@@ -274,13 +284,14 @@ class Personaje(Monigote):
     """
     def __init__(self, claves, escala=1.0, vestuario="casual", ropa=None, color=None, color2=None, pelo=None,
                  peinado=None, sombrero=None, color_sombrero=None, accesorios=None, capa=None, habla=None,
-                 sudadera=None, grosor=11, semilla=1):
+                 pantalon=None, zapatos=None, ojos=None, sudadera=None, grosor=11, semilla=1):
         # con este personaje «pensar» lleva la mano a la barbilla por delante del cuerpo
         claves = [dict(c, pose="barbilla") if c.get("pose") == "pensar" else c for c in claves]
         super().__init__(claves, escala=escala, grosor=grosor, semilla=semilla)
         v = dict(VESTUARIOS[vestuario])
         for k, val in dict(ropa=ropa, color=color or sudadera, color2=color2, pelo=pelo, peinado=peinado,
-                           sombrero=sombrero, color_sombrero=color_sombrero, accesorios=accesorios, capa=capa).items():
+                           sombrero=sombrero, color_sombrero=color_sombrero, accesorios=accesorios, capa=capa,
+                           pantalon=pantalon, zapatos=zapatos, ojos=ojos).items():
             if val is not None: v[k] = val
         self.ropa = v.get("ropa", "sudadera")
         self.color = v.get("color", SUDADERA_BLANCA)
@@ -291,6 +302,19 @@ class Personaje(Monigote):
         self.color_sombrero = v.get("color_sombrero")
         self.accesorios = tuple(v.get("accesorios", ()))
         self.capa = v.get("capa")
+        self.ojos = v.get("ojos", OJOS_CAFE)
+        self.zapatos = v.get("zapatos", ZAPATO)
+        self.vendas = v.get("vendas")                         # color de vendas en antebrazos y pantorrillas
+        r_, c_ = self.ropa, self.color
+        # mangas: largas del color de la ropa; cortas o sin manga dejan ver el brazo blanco
+        self.manga = {"vestido": PIEL, "tunica": c_, "camiseta": c_, "overol": self.color2, "armadura": self.color2,
+                      "sudadera": c_}.get(r_, c_)
+        self.antebrazo = self.vendas or {"vestido": PIEL, "tunica": PIEL, "camiseta": PIEL, "armadura": PIEL}.get(r_, self.manga)
+        if r_ == "overol": self.antebrazo = self.color2
+        self.pantalon = v.get("pantalon") or {"traje": c_, "uniforme": c_, "overol": c_, "espacial": c_, "gi": c_,
+                                               "armadura": (0.45, 0.33, 0.24), "vestido": PIEL, "tunica": PIEL,
+                                               "bata": (0.30, 0.33, 0.42)}.get(r_, JEANS)
+        self.pierna = self.vendas or self.pantalon
         self.habla = habla_desde_audio(habla) if isinstance(habla, str) else habla
         self._boca = 0.0
         assert self.ropa in ROPAS and self.peinado in PEINADOS and (self.sombrero is None or self.sombrero in SOMBREROS)
@@ -325,64 +349,107 @@ class Personaje(Monigote):
         if clave["saltar"]:
             dy = -abs(math.sin(t * 7)) * 70 * s
 
-        T, R = 165 * s, 92 * s                       # largo del torso y radio de la cabeza
-        L = dict(brazo=78 * s, ante=72 * s, muslo=92 * s, pierna=88 * s)
+        T, R = 170 * s, 80 * s                       # largo del torso y radio de la cabeza
+        L = dict(brazo=84 * s, ante=78 * s, muslo=102 * s, pierna=98 * s)
 
         def cadena(o, a1, l1, a2, l2):
             p1 = (o[0] + vec(a1, l1)[0], o[1] + vec(a1, l1)[1])
             return p1, (p1[0] + vec(a2, l2)[0], p1[1] + vec(a2, l2)[1])
         rodi, pie_i = cadena((0, 0), pose["mi"], L["muslo"], pose["pi"], L["pierna"])
         rodd, pie_d = cadena((0, 0), pose["md"], L["muslo"], pose["pd"], L["pierna"])
-        baja = max(pie_i[1], pie_d[1]) + 12 * s
+        baja = max(pie_i[1], pie_d[1]) + 16 * s
         cad = (x, y + dy + resp - baja)
         tor = pose["torso"]
         cad_i, cad_d = _rel(cad, tor, -22 * s, 0), _rel(cad, tor, 22 * s, 0)
         rodi = (cad_i[0] + rodi[0], cad_i[1] + rodi[1]); pie_i = (cad_i[0] + pie_i[0], cad_i[1] + pie_i[1])
         rodd = (cad_d[0] + rodd[0], cad_d[1] + rodd[1]); pie_d = (cad_d[0] + pie_d[0], cad_d[1] + pie_d[1])
-        hom_i, hom_d = _rel(cad, tor, -60 * s, -T + 45 * s), _rel(cad, tor, 60 * s, -T + 45 * s)
+        hom_i, hom_d = _rel(cad, tor, -46 * s, -T + 36 * s), _rel(cad, tor, 46 * s, -T + 36 * s)
         codi, mani = cadena(hom_i, pose["bi"], L["brazo"], pose["ai"], L["ante"])
         codd, mand = cadena(hom_d, pose["bd"], L["brazo"], pose["ad"], L["ante"])
         ang_cab = tor + pose["cabeza"]
-        cab = _rel(_rel(cad, tor, 0, -T + 8 * s), ang_cab, 0, -R * 0.82)
+        cuello = _rel(cad, tor, 0, -T + 12 * s)
+        cab = _rel(cuello, ang_cab, 0, -R * 1.12)
 
         # sombra en el suelo
-        ctx.save(); ctx.set_source_rgba(0, 0, 0, 0.13)
-        ctx.translate(x, y); ctx.scale(1, 0.16); ctx.arc(0, 0, 95 * s * (1 - min(-dy, 80) / 200), 0, 2 * math.pi)
+        ctx.save(); ctx.set_source_rgba(0, 0, 0, 0.16)
+        ctx.translate(x, y); ctx.scale(1, 0.16); ctx.arc(0, 0, 85 * s * (1 - min(-dy, 80) / 200), 0, 2 * math.pi)
         ctx.fill(); ctx.restore()
 
         ctx.set_line_cap(cairo.LINE_CAP_ROUND); ctx.set_line_join(cairo.LINE_JOIN_ROUND)
         self._boca = self.apertura_boca(t)
         if self.capa: self._capa(ctx, cad, tor, T, s)
-        j = lambda p, n: (p[0] + temblor((self.semilla, n), t, 0.8)[0], p[1] + temblor((self.semilla, n), t, 0.8)[1])
-        palo = lambda pts, n: (ctx.move_to(*j(pts[0], n)), ctx.line_to(*j(pts[1], n + 1)),
-                               ctx.line_to(*j(pts[2], n + 2)), ctx.stroke())
-        ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s)
+        j = lambda p, n: (p[0] + temblor((self.semilla, n), t, 0.6)[0], p[1] + temblor((self.semilla, n), t, 0.6)[1])
+        tinta_w = 6.5 * s
+
+        def miembro(p0, p1, p2, w1, w2, c1, c2, n, vendas=None):
+            """Brazo o pierna con volumen: tramo de arriba (w1, c1) y de abajo (w2, c2), con contorno de tinta."""
+            a0, a1, a2 = j(p0, n), j(p1, n + 1), j(p2, n + 2)
+            ctx.set_source_rgb(*TINTA)
+            ctx.set_line_width(w1 + 2 * tinta_w); ctx.move_to(*a0); ctx.line_to(*a1); ctx.stroke()
+            ctx.set_line_width(w2 + 2 * tinta_w); ctx.move_to(*a1); ctx.line_to(*a2); ctx.stroke()
+            ctx.set_source_rgb(*c2); ctx.set_line_width(w2); ctx.move_to(*a1); ctx.line_to(*a2); ctx.stroke()
+            ctx.set_source_rgb(*c1); ctx.set_line_width(w1); ctx.move_to(*a0); ctx.line_to(*a1); ctx.stroke()
+            # sombra fría en un costado de la tela
+            ctx.set_source_rgba(0, 0.05, 0.15, 0.10); ctx.set_line_width(w1 * 0.35)
+            nx, ny = a1[1] - a0[1], -(a1[0] - a0[0]); d = math.hypot(nx, ny) or 1
+            o = (nx / d * w1 * 0.3, ny / d * w1 * 0.3)
+            ctx.move_to(a0[0] + o[0], a0[1] + o[1]); ctx.line_to(a1[0] + o[0], a1[1] + o[1]); ctx.stroke()
+            if vendas:                                              # vendas en espiral (ninja)
+                ctx.set_source_rgb(*TINTA); ctx.set_line_width(2.5 * s)
+                ux, uy = a2[0] - a1[0], a2[1] - a1[1]; lu = math.hypot(ux, uy) or 1
+                px_, py_ = -uy / lu * w2 / 2, ux / lu * w2 / 2
+                for k in (0.35, 0.5, 0.65, 0.8):
+                    cx_, cy_ = a1[0] + ux * k, a1[1] + uy * k
+                    ctx.move_to(cx_ - px_, cy_ - py_ - uy / lu * 6 * s); ctx.line_to(cx_ + px_, cy_ + py_ + uy / lu * 6 * s)
+                    ctx.stroke()
+
+        def pie(pt, hacia):
+            ctx.save(); ctx.translate(pt[0] + hacia * 10 * s, pt[1] + 4 * s)
+            ctx.move_to(-hacia * 20 * s, 8 * s); ctx.curve_to(-hacia * 22 * s, -14 * s, hacia * 6 * s, -16 * s, hacia * 16 * s, -6 * s)
+            ctx.curve_to(hacia * 30 * s, -2 * s, hacia * 34 * s, 8 * s, hacia * 26 * s, 10 * s); ctx.close_path()
+            ctx.set_source_rgb(*self.zapatos); ctx.fill_preserve()
+            ctx.set_source_rgb(*TINTA); ctx.set_line_width(5 * s); ctx.stroke(); ctx.restore()
+
+        def mano(co, ma):
+            ang = math.degrees(math.atan2(ma[0] - co[0], ma[1] - co[1]))
+            ctx.save(); ctx.translate(*_rel(ma, ang, 0, 12 * s)); ctx.rotate(math.pi - math.radians(ang))
+            lw = 5 * s
+            def trazo():
+                ctx.set_source_rgb(*PIEL); ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(lw); ctx.stroke()
+            ctx.save(); ctx.translate(-15 * s, -2 * s); ctx.rotate(-0.55); ctx.scale(0.5, 1)        # pulgar
+            ctx.arc(0, 0, 15 * s, 0, 2 * math.pi); ctx.restore(); trazo()
+            ctx.save(); ctx.scale(0.88, 1); ctx.arc(0, 4 * s, 21 * s, 0, 2 * math.pi); ctx.restore(); trazo()   # palma
+            ctx.set_line_width(3 * s)
+            for k in (-7, 0, 7):                                     # separación de los dedos
+                ctx.move_to(k * s, 12 * s); ctx.line_to(k * 1.15 * s, 23 * s); ctx.stroke()
+            ctx.restore()
+
+        c_manga, c_ante = self.manga, self.antebrazo
+        c_muslo, c_pierna = self.pantalon, self.pierna
         # piernas y pies (los pies apuntan hacia afuera, o hacia donde mira)
-        for n, (c0, ro, pie, lado) in enumerate([(cad_i, rodi, pie_i, -1), (cad_d, rodd, pie_d, 1)]):
-            palo((c0, ro, pie), 10 + n * 3)
-            hacia = clave["mira"] or lado
-            ctx.save(); ctx.translate(pie[0] + hacia * 14 * s, pie[1] + 2 * s); ctx.scale(1, 0.5)
-            ctx.arc(0, 0, 25 * s, 0, 2 * math.pi); ctx.restore(); ctx.fill()
-        # brazos y manos; si la mano cruza el cuerpo (p. ej. «pensar»), el brazo va encima de la sudadera
+        for n, (c0, ro, pt, lado) in enumerate([(cad_i, rodi, pie_i, -1), (cad_d, rodd, pie_d, 1)]):
+            miembro(c0, ro, pt, 36 * s, 30 * s, c_muslo, c_pierna, 10 + n * 3, self.vendas)
+            pie(pt, clave["mira"] or lado)
+        # brazos y manos; si la mano cruza el cuerpo (p. ej. «pensar»), el brazo va encima de la ropa
         brazos = [(hom_i, codi, mani), (hom_d, codd, mand)]
         a_t = math.pi - math.radians(tor)
         def cruza(ma):
             dx, dy2 = ma[0] - cad[0], ma[1] - cad[1]
             lx = dx * math.cos(a_t) + dy2 * math.sin(a_t)
             ly = -dx * math.sin(a_t) + dy2 * math.cos(a_t)
-            return abs(lx) < 58 * s and -T - 20 * s < ly < 20 * s
-        def mano(co, ma):
-            ang = math.degrees(math.atan2(ma[0] - co[0], ma[1] - co[1]))
-            ctx.save(); ctx.translate(*_rel(ma, ang, 0, 6 * s)); ctx.rotate(math.pi - math.radians(ang))
-            ctx.scale(0.8, 1); ctx.arc(0, 0, 15 * s, 0, 2 * math.pi); ctx.restore(); ctx.fill()
+            return abs(lx) < 46 * s and -T - 20 * s < ly < 20 * s
         for n, (h, co, ma) in enumerate(brazos):
-            ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s); palo((h, co, ma), 20 + n * 3); mano(co, ma)
+            miembro(h, co, ma, 30 * s, 25 * s, c_manga, c_ante, 20 + n * 3, self.vendas); mano(co, ma)
 
+        # cuello blanco (la ropa tapa su base)
+        ctx.move_to(*cuello); ctx.line_to(*_rel(cuello, ang_cab, 0, -R * 0.6))
+        ctx.set_source_rgb(*TINTA); ctx.set_line_width(24 * s + 2 * tinta_w); ctx.stroke()
+        ctx.move_to(*cuello); ctx.line_to(*_rel(cuello, ang_cab, 0, -R * 0.6))
+        ctx.set_source_rgb(*PIEL); ctx.set_line_width(24 * s); ctx.stroke()
         self._ropa(ctx, cad, tor, T, s)
         for n, (h, co, ma) in enumerate(brazos):
             if cruza(ma):
-                ctx.set_source_rgb(*TINTA); ctx.set_line_width(self.g * s)
-                palo((h, co, ma), 20 + n * 3); mano(co, ma)
+                miembro(h, co, ma, 30 * s, 25 * s, c_manga, c_ante, 20 + n * 3, self.vendas); mano(co, ma)
         if clave.get("lleva"):                                     # objeto en la mano derecha (de la pantalla)
             ctx.save(); ctx.translate(*mand); ctx.scale(s * 0.45, s * 0.45); clave["lleva"](ctx, t, 1.0); ctx.restore()
         self._cabeza(ctx, cab, ang_cab, R, clave, t)
@@ -401,11 +468,11 @@ class Personaje(Monigote):
         if self.ropa == "sudadera":
             self._sudadera(ctx, cad, tor, T, s)
         else:
-            ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+            ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor)); ctx.scale(ANCHO_ROPA, 1)
             self._prenda(ctx, T, s)
             ctx.restore()
         if self.accesorios:
-            ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+            ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor)); ctx.scale(ANCHO_ROPA, 1)
             self._accesorios_cuerpo(ctx, T, s)
             ctx.restore()
 
@@ -424,8 +491,8 @@ class Personaje(Monigote):
             ctx.set_source_rgb(*color); ctx.set_line_width(w * s); ctx.stroke()
         def punto(x, y, rad, relleno):
             ctx.arc(x * s, y * s, rad * s, 0, 2 * math.pi); ctx.set_source_rgb(*relleno); ctx.fill_preserve(); tinta(3)
-        largo, abajo = dict(bata=82, vestido=108, tunica=100, overol=44, espacial=30, armadura=14).get(r, (14)), \
-            dict(bata=86, vestido=118, tunica=100, overol=72, espacial=82).get(r, 68)
+        largo, abajo = dict(bata=82, vestido=108, tunica=100, overol=44, espacial=30, armadura=14, gi=40).get(r, (14)), \
+            dict(bata=86, vestido=118, tunica=100, overol=72, espacial=82, gi=74).get(r, 68)
         top = -T + 24
         if r == "armadura":   # faldón de tiras debajo de la coraza
             for i in range(-3, 4):
@@ -510,6 +577,15 @@ class Personaje(Monigote):
                 punto(lado * 36, -T + 86, 6, (0.95, 0.78, 0.2))
             poli([(-22, -T + 100), (22, -T + 100), (20, -T + 130), (-20, -T + 130)], col, 4)
             linea([(0, 6), (0, largo - 2)], 4)
+        if r == "gi":                                               # chaqueta cruzada de ninja con cinturón
+            poli([(-26, top - 4), (26, top - 4), (0, top + 58)], col2, 4.5)          # camiseta oscura debajo
+            for (x0, x1) in ((30, -14), (-30, 10)):
+                ctx.move_to(x0 * s, (top - 4) * s); ctx.line_to(x1 * s, (top + 96) * s)
+                ctx.set_source_rgb(*TINTA); ctx.set_line_width(20 * s); ctx.stroke()
+                ctx.move_to(x0 * s, (top - 4) * s); ctx.line_to(x1 * s, (top + 96) * s)
+                ctx.set_source_rgb(*[min(1, v * 1.06) for v in col]); ctx.set_line_width(12 * s); ctx.stroke()
+            ctx.rectangle(-80 * s, -34 * s, 160 * s, 26 * s); ctx.set_source_rgb(*col2); ctx.fill_preserve(); tinta(5)
+            linea([(-50, -8), (-50, 36)], 3.5, [v * 0.7 for v in col]); linea([(50, -8), (50, 36)], 3.5, [v * 0.7 for v in col])
         if r == "espacial":
             poli([(-32, -T + 68), (32, -T + 68), (32, -T + 108), (-32, -T + 108)], (0.62, 0.66, 0.72), 4.5)
             for i, c in enumerate([(0.9, 0.2, 0.2), (0.2, 0.7, 0.3), (0.2, 0.45, 0.9)]): punto(-18 + i * 18, -T + 88, 6, c)
@@ -570,7 +646,7 @@ class Personaje(Monigote):
             ctx.fill_preserve(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(4 * s); ctx.stroke()
 
     def _sudadera(self, ctx, cad, tor, T, s):
-        ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor))
+        ctx.save(); ctx.translate(*cad); ctx.rotate(math.pi - math.radians(tor)); ctx.scale(ANCHO_ROPA, 1)
         col, sombra = self.color, tuple(v * 0.86 for v in self.color)
         lw = 7 * s
         def tinta(w=lw): ctx.set_source_rgb(*TINTA); ctx.set_line_width(w); ctx.stroke()
@@ -625,7 +701,7 @@ class Personaje(Monigote):
         ctx.set_source_rgb(*SOMBRA_FRIA); ctx.paint()                  # sombra fría abajo a la izquierda
         ctx.set_source_rgb(1, 1, 1); ctx.arc(r * 0.13, -r * 0.12, r * 0.96, 0, 2 * math.pi); ctx.fill()
         ctx.restore()
-        ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.set_source_rgb(*TINTA); ctx.set_line_width(8 * self.s); ctx.stroke()
+        ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.set_source_rgb(*TINTA); ctx.set_line_width(7 * self.s); ctx.stroke()
         {"picos": self._pelo, "largo": self._pelo, "corto": self._pelo_corto, "chongo": self._pelo_corto,
          "calvo": self._pelo_calvo}[self.peinado](ctx, r)
         ox = clave["mira"] * r * 0.16
@@ -682,15 +758,15 @@ class Personaje(Monigote):
         if "gafas_sol" in ac:
             for lado in (-1, 1):
                 cx2 = ox * 1.15 + lado * 0.30 * r
-                ctx.move_to(cx2 - 0.2 * r, -0.16 * r); ctx.line_to(cx2 + 0.2 * r, -0.16 * r)
-                ctx.curve_to(cx2 + 0.2 * r, 0.08 * r, cx2 - 0.2 * r, 0.1 * r, cx2 - 0.2 * r, -0.16 * r); ctx.close_path()
+                ctx.move_to(cx2 - 0.23 * r, -0.24 * r); ctx.line_to(cx2 + 0.23 * r, -0.24 * r)
+                ctx.curve_to(cx2 + 0.24 * r, 0.18 * r, cx2 - 0.24 * r, 0.2 * r, cx2 - 0.23 * r, -0.24 * r); ctx.close_path()
                 ctx.set_source_rgb(0.06, 0.06, 0.08); ctx.fill()
                 ctx.set_source_rgba(1, 1, 1, 0.5); ctx.set_line_width(0.03 * r)
                 ctx.move_to(cx2 - 0.1 * r, -0.1 * r); ctx.line_to(cx2 - 0.02 * r, -0.03 * r); ctx.stroke()
             ctx.set_source_rgb(0.06, 0.06, 0.08); ctx.set_line_width(0.05 * r)
-            ctx.move_to(ox * 1.15 - 0.12 * r, -0.14 * r); ctx.line_to(ox * 1.15 + 0.12 * r, -0.14 * r); ctx.stroke()
-            ctx.move_to(-0.98 * r, -0.12 * r); ctx.line_to(ox * 1.15 - 0.5 * r, -0.15 * r); ctx.stroke()
-            ctx.move_to(0.98 * r, -0.12 * r); ctx.line_to(ox * 1.15 + 0.5 * r, -0.15 * r); ctx.stroke()
+            ctx.move_to(ox * 1.15 - 0.1 * r, -0.2 * r); ctx.line_to(ox * 1.15 + 0.1 * r, -0.2 * r); ctx.stroke()
+            ctx.move_to(-0.98 * r, -0.18 * r); ctx.line_to(ox * 1.15 - 0.52 * r, -0.22 * r); ctx.stroke()
+            ctx.move_to(0.98 * r, -0.18 * r); ctx.line_to(ox * 1.15 + 0.52 * r, -0.22 * r); ctx.stroke()
             ctx.set_source_rgb(*TINTA)
         if "auriculares" in ac:
             ctx.arc(0, -0.1 * r, 1.08 * r, math.radians(195), math.radians(345))
@@ -809,6 +885,19 @@ class Personaje(Monigote):
                 ctx.curve_to(lado * 0.28 * r, 0.02 * r, lado * 0.12 * r, 0.06 * r, 0, 0.05 * r); ctx.close_path()
                 tr(ctx, (0.95, 0.78, 0.2), 3)
             ctx.restore()
+        elif tipo == "cinta":                                   # cinta ninja en la frente, con colas
+            c0 = col((0.22, 0.23, 0.25))
+            for k, (dx, dy2) in enumerate(((-1.35, 0.55), (-1.15, 0.95))):
+                ctx.move_to(-0.9 * r, -0.5 * r)
+                ctx.curve_to(-1.15 * r, -0.3 * r, (dx + 0.1) * r, 0.1 * r, dx * r, dy2 * r)
+                ctx.line_to((dx + 0.2) * r, (dy2 + 0.04) * r)
+                ctx.curve_to((dx + 0.25) * r, 0.1 * r, -1.0 * r, -0.2 * r, -0.85 * r, -0.36 * r); ctx.close_path()
+                tr(ctx, [v * (0.85 + 0.1 * k) for v in c0], 4)
+            ctx.save(); ctx.arc(0, 0, r * 1.06, 0, 2 * math.pi); ctx.clip()
+            ctx.move_to(-1.1 * r, -0.62 * r); ctx.curve_to(-0.4 * r, -0.78 * r, 0.4 * r, -0.78 * r, 1.1 * r, -0.62 * r)
+            ctx.line_to(1.1 * r, -0.38 * r); ctx.curve_to(0.4 * r, -0.54 * r, -0.4 * r, -0.54 * r, -1.1 * r, -0.38 * r)
+            ctx.close_path(); tr(ctx, c0, 5)
+            ctx.restore()
         elif tipo == "burbuja":
             ctx.arc(0, -0.05 * r, 1.32 * r, 0, 2 * math.pi)
             ctx.set_source_rgba(0.75, 0.88, 1.0, 0.28); ctx.fill_preserve()
@@ -863,32 +952,42 @@ class Personaje(Monigote):
                      serio=((-0.33, -0.36), (-0.33, -0.36)), pensar=((-0.32, -0.34), (-0.46, -0.50)),
                      enojado=((-0.24, -0.40), (-0.24, -0.40))).get(cara, ((-0.36, -0.40), (-0.36, -0.40)))
         for n, lado in enumerate((-1, 1)):
-            ex, ey = ox + lado * r * 0.30, -r * 0.04
+            ex, ey = ox + lado * r * 0.30, -r * 0.02
             yi, ye = cejas[n]
-            # ceja gruesa con arco
+            # ceja gruesa del color del pelo, con contorno
             xi, xe = ex - lado * r * 0.13, ex + lado * r * 0.20
-            ctx.set_line_width(r * 0.095); ctx.set_line_cap(cairo.LINE_CAP_ROUND)
-            ctx.move_to(xi, yi * r)
-            ctx.curve_to(ex - lado * r * 0.02, (yi + ye) / 2 * r - r * 0.09, ex + lado * r * 0.1, ye * r - r * 0.04, xe, ye * r + r * 0.03)
-            ctx.stroke()
+            ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+            for ancho, color in ((r * 0.13, TINTA), (r * 0.075, self.pelo)):
+                ctx.move_to(xi, yi * r)
+                ctx.curve_to(ex - lado * r * 0.02, (yi + ye) / 2 * r - r * 0.09, ex + lado * r * 0.1, ye * r - r * 0.04,
+                             xe, ye * r + r * 0.03)
+                ctx.set_source_rgb(*color); ctx.set_line_width(ancho); ctx.stroke()
+            ctx.set_source_rgb(*TINTA)
             ex2 = ex + ox * 0.15
+            if "gafas_sol" in self.accesorios: continue           # las gafas oscuras tapan los ojos
             if parpadeo and cara != "sorpresa":
-                ctx.set_line_width(r * 0.05); ctx.move_to(ex2 - r * 0.08, ey); ctx.line_to(ex2 + r * 0.08, ey); ctx.stroke()
+                ctx.set_line_width(r * 0.05); ctx.move_to(ex2 - r * 0.09, ey); ctx.line_to(ex2 + r * 0.09, ey); ctx.stroke()
                 continue
-            alto = 0.16 if cara == "sorpresa" else 0.125
+            grande = cara == "sorpresa"
+            rx, ry = r * (0.15 if grande else 0.13), r * (0.2 if grande else 0.17)
+            def blanco():
+                ctx.save(); ctx.translate(ex2, ey); ctx.scale(rx, ry); ctx.arc(0, 0, 1, 0, 2 * math.pi); ctx.restore()
             ctx.save()
             if cara in ("picaro", "serio", "enojado"):            # párpado a media asta: corta la parte de arriba
-                ctx.rectangle(ex2 - r * 0.2, ey - r * 0.045, r * 0.4, r * 0.4); ctx.clip()
-            ctx.translate(ex2, ey); ctx.scale(0.66, 1); ctx.arc(0, 0, r * alto, 0, 2 * math.pi); ctx.restore(); ctx.fill()
+                ctx.rectangle(ex2 - r * 0.3, ey - ry * 0.25, r * 0.6, r * 0.6); ctx.clip()
+            blanco(); ctx.set_source_rgb(1, 1, 1); ctx.fill_preserve(); ctx.save(); ctx.clip()
+            ix = ex2 + ox * 0.35 + lado * r * 0.01
+            ctx.arc(ix, ey + r * 0.02, r * (0.085 if grande else 0.1), 0, 2 * math.pi); ctx.set_source_rgb(*self.ojos); ctx.fill()
+            ctx.arc(ix, ey + r * 0.02, r * 0.045, 0, 2 * math.pi); ctx.set_source_rgb(*TINTA); ctx.fill()
+            ctx.arc(ix + r * 0.035, ey - r * 0.03, r * 0.028, 0, 2 * math.pi); ctx.set_source_rgb(1, 1, 1); ctx.fill()
+            ctx.restore(); blanco(); ctx.set_source_rgb(*TINTA); ctx.set_line_width(r * 0.04); ctx.stroke()
+            ctx.restore()
             if cara in ("picaro", "serio", "enojado"):
-                ctx.set_line_width(r * 0.045); ctx.set_line_cap(cairo.LINE_CAP_BUTT)
-                ctx.move_to(ex2 - r * 0.095, ey - r * 0.045); ctx.line_to(ex2 + r * 0.095, ey - r * 0.045); ctx.stroke()
-                ctx.set_line_cap(cairo.LINE_CAP_ROUND)
-            else:
-                ctx.set_source_rgb(1, 1, 1); ctx.arc(ex2 + r * 0.025, ey - r * 0.055, r * 0.025, 0, 2 * math.pi)
-                ctx.fill(); ctx.set_source_rgb(*TINTA)
-        mx, my = ox, r * 0.36
-        ctx.set_line_width(r * 0.055)
+                ctx.set_line_width(r * 0.055); ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+                ctx.move_to(ex2 - rx * 1.05, ey - ry * 0.25); ctx.line_to(ex2 + rx * 1.05, ey - ry * 0.25); ctx.stroke()
+            ctx.set_source_rgb(*TINTA)
+        mx, my = ox, r * 0.42
+        ctx.set_line_width(r * 0.05)
         if self._boca > 0.08 and cara != "sorpresa":                 # hablando: boca abierta según la voz
             k = self._boca
             ctx.save(); ctx.translate(mx, my - r * 0.02); ctx.scale(1, 0.25 + 0.75 * k)

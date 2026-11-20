@@ -1,8 +1,8 @@
 ---
 name: stickman
 description: >-
-  Crea un short vertical con el personaje «cabezón» (estilo del usuario: cabeza blanca grande, cejas gruesas,
-  extremidades de palito) vestido según la historia, a partir de una historia, guion o audio que dé el usuario.
+  Crea un short vertical con el personaje del usuario (cabeza blanca redonda, ojos con iris de color, cejas del
+  color del pelo, brazos y piernas con ropa, manos blancas) vestido según la historia, a partir de una historia, guion o audio que dé el usuario.
   Úsala cuando escriban /stickman, pidan un short o video nuevo, o den un audio o una historia para animar.
 ---
 
@@ -25,12 +25,13 @@ clásico salvo que lo pidan. Todo es Python (`stickman/motor.py`): sin IA de vid
 Haz una tabla corta antes de animar: **personaje → vestuario → por qué** (época, oficio, lugar de la historia), y
 muéstrala a la persona junto con el plan de escenas.
 - Parte de `VESTUARIOS` en `motor.py`: casual, estudiante, doctor, cientifico, ejecutivo, policia, soldado, rey,
-  reina, romano, caballero, griego, vaquero, granjero, obrero, chef, mago, pirata, astronauta, deportista,
-  abuelo, abuela, nina. Hoja de referencia: `python3 ejemplos/vestuarios.py` → `salida/vestuarios.png`.
+  reina, romano, caballero, griego, vaquero, granjero, obrero, chef, mago, pirata, astronauta, ninja, piloto,
+  presidente, agente, deportista, abuelo, abuela, nina. Hoja de referencia: `python3 ejemplos/vestuarios.py` → `salida/vestuarios.png`.
 - Ajusta con parámetros: `ropa` (sudadera, camiseta, camisa, uniforme, traje, bata, vestido, tunica, armadura,
-  overol, espacial), `color`, `color2`, `pelo` (`CANOSO`, `NEGRO`, `RUBIO`, `PELIRROJO` o RGB), `peinado`
+  overol, espacial, gi), `color`, `color2`, `pantalon`, `zapatos`, `ojos` (`OJOS_CAFE`, `OJOS_AZUL` o RGB), `pelo` (`CANOSO`, `NEGRO`, `RUBIO`, `PELIRROJO` o RGB), `peinado`
   (picos, corto, largo, chongo, calvo), `sombrero` (gorra, corona, casco_romano, vaquero, casco_obra, chef, mago,
-  pirata, policia, burbuja, paja), `accesorios` (lentes, bigote, barba, parche, corbata, estetoscopio, medalla),
+  pirata, policia, burbuja, paja, piloto, cinta), `accesorios` (lentes, gafas_sol, auriculares, bigote, barba,
+  parche, corbata, estetoscopio, medalla, charreteras, alas),
   `capa` (color).
 - Sé fiel a la época y al lugar: colores y prendas que correspondan (un faraón no lleva traje; un médico de 1800
   no lleva bata moderna). Si nada encaja, combina piezas; si de verdad falta una prenda o un sombrero, agrégalo
@@ -60,6 +61,12 @@ rey = Personaje(claves_rey, escala=2.0, vestuario="rey", pelo=CANOSO)
   Cuando una cita va en globo de diálogo, quita los subtítulos de ese tramo para no repetir el texto.
 - Fondo, utilería (`Elemento`), sacudidas y zoom como en el ejemplo; efectos de `sonido.py`. La voz va al frente y
   la música y los efectos de 5 a 10 dB por debajo.
+
+## Fondos realistas (opcional)
+`Foto(ruta, foco=, mover=, desenfoque=, luz=, tinte=, fuerza=)` pone una foto real de fondo (recorte vertical,
+paneo lento, desenfoque y color de noche o de alerta). Fuentes: fotos que dé el usuario, o imágenes generadas
+(Higgsfield) si tiene créditos. Wikimedia Commons bloquea las descargas desde los servidores de las sesiones en
+la nube (error 429): no cuentes con ella. Anota la licencia y el autor de cada foto en `CREDITOS.txt`.
 
 ## 4. Revisar y entregar
 1. Fotos de revisión de cada escena (`short.foto(t, ruta)`) y míralas antes del render: ropa correcta, nada
