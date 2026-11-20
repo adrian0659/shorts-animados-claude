@@ -1150,6 +1150,46 @@ class Dibujo:
     def dibujar(self, ctx, t): ctx.save(); self.f(ctx, t); ctx.restore()
 
 
+class Foto:
+    """Fondo con una foto real, recortada a vertical y preparada una sola vez.
+
+    foco: punto de la foto que queda al centro (0..1, 0..1). zoom: acercamiento extra sobre el recorte.
+    mover: (zoom_final, dx, dy) para un paneo lento tipo «Ken Burns» entre t0 y t1 (dx, dy en px de pantalla).
+    desenfoque: radio en px (separa la foto de los personajes). luz: multiplica el brillo.
+    tinte: (r, g, b) que se mezcla con la foto (p. ej. azul noche) y fuerza: cuánto. vineta: 0..1.
+    """
+    def __init__(self, ruta, t0=0.0, t1=None, foco=(0.5, 0.5), zoom=1.0, mover=None, desenfoque=6, luz=1.0,
+                 tinte=None, fuerza=0.0, vineta=0.45, espejo=False):
+        from PIL import Image, ImageFilter, ImageEnhance, ImageOps
+        im = Image.open(ruta).convert("RGB")
+        if espejo: im = ImageOps.mirror(im)
+        margen = 1.12                                            # sobra para el paneo
+        esc = max(W * margen / im.width, H * margen / im.height) * zoom
+        im = im.resize((max(1, int(im.width * esc)), max(1, int(im.height * esc))), Image.LANCZOS)
+        cw, ch = int(W * margen), int(H * margen)
+        x0 = int(clamp(foco[0] * im.width - cw / 2, 0, im.width - cw))
+        y0 = int(clamp(foco[1] * im.height - ch / 2, 0, im.height - ch))
+        im = im.crop((x0, y0, x0 + cw, y0 + ch))
+        if desenfoque: im = im.filter(ImageFilter.GaussianBlur(desenfoque))
+        if luz != 1.0: im = ImageEnhance.Brightness(im).enhance(luz)
+        a = np.asarray(im).astype(np.float32) / 255
+        if tinte: a = a * (1 - fuerza) + a.mean(axis=2, keepdims=True) * np.array(tinte) * fuerza * 1.6
+        if vineta:
+            yy, xx = np.mgrid[0:ch, 0:cw]
+            d = np.sqrt(((xx - cw / 2) / (cw / 2)) ** 2 + ((yy - ch / 2) / (ch / 2)) ** 2)
+            a *= (1 - vineta * np.clip(d - 0.55, 0, 1) ** 1.5)[..., None]
+        a = (np.clip(a, 0, 1) * 255).astype(np.uint8)
+        bgra = np.zeros((ch, cw, 4), np.uint8); bgra[..., 0], bgra[..., 1], bgra[..., 2] = a[..., 2], a[..., 1], a[..., 0]
+        self.sup = cairo.ImageSurface.create_for_data(bytearray(bgra.tobytes()), cairo.FORMAT_RGB24, cw, ch, cw * 4)
+        self.cw, self.ch, self.t0, self.t1, self.mover = cw, ch, t0, t1, mover
+
+    def dibujar(self, ctx, t):
+        k = suave((t - self.t0) / max(1e-6, (self.t1 or self.t0 + 1) - self.t0)) if self.mover else 0
+        z, dx, dy = (lerp(1, self.mover[0], k), self.mover[1] * k, self.mover[2] * k) if self.mover else (1, 0, 0)
+        ctx.save(); ctx.translate(W / 2 + dx, H / 2 + dy); ctx.scale(z, z)
+        ctx.set_source_surface(self.sup, -self.cw / 2, -self.ch / 2); ctx.paint(); ctx.restore()
+
+
 # ---------------------------------------------------------------- más utilería
 def cielo_noche(ctx, t, alto=H, nubes=True, velocidad=60, semilla=7):
     g = cairo.LinearGradient(0, 0, 0, alto)
