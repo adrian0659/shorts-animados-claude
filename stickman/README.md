@@ -33,3 +33,17 @@ python3 ejemplos/pulpo.py           # video final: salida/pulpo.mp4
 ## Voz
 El ejemplo usa texto en pantalla, sin narración. Para agregar voz, graba o genera un audio y mézclalo con
 `Mezcla.poner(0, audio)`; ajusta los tiempos del guion a la voz.
+
+## Estilo ilustrado (personajes con ropa)
+`ilustrado.py` agrega un segundo look: cabeza grande blanca con contorno grueso, pelo con forma, ojos de punto,
+cejas expresivas, ropa de color (camisa, playera, vestido, corbata, gafete), guantes blancos y zapatos negros,
+con escenarios sombreados (`Taller`, `Auto`) y tarjetas de dato (`Cartel`).
+
+```
+python3 ejemplos/taller_prueba.py   # salida/taller_prueba.png
+python3 ejemplos/elenco_prueba.py   # peinados, ropa, caras y poses
+```
+- `Persona(claves, pelo=..., color_pelo=..., ropa=dict(...))`: mismas claves que `Monigote` más `mano_d` / `mano_i`
+  (`telefono`, `tablet`, `llave`, `billete`).
+- Peinados: `puntas, raya, corto, largo, coleta, calvo`. Caras: `serio, feliz, sorpresa, triste, pensar, enojado, preocupado`.
+- Poses nuevas: `telefono, entregar, recibir_i, manos_frente, brazos_cruzados, explicar, cabeza_mano`.
