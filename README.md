@@ -42,6 +42,7 @@ puntadas en el brazo y en la pierna, con piel, herida, hilo y vello que se ven r
 | `plantillas/audio/` | Sonido sintetizado: efectos, música, mezcla con la voz y volumen final |
 | `plantillas/scripts/` | Fotos sueltas, hojas lado a lado, unir el trabajo de los agentes y revisión cuadro por cuadro |
 | `realista/` | Shorts 3D realistas en Blender: guía (`REALISTA.md`), dos escenas completas (brazo y pierna con puntadas), medición de cámara y recursos con su licencia |
+| `pov-stickman/` | Videos «POV: Eres el creador de…» con monito stickman sobre papel beige: análisis del formato, fórmula de guion, prompts para Flow/Nano Banana y `ensamblar.py` (imágenes + voz → MP4 con zoom y paneo) |
 | `herramientas/medir_30fps.py` | Mide cualquier short a 30 cuadros por segundo: hojas, cortes, movimiento de cámara, color |
 | `referencias/BIBLIA_DE_ESTILO.md` | La fórmula del guion y de la imagen medida en 20 shorts de referencia |
 | `referencias/reportes_en/` | Siete reportes con medidas: movimiento, profundidad, texturas, personajes, luz, contornos, color (en inglés) |

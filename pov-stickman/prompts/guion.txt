@@ -1,0 +1,21 @@
+Pega esto en Claude, cambiando lo que está entre corchetes:
+
+Escribe el guion de un video narrado en español titulado «POV: Eres el creador de [TEMA]».
+Duración: [8] minutos (~[1250] palabras). Narración en SEGUNDA PERSONA («Eres…», «Tú decides…»),
+tono serio con humor seco e irónico.
+
+Estructura:
+1. Gancho de 15 s: quién eres, tu problema absurdo y la solución extrema que vas a crear.
+2. Contexto con lugar, época y un dato duro con cifra.
+3. Primer intento que fracasa por una razón concreta y graciosa.
+4. Escalada en 3–4 versiones: cada una arregla el fallo anterior y crea uno nuevo.
+5. Clímax con la versión más exagerada.
+6. Qué pasó en la realidad (consecuencias, cómo terminó).
+7. Remate con una frase seca e irónica.
+
+Reglas:
+- Solo hechos reales verificables. Pon arriba una lista de datos con su fuente y marca lo que sea dudoso.
+- Explica el fenómeno, sin instrucciones técnicas para fabricar o hacer nada peligroso o ilegal.
+- Frases cortas, una idea por frase, sin relleno.
+- Divide el guion en PLANOS de 3–6 segundos. Para cada uno da: texto narrado | qué se ve |
+  expresión del monito | objeto principal.

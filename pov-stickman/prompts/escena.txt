@@ -1,0 +1,20 @@
+Plantilla de escena (para Flow escribe la primera línea tal cual; @{protagonista} es la hoja de personaje subida).
+
+Image 1 -> Character: @{protagonista}
+
+Hand-drawn cartoon illustration in the exact style of @Image 1: the stickman from @Image 1
+(same round white head, same hair, same thin black stick body) is [ACCIÓN Y EXPRESIÓN],
+[POSICIÓN: on the left third / center].
+[OBJETO PRINCIPAL], drawn in detailed comic ink style with shading, rivets, rust and texture,
+much more detailed than the stickman.
+[SECUNDARIOS opcional: two bald stickmen with identical round white heads wearing (accesorio)].
+Plain warm beige textured paper background, almost empty, a few loose ink strokes for the floor line,
+soft gray oval shadows under characters. [EFECTO opcional: bright welding sparks / purple smoky villain aura / motion lines].
+Clean composition, 16:9, no captions, no watermark.
+
+Ejemplos de [ACCIÓN Y EXPRESIÓN]:
+- standing with hands on hips and a smug confident smile, eyebrows in a V
+- scratching his head, confused, question mark above
+- arms raised in shock, mouth wide open
+- pointing proudly at the object, eyes closed with satisfaction
+- sweating nervously, small sweat drops
