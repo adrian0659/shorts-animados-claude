@@ -1,0 +1,366 @@
+{
+ "ancho": 1920,
+ "alto": 1080,
+ "fps": 30,
+ "voz": "voz.mp3",
+ "musica": "musica.mp3",
+ "volumen_musica": 0.12,
+ "fundido": 0.3,
+ "planos": [
+  {
+   "imagen": "img/01.png",
+   "inicio": 0.0,
+   "fin": 2.4,
+   "movimiento": "zoom_in",
+   "texto": "POV: te acabas de graduar de doctor…",
+   "escena": "the doctor in a graduation gown and cap holding his diploma, big proud smile, confetti, university hall",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/02.png",
+   "inicio": 2.4,
+   "fin": 4.8,
+   "movimiento": "zoom_in",
+   "texto": "…y el cártel te recluta.",
+   "escena": "the same doctor in graduation gown, shocked, while two tall dark silhouettes of armed men loom right behind him",
+   "atmosfera": "oscura",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/03.png",
+   "inicio": 4.8,
+   "fin": 7.5,
+   "movimiento": "paneo_der",
+   "texto": "Después de seis años estudiando medicina,",
+   "escena": "the doctor exhausted at a desk buried under huge stacks of medical books, coffee cups, a skeleton model, late-night lamp",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/04.png",
+   "inicio": 7.5,
+   "fin": 10.2,
+   "movimiento": "zoom_in",
+   "texto": "finalmente consigues tu título de doctor.",
+   "escena": "the doctor in a white coat with stethoscope proudly holding up a framed diploma that reads 'MÉDICO CIRUJANO', sparkles",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/05.png",
+   "inicio": 10.2,
+   "fin": 13.1,
+   "movimiento": "zoom_out",
+   "texto": "Tu sueño siempre fue tener tu propio consultorio,",
+   "escena": "the doctor smiling dreamily, a big thought bubble above him showing a small modern clinic with a sign 'CONSULTORIO'",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/06.png",
+   "inicio": 13.1,
+   "fin": 16.3,
+   "movimiento": "paneo_izq",
+   "texto": "ayudar a las personas y construir una buena vida.",
+   "escena": "the doctor kindly checking a smiling little girl with his stethoscope while her grateful mother watches, bright clinic",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/07.png",
+   "inicio": 16.3,
+   "fin": 18.4,
+   "movimiento": "sacudida",
+   "texto": "Pero hay un problema.",
+   "escena": "big bold hand-lettered word 'PERO…' cracking like glass in the center, comic burst lines, light gray background",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/08.png",
+   "inicio": 18.4,
+   "fin": 21.3,
+   "movimiento": "zoom_in",
+   "texto": "Acabas de graduarte, no tienes experiencia,",
+   "escena": "job interview: a stern recruiter stamps a big red stamp 'SE REQUIERE EXPERIENCIA' on the doctor's resume, doctor sad",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/09.png",
+   "inicio": 21.3,
+   "fin": 24.8,
+   "movimiento": "zoom_out",
+   "texto": "y encontrar trabajo no es tan fácil como imaginabas.",
+   "escena": "the doctor sitting on his bed in a tiny apartment surrounded by piles of rejection letters marked 'RECHAZADO', worried",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/10.png",
+   "inicio": 24.8,
+   "fin": 28.2,
+   "movimiento": "zoom_in",
+   "texto": "Un día, recibes una oferta de trabajo bastante extraña.",
+   "escena": "the doctor looking at his phone with a puzzled face, phone screen shows a message from 'NÚMERO DESCONOCIDO'",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/11.png",
+   "inicio": 28.2,
+   "fin": 30.7,
+   "movimiento": "zoom_in",
+   "texto": "Te ofrecen muchísimo dinero",
+   "escena": "close-up of the doctor's face, eyes wide open in amazement, jaw dropped, green dollar bills flying around",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/12.png",
+   "inicio": 30.7,
+   "fin": 33.2,
+   "movimiento": "paneo_der",
+   "texto": "por atender a unos pacientes en una propiedad privada.",
+   "escena": "the doctor with a thought bubble showing a luxurious private estate with a big gate and palm trees",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/13.png",
+   "inicio": 33.2,
+   "fin": 36.4,
+   "movimiento": "zoom_out",
+   "texto": "Al principio, piensas que se trata de empresarios adinerados.",
+   "escena": "thought bubble: three rich businessmen in elegant suits smiling and shaking hands; the doctor nods naively",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/14.png",
+   "inicio": 36.4,
+   "fin": 39.4,
+   "movimiento": "paneo_der",
+   "texto": "Aceptas la entrevista",
+   "escena": "the doctor driving a small old car along a dusty road toward a huge iron gate",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/15.png",
+   "inicio": 39.4,
+   "fin": 42.5,
+   "movimiento": "zoom_out",
+   "texto": "y llegas a una enorme propiedad rodeada de hombres armados.",
+   "escena": "wide shot: a huge mansion surrounded by stickmen guards in tactical vests holding rifles; the doctor tiny and nervous at the gate",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/16.png",
+   "inicio": 42.5,
+   "fin": 44.9,
+   "movimiento": "zoom_in",
+   "texto": "Entonces aparece el jefe.",
+   "escena": "a pitch-black silhouette of the boss in a cowboy hat standing in a doorway, light behind him, the doctor gulping",
+   "atmosfera": "oscura",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/17.png",
+   "inicio": 44.9,
+   "fin": 48.3,
+   "movimiento": "zoom_in",
+   "texto": "Te explica que necesitan un médico disponible las 24 horas",
+   "escena": "the boss (round head, mustache, cowboy hat, gold chain, flashy shirt) behind a big wooden desk, a wall clock with '24 H', doctor seated across",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/18.png",
+   "inicio": 48.3,
+   "fin": 51.7,
+   "movimiento": "zoom_in",
+   "texto": "y que no debes hacer preguntas sobre las personas que llegan.",
+   "escena": "the boss holding one finger over his lips 'shhh', menacing eyes; the doctor sweating nervously",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/19.png",
+   "inicio": 51.7,
+   "fin": 55.7,
+   "movimiento": "zoom_in",
+   "texto": "En ese momento comprendes que no estás frente a empresarios normales,",
+   "escena": "extreme close-up of the doctor's face realizing the truth, sweat drops, pupils tiny",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/20.png",
+   "inicio": 55.7,
+   "fin": 57.7,
+   "movimiento": "paneo_izq",
+   "texto": "estás frente a integrantes de un cártel.",
+   "escena": "a row of tough stickmen gunmen with tattoos and rifles staring coldly at the camera",
+   "atmosfera": "oscura",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/21.png",
+   "inicio": 57.7,
+   "fin": 61.5,
+   "movimiento": "zoom_in",
+   "texto": "Te ofrecen una cantidad de dinero que jamás habías imaginado",
+   "escena": "an open leather briefcase packed with stacks of dollar bills on the desk, glowing",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/22.png",
+   "inicio": 61.5,
+   "fin": 63.6,
+   "movimiento": "fijo",
+   "texto": "ganar como médico recién graduado,",
+   "escena": "split screen: the doctor holding a tiny paycheck on the left, big bold 'VS' in the middle, a mountain of cash on the right",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/23.png",
+   "inicio": 63.6,
+   "fin": 66.4,
+   "movimiento": "zoom_in",
+   "texto": "pero también te ponen una condición.",
+   "escena": "the boss raising one finger, serious face, the doctor listening",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/24.png",
+   "inicio": 66.4,
+   "fin": 68.3,
+   "movimiento": "sacudida",
+   "texto": "Absoluta discreción.",
+   "escena": "a big padlock over a zipped mouth, bold hand-lettered word 'DISCRECIÓN' above, dark background",
+   "atmosfera": "oscura",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/25.png",
+   "inicio": 68.3,
+   "fin": 72.8,
+   "movimiento": "paneo_der",
+   "texto": "Al principio crees que solamente tendrás que atender heridas y emergencias médicas.",
+   "escena": "the doctor bandaging the arm of a tattooed gunman in an improvised clinic inside the mansion, medical supplies on a table",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/26.png",
+   "inicio": 72.8,
+   "fin": 77.4,
+   "movimiento": "zoom_in",
+   "texto": "Sin embargo, pronto descubres que estás atrapado en un ambiente donde hay amenazas,",
+   "escena": "the doctor in his small clinic room seen through iron bars, guards with rifles at the door, he looks trapped",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/27.png",
+   "inicio": 77.4,
+   "fin": 81.4,
+   "movimiento": "zoom_out",
+   "texto": "miedo y personas que no pueden acudir a un hospital convencional.",
+   "escena": "a normal hospital building crossed out with a thick red X, while a black SUV arrives at the mansion at night",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/28.png",
+   "inicio": 81.4,
+   "fin": 84.6,
+   "movimiento": "zoom_in",
+   "texto": "Cada día te preguntas si el dinero realmente vale la pena.",
+   "escena": "the doctor torn between a tiny red devil holding money on one shoulder and a tiny angel with a stethoscope on the other",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/29.png",
+   "inicio": 84.6,
+   "fin": 88.0,
+   "movimiento": "sacudida",
+   "texto": "Hasta que una noche llega un paciente en estado crítico",
+   "escena": "night, armed men rush in carrying an unconscious man on a stretcher, the doctor running toward them, dramatic light",
+   "atmosfera": "oscura",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/30.png",
+   "inicio": 88.0,
+   "fin": 92.1,
+   "movimiento": "zoom_in",
+   "texto": "y te das cuenta de que ya no puedes seguir fingiendo que tu trabajo es normal.",
+   "escena": "the doctor alone under a single light, staring at his gloved hands, haunted expression",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/31.png",
+   "inicio": 92.1,
+   "fin": 94.5,
+   "movimiento": "zoom_in",
+   "texto": "Quieres renunciar,",
+   "escena": "the doctor nervously holding out an envelope labeled 'RENUNCIA' toward the boss's desk",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/32.png",
+   "inicio": 94.5,
+   "fin": 97.0,
+   "movimiento": "zoom_in",
+   "texto": "pero el jefe te recuerda que ahora conoces demasiados secretos.",
+   "escena": "close-up of the boss leaning forward with a cold smile, a thick folder labeled 'SECRETOS' on the desk",
+   "atmosfera": "oscura",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/33.png",
+   "inicio": 97.0,
+   "fin": 101.6,
+   "movimiento": "zoom_out",
+   "texto": "Y entonces entiendes que aceptar aquella oferta fue el mayor error de tu vida.",
+   "escena": "the doctor sitting on the floor with his head in his hands, a faded thought bubble of the phone with the job offer",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/34.png",
+   "inicio": 101.6,
+   "fin": 104.5,
+   "movimiento": "zoom_in",
+   "texto": "Porque estudiaste seis años para salvar vidas,",
+   "escena": "a framed graduation photo of the smiling doctor on a wall, cracked glass",
+   "atmosfera": "normal"
+  },
+  {
+   "imagen": "img/35.png",
+   "inicio": 104.5,
+   "fin": 108.9,
+   "movimiento": "zoom_out",
+   "texto": "pero terminaste trabajando para una organización que las pone en peligro.",
+   "escena": "the tiny doctor standing in front of a giant dark shadow of the cartel boss and gunmen towering over him",
+   "atmosfera": "oscura"
+  },
+  {
+   "imagen": "img/36.png",
+   "inicio": 108.9,
+   "fin": 109.9,
+   "movimiento": "zoom_in",
+   "texto": "¿Tú qué harías?",
+   "escena": "the doctor looking straight at the camera with a serious, questioning face",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/37.png",
+   "inicio": 109.9,
+   "fin": 110.9,
+   "movimiento": "zoom_in",
+   "texto": "¿Aceptarías el dinero?",
+   "escena": "close-up of the open briefcase full of cash",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  },
+  {
+   "imagen": "img/38.png",
+   "inicio": 110.9,
+   "fin": 114.6,
+   "movimiento": "zoom_out",
+   "texto": "¿O abandonarías todo antes de que fuera demasiado tarde?",
+   "escena": "the doctor at a crossroads: one road leads to the dark mansion with money, the other to a sunrise and a small clinic",
+   "atmosfera": "normal",
+   "transicion": "corte"
+  }
+ ]
+}
