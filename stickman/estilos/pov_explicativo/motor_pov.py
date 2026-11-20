@@ -131,6 +131,9 @@ TRAJES = {
     "socio":   dict(camisa=(0.85, 0.82, 0.74), largo=True, pelo="raya", color_pelo=(0.12, 0.1, 0.1), bigote=True),
     "socio2":  dict(camisa=(0.2, 0.32, 0.3), largo=False, pelo="corto", color_pelo=(0.1, 0.08, 0.06)),
     "amigo":   dict(camisa=(0.95, 0.65, 0.2), largo=False, pelo="corto", color_pelo=(0.1, 0.08, 0.06)),
+    "mecanico": dict(camisa=(0.13, 0.17, 0.32), largo=False, pelo="picos"),
+    "oficinista": dict(camisa=(0.92, 0.92, 0.95), largo=True, corbata=(0.6, 0.12, 0.15), saco=False, pelo="raya",
+                       color_pelo=(0.35, 0.22, 0.12)),
     "amiga":   dict(camisa=(0.35, 0.6, 0.85), largo=False, pelo="largo", color_pelo=(0.3, 0.18, 0.1)),
 }
 

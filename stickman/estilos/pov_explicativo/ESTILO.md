@@ -71,3 +71,26 @@ python3 videos/escolta.py --voz voz.mp3  # video final en salida/escolta/escolta
 ```
 Flujo: transcribir la voz con tiempos por palabra (faster-whisper) → un corte por frase, 0.15 s antes →
 una escena por frase con 1–3 etiquetas que caen sobre su palabra → fotos de revisión → render en paralelo.
+
+## Escenarios realistas y detallados (caricatura) — `escenarios.py`
+Fondos con más realismo, cerca de la referencia: perspectiva de un punto (`Cuarto`), texturas sutiles
+(estuco, concreto, duela de madera, piedra, empedrado), sombras suaves difuminadas, oclusión en esquinas,
+haces de luz de ventana, reflejo en pisos brillantes, lámparas, bruma por capas y mucha utilería.
+Muestra: `escenarios_muestra.png` · con monigote y etiquetas: `escenarios_demo_taller.png`.
+
+| Escenario | Qué trae | Horas |
+|---|---|---|
+| `taller` | taller mecánico: piso epóxico con reflejo, gabinete rojo, tablero de herramientas, carteles, banco, llantas | dia/tarde/noche |
+| `oficina` | ventanal a la ciudad (luces de noche), escritorio, librero, plantas, duela | dia/noche |
+| `sala` | sillón en primer plano, tapete, tele, lámpara de pie, cortinas, cuadro | dia/tarde/noche |
+| `cocina` | alacenas, azulejo, estufa, refri, barra | dia/noche |
+| `bodega` | concreto, cajas «FRÁGIL», foco colgante con cono de luz | noche |
+| `calle` | calle mexicana en perspectiva: fachadas de colores, balcones, postes, cables, coche | dia/tarde/noche |
+| `rancho` | hacienda con arcos, base de piedra, buganvilias, faroles, empedrado, montañas | dia/tarde/noche |
+| `sierra` | pinos en capas con niebla, sol bajo | dia/tarde/noche |
+
+Uso: `Escena(t0, t1, lambda c: taller(c, "noche"), capas=[actor, Etiqueta(...)])`.
+Hoja de muestra: `python3 escenarios.py taller oficina calle:tarde rancho:noche`.
+Para un escenario nuevo: crea un `Cuarto(...)`, llama `pintar(...)` y coloca utilería con `quad(lado, u0, u1, v0, v1)`
+(paredes laterales) o en coordenadas directas (pared del fondo); termina con `reflejo_piso` si el piso brilla.
+Trajes nuevos: `mecanico`, `oficinista`.
