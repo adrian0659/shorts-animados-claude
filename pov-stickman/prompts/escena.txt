@@ -12,6 +12,20 @@ Plain warm beige textured paper background, almost empty, a few loose ink stroke
 soft gray oval shadows under characters. [EFECTO opcional: bright welding sparks / purple smoky villain aura / motion lines].
 Clean composition, 16:9, no captions, no watermark.
 
+Variante OSCURA (tensión): cambia el fondo por
+"dark gritty interior at night, single hanging light bulb casting a cone of warm light, deep shadows".
+
+Recursos visuales (añade uno por imagen como máximo):
+- thought bubble above the character containing [íconos]
+- hand-lettered black labels with arrows pointing at parts of the object: "[ETIQUETA 1]", "[ETIQUETA 2]"
+  (escribe las etiquetas en español y revisa que salgan bien escritas)
+- split screen: the stickman on the left, a big bold "VS" in the middle, [rival] on the right
+- a thick red X crossed over [cosa descartada]
+- extreme close-up of the stickman's face filling the frame, [emoción exagerada]
+- a pitch-black silhouette of [amenaza] standing in a doorway
+- tiny red devil on one shoulder and a tiny angel on the other
+- wall calendar with several days crossed out with black X marks
+
 Ejemplos de [ACCIÓN Y EXPRESIÓN]:
 - standing with hands on hips and a smug confident smile, eyebrows in a V
 - scratching his head, confused, question mark above

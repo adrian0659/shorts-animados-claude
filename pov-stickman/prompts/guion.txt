@@ -1,21 +1,28 @@
 Pega esto en Claude, cambiando lo que está entre corchetes:
 
-Escribe el guion de un video narrado en español titulado «POV: Eres el creador de [TEMA]».
-Duración: [8] minutos (~[1250] palabras). Narración en SEGUNDA PERSONA («Eres…», «Tú decides…»),
-tono serio con humor seco e irónico.
+Escribe el guion de un video narrado en español [de México] titulado «POV: Eres [rol sorprendente]».
+Es una HISTORIA DE FICCIÓN en segunda persona sobre un fenómeno real: [fenómeno].
+Duración: [8] minutos = ~[1200] palabras (150 por minuto). Tono de narrador de documental, con ironía y
+jerga [mexicana] natural (sin abusar). Frases cortas y sensoriales en los momentos clave.
 
-Estructura:
-1. Gancho de 15 s: quién eres, tu problema absurdo y la solución extrema que vas a crear.
-2. Contexto con lugar, época y un dato duro con cifra.
-3. Primer intento que fracasa por una razón concreta y graciosa.
-4. Escalada en 3–4 versiones: cada una arregla el fallo anterior y crea uno nuevo.
-5. Clímax con la versión más exagerada.
-6. Qué pasó en la realidad (consecuencias, cómo terminó).
-7. Remate con una frase seca e irónica.
+Estructura obligatoria:
+0. ADELANTO EN FRÍO (15 s, SIN VOZ): describe 4–5 imágenes del momento más épico del final.
+1. GANCHO «Este eres tú» (35 s): una escena imposible del presente que contradice quién eres.
+   «Cualquiera asumiría que eres… pero la verdad es mucho más patética: eres solo un…».
+   Cierra con la pregunta «¿Cómo es que…?» y «Descubramos esta absurda historia».
+2. ACTO 1, EL POZO (~1 min): origen humilde, deudas y un plan que fracasa. Que el espectador sienta la presión.
+3. ACTO 2, LA PRIMERA TENTACIÓN: una propuesta sospechosa con dinero. Duda → acepta por necesidad → le pagan de más.
+4. ESCALADA 1: vuelven con algo más grande y aparece una evidencia que asusta → acepta por miedo.
+5. AUTOENGAÑO (2 frases): «Te dices a ti mismo que…».
+6. ESCALADA 2: una propuesta definitiva. Esta vez dice que NO.
+7. EL CASTIGO: una amenaza silenciosa y concreta. Acepta: «Acabas de venderle tu alma al diablo».
+8. TRANSFORMACIÓN: recursos ilimitados, el negocio cambia por completo y algo oscuro despierta en él.
+9. CIERRE: el éxito llega a su punto más alto, se vuelve a la escena del gancho y termina con una frase irónica.
 
 Reglas:
-- Solo hechos reales verificables. Pon arriba una lista de datos con su fuente y marca lo que sea dudoso.
-- Explica el fenómeno, sin instrucciones técnicas para fabricar o hacer nada peligroso o ilegal.
-- Frases cortas, una idea por frase, sin relleno.
-- Divide el guion en PLANOS de 3–6 segundos. Para cada uno da: texto narrado | qué se ve |
-  expresión del monito | objeto principal.
+- Basado en el fenómeno real, pero el protagonista es ficticio. Pon arriba 3–5 datos reales que le den credibilidad, con su fuente.
+- Narra las consecuencias y el costo moral. Sin instrucciones técnicas para fabricar o hacer nada peligroso o ilegal.
+- Preguntas retóricas en los giros («¿Crees que te la libraste?»).
+- Divide el guion en PLANOS de 2–4 segundos (unas 6–10 palabras cada uno). Para cada plano da:
+  texto narrado | qué se ve | atmósfera (beige / oscura) | expresión del monito | recurso visual
+  (burbuja, etiqueta con flecha, infografía, VS, X roja, primer plano, silueta, diablito y angelito, calendario).

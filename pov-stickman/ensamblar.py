@@ -15,6 +15,7 @@ plan.json:
   "voz": "voz.mp3",                 (opcional)
   "musica": "musica.mp3",           (opcional, se repite en bucle)
   "volumen_musica": 0.12,
+  "fundido": 0.35,                  (segundos de fundido entre planos; 0 = siempre corte seco)
   "planos": [
     {"imagen": "img/01.png", "inicio": 0.0, "fin": 4.2, "movimiento": "zoom_in",
      "texto": "Eres un mecánico en 2010…"},
@@ -22,6 +23,8 @@ plan.json:
   ]
 }
 movimiento: zoom_in | zoom_out | paneo_der | paneo_izq | subir | bajar | sacudida | fijo
+transicion: "corte" en un plano = entra con corte seco (úsalo en golpes y cambios de escena);
+            si no, entra con fundido. También puedes poner "fundido": 0.5 en un plano concreto.
 Los tiempos van en segundos; si «inicio» falta, el plano empieza donde terminó el anterior.
 Las rutas son relativas a la carpeta del plan.
 """
@@ -112,17 +115,36 @@ def main():
            "-crf", "20", "-pix_fmt", "yuv420p", tmp_video]
     ff = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     n_total = int(round(total * FPS))
-    actual, base = None, None
-    for f in range(n_total):
-        tt = f / FPS
-        n, ini, fin, p = next((x for x in planos if x[1] <= tt < x[2]), planos[-1])
-        if actual != n:
+    bases = {}  # caché de las imágenes ya escaladas (solo el plano actual y el siguiente)
+
+    def base_de(n, p):
+        if n not in bases:
             img = rel(p["imagen"]) if p.get("imagen") else None
             im = Image.open(img) if img and os.path.exists(img) else tarjeta(p.get("texto", ""), W, H, n)
-            base, actual = cubrir(im, W, H), n
-        dur = fin - ini; tl = tt - ini
+            bases[n] = cubrir(im, W, H)
+            for viejo in [k for k in bases if k < n - 1]: del bases[viejo]
+        return bases[n]
+
+    def render_plano(x, tt):
+        n, ini, fin, p = x
+        dur = fin - ini; tl = max(0.0, tt - ini)
         z, dx, dy = camara(p.get("movimiento", "zoom_in"), suave(tl / max(dur, 1e-3)), tl, dur)
-        ff.stdin.write(np.asarray(cuadro(base, W, H, z, dx, dy), dtype=np.uint8).tobytes())
+        return np.asarray(cuadro(base_de(n, p), W, H, z, dx, dy), dtype=np.float32)
+
+    fundido_def = plan.get("fundido", 0.35)
+    for f in range(n_total):
+        tt = f / FPS
+        i = next((k for k, x in enumerate(planos) if x[1] <= tt < x[2]), len(planos) - 1)
+        cuadro_a = render_plano(planos[i], tt)
+        # fundido hacia el plano siguiente (salvo que ese plano pida "transicion": "corte")
+        if i + 1 < len(planos):
+            sig = planos[i + 1]
+            fd = 0.0 if sig[3].get("transicion") == "corte" else sig[3].get("fundido", fundido_def)
+            fin = planos[i][2]
+            if fd > 0 and tt > fin - fd:
+                a = suave((tt - (fin - fd)) / fd)
+                cuadro_a = cuadro_a * (1 - a) + render_plano(sig, sig[1]) * a
+        ff.stdin.write(cuadro_a.astype(np.uint8).tobytes())
         if f % FPS == 0: print(f"\r  imagen {tt:6.1f}s / {total:.1f}s", end="", flush=True)
     ff.stdin.close(); ff.wait(); print()
 

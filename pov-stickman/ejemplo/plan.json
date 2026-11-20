@@ -5,12 +5,13 @@
   "voz": "voz.mp3",
   "musica": "musica.mp3",
   "volumen_musica": 0.12,
+  "fundido": 0.35,
   "planos": [
     {"imagen": "img/01.png", "inicio": 0.0, "fin": 4.0, "movimiento": "zoom_in",
      "texto": "Eres un ingeniero en 1907 y te acaban de encargar algo imposible."},
     {"imagen": "img/02.png", "fin": 8.5, "movimiento": "paneo_der",
      "texto": "Tu jefe quiere un barco que no se pueda hundir."},
-    {"imagen": "img/03.png", "fin": 12.0, "movimiento": "sacudida",
+    {"imagen": "img/03.png", "fin": 12.0, "movimiento": "sacudida", "transicion": "corte",
      "texto": "Tú sonríes. Ya tienes un plan."},
     {"imagen": "img/04.png", "fin": 16.5, "movimiento": "zoom_out",
      "texto": "Dieciséis compartimentos estancos. Si uno se inunda, los demás aguantan."}

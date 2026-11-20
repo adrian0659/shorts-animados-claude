@@ -3,6 +3,7 @@
 Kit para hacer videos explicativos narrados en segunda persona, con un monito de cabeza
 redonda dibujado a tinta sobre papel beige, como el video de referencia
 («POV: Eres el Creador de los Narcotanques de los Cárteles»).
+**El análisis medido del video completo está en `ANALISIS.md`.**
 
 ## 1. Análisis del video de referencia
 
@@ -18,26 +19,32 @@ redonda dibujado a tinta sobre papel beige, como el video de referencia
 | **Texto en imagen** | Rótulos cortos en los objetos (cajas con una palabra) y flechas rojas a mano en la miniatura. Casi sin texto sobreimpreso. |
 | **Efectos** | Chispas de soldadura, aura morada humeante («modo villano») y líneas de movimiento. |
 | **Miniatura** | El objeto en grande, una mano en primer plano trabajando (soldando), chispas brillantes y una flecha roja. |
-| **Animación** | Ilustraciones fijas con poco movimiento: la cámara se acerca o se desliza, los objetos aparecen de golpe y algunos planos están animados con IA de video (brazos robóticos, cinta transportadora). |
+| **Animación** | Imágenes fijas con zoom lento, fundidos cortos entre planos y unos pocos planos con movimiento de IA. Los primeros planos de caras crecen lentamente durante 4–8 s. |
 | **Cómo se hizo (probable)** | Imágenes con IA (Nano Banana / Flow u otro) usando una **hoja de personaje fija** como referencia, voz con IA, movimiento con imagen→video y edición en CapCut o DaVinci. |
 
-## 2. La fórmula del guion
+## 2. La fórmula del guion (medida en el video completo: ver `ANALISIS.md`)
 
-Duración típica: 6–12 min. Ritmo: 150–160 palabras por minuto y **una imagen nueva cada 3–6 s**.
+Duración: 7–10 min. Voz a **150 palabras/min**, casi sin pausas. **Una imagen nueva cada 2–4 s**
+(media de 3,2 s), con fundidos cortos dentro de una escena y cortes secos en los golpes.
 
-1. **Gancho (0–15 s):** «Eres [rol]. Tienes [problema absurdo]. Y tu solución va a ser [cosa extrema]».
-2. **Contexto:** dónde y cuándo, por qué existe el problema y un dato duro con cifra.
-3. **Primer intento, que sale mal.** Algo simple que fracasa por una razón concreta. Usa humor.
-4. **Escalada, con 3 o 4 versiones:** cada versión resuelve el fallo anterior y crea uno nuevo (más blindaje → más peso → motor más grande…). Esta es la columna del video.
-5. **El clímax:** la versión más exagerada, con el monito orgulloso y aura de villano.
-6. **El giro / consecuencia real:** qué pasó de verdad (decomisos, arrestos, cómo acabó).
-7. **Remate:** una frase seca e irónica sobre el protagonista.
+Es una **historia de ficción en segunda persona sobre un fenómeno real**: una persona normal que va cayendo,
+paso a paso, en algo oscuro.
+
+1. **Adelanto en frío (0–15 s, sin voz):** imágenes épicas del final con música.
+2. **«Este eres tú» (15–50 s):** una escena imposible del presente → «cualquiera asumiría que eres X…
+   pero la verdad es más patética» → «¿Cómo es que…?» → «Descubramos esta absurda historia».
+3. **El pozo:** origen humilde, deudas y un negocio que fracasa.
+4. **La primera tentación:** una propuesta sospechosa con dinero → acepta por necesidad → le pagan de más.
+5. **Escalada:** vuelven con algo peor y aparece una evidencia que asusta → acepta por miedo. Sigue el autoengaño.
+6. **La oferta definitiva:** dice que NO → castigo silencioso → acepta («vendiste tu alma»).
+7. **Transformación:** recursos ilimitados, el negocio cambia por completo y algo oscuro despierta.
+8. **Cierre:** el éxito llega al máximo, se vuelve a la escena del gancho y termina con una frase irónica.
 
 Reglas:
-- Hechos reales verificables, con fuente anotada arriba del guion. Si hay cifras dudosas, usa la estimación prudente.
-- **Narra, no glorifiques.** Con temas criminales, explica el fenómeno y su final real, sin dar instrucciones de cómo fabricar o hacer nada peligroso.
-- Frases cortas. Una idea por imagen. No describas con la voz lo que ya se ve.
-- Usa `prompts/guion.txt` para pedirle el guion a Claude.
+- Narración en segunda persona con la jerga de tu público y frases sensoriales en los momentos clave.
+- Datos reales del fenómeno para dar credibilidad, con su fuente.
+- **Narra, no glorifiques.** Muestra el costo moral, sin instrucciones para fabricar o hacer nada peligroso.
+- Usa `prompts/guion.txt`: ya devuelve el guion dividido en planos.
 
 ## 3. Herramientas
 
@@ -62,7 +69,7 @@ look y la fórmula de este formato.
 2. **Guion:** usa `prompts/guion.txt` y revisa los datos.
 3. **Voz:** genera `voz.mp3` y saca los tiempos con Whisper.
 4. **Hoja de personaje:** genera 4 opciones con `prompts/personaje.txt`, elige una y súbela a Flow como `protagonista`. **Esta imagen se usa en TODAS las escenas.**
-5. **Lista de escenas:** divide el guion en planos de 3–6 s. Para cada uno escribe: texto narrado, qué se ve, expresión del monito y objeto principal (ver `ejemplo/plan.json`).
+5. **Lista de escenas:** divide el guion en planos de 2–4 s. Para cada uno escribe: texto narrado, qué se ve, expresión del monito y objeto principal (ver `ejemplo/plan.json`).
 6. **Imágenes:** genera cada plano con `prompts/escena.txt` en 16:9 (o 9:16 para shorts) y repite los que salgan con otro estilo.
 7. **Ensamblar:** completa `plan.json` con las rutas y los tiempos y luego ejecuta:
    ```
@@ -76,7 +83,9 @@ look y la fórmula de este formato.
 - [ ] El protagonista se ve igual en todas las imágenes (pelo, tamaño de cabeza y grosor de línea).
 - [ ] El fondo es siempre papel beige con poco detalle.
 - [ ] Los objetos son detallados y los personajes simples.
-- [ ] Cada imagen dura entre 3 y 6 s y ninguna se queda quieta.
-- [ ] La voz va al frente y la música 15–20 dB más baja.
+- [ ] Las imágenes duran 2–4 s (los primeros planos de cara, hasta 8 s) y ninguna se queda quieta.
+- [ ] El video arranca con un adelanto sin voz y el gancho «Este eres tú».
+- [ ] Ninguna imagen tiene texto mal escrito ni en otro idioma.
+- [ ] La voz va al frente, la música de suspenso suena 15–20 dB más baja y el final queda a −14 LUFS.
 - [ ] Los datos tienen su fuente y no hay instrucciones peligrosas.
 - [ ] El estilo es este, pero el personaje es tuyo: cambia la seña (otro color o forma de pelo, gorra, lentes). No copies el personaje, los guiones ni las miniaturas del canal de referencia.
