@@ -14,6 +14,16 @@ MARKER = "Permanent Marker"
 MANO = "Kalam"
 
 
+def formato(w, h):
+    """Cambia el tamaño del lienzo (p. ej. 1920x1080 para 16:9). Llamar antes de crear escenas."""
+    global W, H, _VIÑETA
+    W, H = w, h; _VIÑETA = None
+    import sys
+    e = sys.modules.get("escenarios")
+    if e is not None:
+        e.W, e.H = w, h; e._CACHE.clear()
+
+
 # ------------------------------------------------------------------ utilidades
 def lerp(a, b, k): return a + (b - a) * k
 def clamp(x, a=0.0, b=1.0): return max(a, min(b, x))

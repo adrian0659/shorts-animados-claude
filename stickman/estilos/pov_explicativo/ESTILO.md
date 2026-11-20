@@ -94,3 +94,23 @@ Hoja de muestra: `python3 escenarios.py taller oficina calle:tarde rancho:noche`
 Para un escenario nuevo: crea un `Cuarto(...)`, llama `pintar(...)` y coloca utilería con `quad(lado, u0, u1, v0, v1)`
 (paredes laterales) o en coordenadas directas (pared del fondo); termina con `reflejo_piso` si el piso brilla.
 Trajes nuevos: `mecanico`, `oficinista`.
+
+## Cómic POV (personas caricatura + manos en primera persona) — `comic.py`
+Referencia: `cuadros/referencia_comic_pov.jpg` · resultado con código: `comic_pov_demo.png`.
+- **Formato 16:9** (`M.formato(1920, 1080)`; también sirve 9:16 cambiando el formato y las posiciones).
+- **Cámara en primera persona:** los antebrazos del espectador salen del borde inferior con guantes y sostienen
+  objetos (`manos_pov(objeto_izq, objeto_der, guantes)`); se mecen un poco.
+- **Personas caricatura** (`Persona(cfg, claves, s)`), de la cintura para arriba detrás de una mesa:
+  cara con orejas, nariz, surcos, ojos con iris, párpado grueso, cejas gruesas, arrugas de enojo/miedo, sudor;
+  bocas `grito` (con dientes y lengua, se mueve), `oval`, `sonrisa`, `sonrisa_lado`, `triste`, `torcida`, `linea`.
+  - Expresiones: `neutral, enojado, furioso, miedo, sorpresa, feliz, serio, triste, pensando, malicia` (tiemblan si hay miedo/furia).
+  - Poses de brazos: `relajado, senalar_d, senalar_i, manos_cabeza, apoyado, cruzados, pensar, telefono, dinero`.
+  - Pelo: `ondulado, canoso, gorro, gorra, corto, calvo, largo`; extras: `bigote, barba ('candado'),
+    barba_crecida, lentes='sol', cigarro (con humo), cicatriz, cadena`.
+  - Ropa: `hawaiana` (flores), `sudadera` (playera con estampado), `camisa, traje, cuadros, playera, bata, militar`.
+- **Tinta de cómic:** contorno grueso, sombra de cel en un lado, achurado diagonal, arrugas de tela.
+- **Escenario** `casa_rodante` (laboratorio en casa rodante: techo curvo, ventilas, tubo fluorescente, cables,
+  estante con matraces, alacenas, tablero eléctrico) + `mostrador_lab` en primer plano (frascos, charola,
+  guante, frasco con cristales, fajos de billetes, lentes). Combínalo con los escenarios de `escenarios.py`.
+- Personajes siempre **originales**: no copies caras, ropa ni nombres de series o películas.
+- Demo: `python3 comic.py --video` → `salida/comic_demo.png` y `salida/comic_demo.mp4`.
