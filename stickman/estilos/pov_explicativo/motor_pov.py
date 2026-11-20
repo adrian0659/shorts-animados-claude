@@ -143,6 +143,12 @@ TRAJES = {
     "amigo":   dict(camisa=(0.95, 0.65, 0.2), largo=False, pelo="corto", color_pelo=(0.1, 0.08, 0.06)),
     "mecanico": dict(camisa=(0.15, 0.2, 0.36), largo=False, pelo="picos", cuello=(0.8, 0.12, 0.12), puno=(0.8, 0.12, 0.12),
                      parche="MECÁNICO", bolsillo=True),
+    "doctor": dict(camisa=(0.97, 0.97, 0.98), largo=True, pelo="picos", cuello=(0.35, 0.68, 0.66), bolsillo=True,
+                   parche="DR.", estetoscopio=True),
+    "doctor_grad": dict(camisa=(0.97, 0.97, 0.98), largo=True, pelo="picos", cuello=(0.35, 0.68, 0.66), bolsillo=True,
+                        parche="DR.", estetoscopio=True, birrete=True),
+    "jefe_traje": dict(camisa=(0.13, 0.13, 0.15), largo=True, saco=True, corbata=(0.7, 0.1, 0.12), pelo="raya",
+                       color_pelo=(0.1, 0.08, 0.07), bigote=True),
     "cliente": dict(camisa=(0.82, 0.83, 0.86), largo=True, pelo="raya", color_pelo=(0.42, 0.26, 0.15),
                     corbata=(0.55, 0.12, 0.2), cuello=(0.9, 0.9, 0.92), bolsillo=False),
     "oficinista": dict(camisa=(0.92, 0.92, 0.95), largo=True, corbata=(0.6, 0.12, 0.15), saco=False, pelo="raya",
@@ -338,6 +344,15 @@ class Actor:
             ctx.set_source_rgba(0.15, 0.17, 0.1, 0.5)
             for (a, b, rr) in [(-0.5, -0.6, 0.18), (0.3, -0.8, 0.14), (0.6, -0.35, 0.12)]:
                 ctx.arc(a * r, b * r, rr * r, 0, 7); ctx.fill()
+        if tr.get("birrete"):
+            y = -r * 0.95
+            ctx.move_to(-r * 0.72, y + r * 0.12); ctx.curve_to(-r * 0.7, y - r * 0.22, r * 0.7, y - r * 0.22, r * 0.72, y + r * 0.12)
+            ctx.close_path(); relleno(ctx, (0.12, 0.12, 0.14), 4)
+            ctx.move_to(0, y - r * 0.55); ctx.line_to(r * 1.2, y - r * 0.25); ctx.line_to(0, y + r * 0.02); ctx.line_to(-r * 1.2, y - r * 0.25)
+            ctx.close_path(); relleno(ctx, degradado(y - r * 0.55, y, (0.26, 0.26, 0.3), (0.1, 0.1, 0.12)), 4)
+            ctx.arc(0, y - r * 0.27, r * 0.06, 0, 7); relleno(ctx, (0.9, 0.75, 0.2), 0)
+            linea(ctx, [(0, y - r * 0.27), (r * 0.75, y - r * 0.08), (r * 0.8, y + r * 0.4)], r * 0.035, (0.9, 0.75, 0.2))
+            ctx.arc(r * 0.8, y + r * 0.44, r * 0.07, 0, 7); relleno(ctx, (0.9, 0.75, 0.2), 0)
         if tr.get("audifono"):
             ex = -r * 0.98 * f if True else 0
             ctx.arc(-r * 0.9 * f, r * 0.05, r * 0.11, 0, 7); relleno(ctx, (0.15, 0.15, 0.17), 2)
@@ -485,6 +500,14 @@ def camisa_detalles(ctx, tr, mid, bot, px, py, ux, uy, s, f):
         ctx.move_to(t0[0] - 6 * s, t0[1] + 13 * s); ctx.line_to(t0[0] + 6 * s, t0[1] + 13 * s)
         ctx.line_to(v[0] + 12 * s, v[1] - 12 * s); ctx.line_to(v[0], v[1] + 6 * s); ctx.line_to(v[0] - 12 * s, v[1] - 12 * s)
         ctx.close_path(); relleno(ctx, tr["corbata"], 2.5 * s)
+    if tr.get("estetoscopio"):
+        a = (mid[0] - px * 24 * s, mid[1] - py * 24 * s); b = (mid[0] + px * 24 * s, mid[1] + py * 24 * s)
+        p1 = (lerp(mid[0], bot[0], 0.42) - px * 20 * s, lerp(mid[1], bot[1], 0.42) - py * 20 * s)
+        p2 = (lerp(mid[0], bot[0], 0.55) + px * 14 * s, lerp(mid[1], bot[1], 0.55) + py * 14 * s)
+        ctx.move_to(*a); ctx.curve_to(a[0] - px * 6 * s, p1[1] - 30 * s, p1[0] - px * 4 * s, p1[1], *p1)
+        ctx.move_to(*b); ctx.curve_to(b[0] + px * 6 * s, p2[1] - 50 * s, p2[0] + px * 4 * s, p2[1] - 10 * s, *p2)
+        ctx.set_source_rgb(0.2, 0.22, 0.25); ctx.set_line_width(6 * s); ctx.stroke()
+        ctx.arc(p2[0], p2[1] + 4 * s, 11 * s, 0, 7); relleno(ctx, (0.78, 0.8, 0.84), 3 * s)
     for k in (0.55, 0.8):
         a = (lerp(mid[0], bot[0], k) - px * 40 * s, lerp(mid[1], bot[1], k) - py * 40 * s)
         linea(ctx, [a, (a[0] + px * 14 * s + ux * 10 * s, a[1] + py * 14 * s - uy * 10 * s)], 2 * s, TINTA, 0.35)
