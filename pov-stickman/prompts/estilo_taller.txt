@@ -1,0 +1,30 @@
+ESTILO «TALLER»: monitos con ropa en escenarios realistas y limpios (referencia: referencias/estilo_taller.jpg)
+
+--- Para Flow: sube la imagen de referencia como "estilo" y tu personaje elegido como "protagonista" ---
+
+Image 1 -> Style: @{estilo}
+Image 2 -> Character: @{protagonista}
+
+Clean digital cartoon illustration in the exact style of @Image 1.
+Characters: perfectly round white heads with a thin black outline, simple faces (black dot eyes,
+short straight eyebrows, small line mouth), thin black stick arms and stick legs, white cartoon
+glove hands, big black shoes, and REAL CLOTHES drawn over the stick body.
+The main character is the mechanic from @Image 2: spiky messy black hair, navy blue short-sleeve
+mechanic shirt with red collar and red sleeve trim, a small "MECÁNICO" name patch.
+Scene: [QUÉ PASA: acción, expresión y con quién].
+Setting: [LUGAR], realistic and clean, soft cool gray and blue tones, bright daylight, detailed
+objects ([OBJETOS]), any visible text in correct Spanish.
+16:9, no captions, no watermark.
+
+--- Hoja de personaje (genera esto primero y elige la mejor) ---
+
+Image 1 -> Style: @{estilo}
+
+Character reference sheet in the exact style of @Image 1: the same mechanic (spiky messy black hair,
+round white head, navy short-sleeve mechanic shirt with red collar and trim, "MECÁNICO" patch, dark
+pants drawn as thin stick legs, big black shoes, white glove hands). Show him 4 times: front neutral,
+confident smile with arms crossed, shocked with arms up, worried holding a wrench.
+Plain light gray background, no text besides the patch.
+
+--- Variante oscura (tensión) ---
+Cambia el «Setting» por: "[LUGAR] at night, a single overhead light casting hard shadows, dark moody tones".
