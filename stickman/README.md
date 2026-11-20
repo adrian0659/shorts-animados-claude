@@ -47,3 +47,10 @@ python3 ejemplos/elenco_prueba.py   # peinados, ropa, caras y poses
   (`telefono`, `tablet`, `llave`, `billete`).
 - Peinados: `puntas, raya, corto, largo, coleta, calvo`. Caras: `serio, feliz, sorpresa, triste, pensar, enojado, preocupado`.
 - Poses nuevas: `telefono, entregar, recibir_i, manos_frente, brazos_cruzados, explicar, cabeza_mano`.
+
+### Flexibilidad
+Los personajes ilustrados se mueven como de goma: brazos y piernas curvos, espalda que se encorva o se arquea,
+la cabeza y los antebrazos llegan un poco después que el torso, un pequeño rebote al cambiar de pose,
+se aplastan y se estiran al saltar, y la corbata se mece. Ajustes en `Persona(...)`:
+`flex` (0 = rígido, 0.9 por defecto, 1.3 = muy de goma), `rebote` (0 = sin rebote) y `transicion` (segundos).
+Clave nueva `habla=True`: abre y cierra la boca, asiente y gesticula. Prueba: `python3 ejemplos/flexible_prueba.py`.

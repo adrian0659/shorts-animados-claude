@@ -103,6 +103,70 @@ def obj_billete(ctx, s, ang, mira):
 OBJETOS = {"telefono": obj_telefono, "tablet": obj_tablet(), "llave": obj_llave, "billete": obj_billete}
 
 
+
+# ---------------------------------------------------------------- flexibilidad
+# retraso (s) con el que cada articulación sigue al torso: da el efecto de "látigo" suave
+RETRASO = dict(torso=0.0, cabeza=0.07, bi=0.03, bd=0.03, ai=0.09, ad=0.09, mi=0.0, md=0.0, pi=0.03, pd=0.03)
+# curvatura de la espalda por pose (positivo = se encorva, negativo = se arquea hacia atrás)
+CURVA = dict(triste=10, pensar=7, encoger=6, telefono=4, entregar=7, recibir_i=7, cabeza_mano=10,
+             sorpresa=-10, festejar=-12, saludo=-3, señalar_d=3, señalar_i=3, explicar=3)
+
+
+def _con_rebote(k, c=1.0):
+    """Llega con un pequeño rebote (c = cuánto se pasa; 0 = sin rebote)."""
+    k = clamp(k)
+    if c <= 0: return suave(k)
+    return 1 + (c + 1) * (k - 1) ** 3 + c * (k - 1) ** 2
+
+
+def _control(a, b, c, flex):
+    """Punto de control para que la curva a->c pase por b (flex = 1) o vaya recta (flex = 0)."""
+    mx, my = (a[0] + c[0]) / 2, (a[1] + c[1]) / 2
+    return (lerp(mx, 2 * b[0] - mx, flex), lerp(my, 2 * b[1] - my, flex))
+
+
+def _curva(ctx, a, b, c, flex):
+    q = _control(a, b, c, flex)
+    ctx.move_to(*a)
+    ctx.curve_to(a[0] + (q[0] - a[0]) * 2 / 3, a[1] + (q[1] - a[1]) * 2 / 3,
+                 c[0] + (q[0] - c[0]) * 2 / 3, c[1] + (q[1] - c[1]) * 2 / 3, *c)
+
+
+def _muestras(a, b, c, flex, k0=0.0, k1=1.0, n=12):
+    q = _control(a, b, c, flex); out = []
+    for i in range(n + 1):
+        k = k0 + (k1 - k0) * i / n; m = 1 - k
+        out.append((m * m * a[0] + 2 * m * k * q[0] + k * k * c[0], m * m * a[1] + 2 * m * k * q[1] + k * k * c[1]))
+    return out
+
+
+class _Columna:
+    """Espalda curva (bezier cuadrática de hombro a cadera). P(a, b): punto a 'a' de ancho y 'b' de largo
+    desde el hombro (en unidades sin escala), siguiendo la curva."""
+    def __init__(self, hombro, ctrl, cadera, s, largo=150):
+        self.h, self.q, self.c, self.s, self.L = hombro, ctrl, cadera, s, largo
+
+    def _pt(self, k):
+        m = 1 - k; h, q, c = self.h, self.q, self.c
+        return (m * m * h[0] + 2 * m * k * q[0] + k * k * c[0], m * m * h[1] + 2 * m * k * q[1] + k * k * c[1])
+
+    def _tan(self, k):  # tangente hacia el hombro (unitaria)
+        m = 1 - k; h, q, c = self.h, self.q, self.c
+        dx = 2 * m * (q[0] - h[0]) + 2 * k * (c[0] - q[0]); dy = 2 * m * (q[1] - h[1]) + 2 * k * (c[1] - q[1])
+        n = math.hypot(dx, dy) or 1
+        return (-dx / n, -dy / n)
+
+    def angulo(self, b):
+        ux, uy = self._tan(clamp(b / self.L)); return math.degrees(math.atan2(ux, uy))
+
+    def P(self, a, b):
+        k = b / self.L; kc = clamp(k)
+        px, py = self._pt(kc); ux, uy = self._tan(kc)
+        extra = (k - kc) * math.hypot(self.c[0] - self.h[0], self.c[1] - self.h[1])  # fuera del tramo: sigue recto
+        px -= ux * extra; py -= uy * extra
+        nx, ny = -uy, ux
+        return (px + nx * a * self.s, py + ny * a * self.s)
+
 # ---------------------------------------------------------------- personaje
 class Persona(Monigote):
     """Monigote ilustrado. Claves extra por fotograma: mano_d / mano_i (nombre de objeto o None).
@@ -112,35 +176,77 @@ class Persona(Monigote):
                corbata=(r,g,b)|None, gafete='TEXTO'|None, pantalon=(r,g,b)|None, bolsillo=True)
     """
     def __init__(self, claves, escala=1.6, pelo="raya", color_pelo=(0.45, 0.27, 0.16),
-                 ropa=None, semilla=1):
+                 ropa=None, semilla=1, flex=0.9, rebote=0.9, transicion=0.4):
+        for c in claves: c.setdefault("habla", False)   # hablar no se hereda entre claves
         super().__init__(claves, escala=escala, semilla=semilla)
         prev = dict(mano_d=None, mano_i=None)
         for c in self.claves:
             for k, v in prev.items(): c.setdefault(k, v)
             prev = dict(mano_d=c["mano_d"], mano_i=c["mano_i"])
         self.pelo, self.color_pelo = pelo, color_pelo
+        self.flex, self.rebote, self.transicion = flex, rebote, transicion
         self.ropa = dict(tipo="camisa", color=(0.85, 0.86, 0.88), cuello=None, manga="larga",
                          corbata=None, gafete=None, pantalon=None, bolsillo=False)
         self.ropa.update(ropa or {})
 
-    # ------------------------------------------------------------ esqueleto
+    # ------------------------------------------------------------ pose con flexibilidad
+    def _pose_flexible(self, t):
+        """Pose con traslape: cada parte del cuerpo llega a su pose un poco después que el torso
+        (la cabeza y los antebrazos "siguen" el movimiento) y con un pequeño rebote al llegar."""
+        cs = self.claves
+        a = cs[0]
+        for c in cs:
+            if c["t"] <= t: a = c
+        idx = cs.index(a)
+        ant = cs[idx - 1] if idx > 0 else a
+        dt = t - a["t"]
+        p0, p1 = POSES[ant["pose"]], POSES[a["pose"]]
+        pose = {}
+        for j in ARTIC:
+            k = _con_rebote((dt - RETRASO.get(j, 0)) / self.transicion, self.rebote)
+            pose[j] = lerp(p0[j], p1[j], k)
+        kc = _con_rebote(dt / self.transicion, self.rebote)
+        curva = lerp(CURVA.get(ant["pose"], 0), CURVA.get(a["pose"], 0), kc)
+        cambio = ant["pose"] != a["pose"] and idx > 0
+        return pose, curva, dt, cambio
+
     def dibujar(self, ctx, t):
-        pose, x, y, clave, moviendo = self.estado(t)
-        s = self.s; pose = dict(pose)
-        resp = math.sin(t * 2.2 + self.semilla) * 1.2
-        pose["torso"] += math.sin(t * 1.3 + self.semilla) * 0.8
-        if clave["pose"] == "saludo": pose["ad"] += math.sin(t * 12) * 22
-        if clave["pose"] in ("explicar",): pose["ad"] += math.sin(t * 5) * 10
-        dy = 0
+        _, x, y, clave, moviendo = self.estado(t)
+        pose, curva, dt, cambio = self._pose_flexible(t)
+        s = self.s; sem = self.semilla
+        mira = clave["mira"]; md = mira if mira else 1
+        habla = clave.get("habla", False)
+        # vida en reposo: respiración, peso que se mece, brazos que cuelgan sueltos
+        resp = math.sin(t * 2.2 + sem) * 1.4
+        pose["torso"] += math.sin(t * 1.3 + sem) * 1.2
+        pose["ai"] += math.sin(t * 1.7 + sem) * 4; pose["ad"] += math.sin(t * 1.9 + sem * 2) * 4
+        curva += math.sin(t * 1.1 + sem) * 2
+        x += math.sin(t * 0.9 + sem) * 2.5 * s
+        if clave["pose"] == "saludo": pose["ad"] += math.sin(t * 12) * 24; pose["bd"] += math.sin(t * 12 - 0.6) * 8
+        if clave["pose"] == "explicar": pose["ad"] += math.sin(t * 5) * 12
+        if habla:  # asiente un poco y gesticula
+            pose["cabeza"] += math.sin(t * 6.5 + sem) * 4
+            if clave["pose"] in ("parado", "explicar", "manos_frente"):
+                pose["ad"] += math.sin(t * 4.3) * 10; pose["bd"] += math.sin(t * 4.3 - 0.5) * 6
+        dy = 0; sy = 1.0
         if moviendo:
             f = t * 8
-            pose["mi"] = math.sin(f) * 24; pose["pi"] = pose["mi"] + max(0, math.sin(f - 1.2)) * -28
-            pose["md"] = -math.sin(f) * 24; pose["pd"] = pose["md"] + max(0, -math.sin(f - 1.2)) * -28
+            pose["mi"] = math.sin(f) * 26; pose["pi"] = pose["mi"] + max(0, math.sin(f - 1.2)) * -34
+            pose["md"] = -math.sin(f) * 26; pose["pd"] = pose["md"] + max(0, -math.sin(f - 1.2)) * -34
             if clave["pose"] == "parado":
-                pose["bi"] = -8 - math.sin(f) * 18; pose["ai"] = pose["bi"] - 10
-                pose["bd"] = 8 + math.sin(f) * 18; pose["ad"] = pose["bd"] + 10
-            dy = -abs(math.sin(f)) * 8 * s
-        if clave["saltar"]: dy = -abs(math.sin(t * 7)) * 70 * s
+                pose["bi"] = -8 - math.sin(f) * 22; pose["ai"] = pose["bi"] - 14 - math.sin(f - 0.8) * 16
+                pose["bd"] = 8 + math.sin(f) * 22; pose["ad"] = pose["bd"] + 14 + math.sin(f - 0.8) * 16
+            pose["torso"] += md * 5                     # se inclina hacia donde camina
+            pose["cabeza"] += math.sin(f * 2) * 2
+            curva += 4
+            dy = -abs(math.sin(f)) * 10 * s
+        if clave["saltar"]:
+            h = abs(math.sin(t * 7)); dy = -h * 75 * s
+            sy = (0.86 + 0.7 * h) if h < 0.2 else 1 + 0.07 * abs(math.cos(t * 7))   # aplasta y estira
+            pose["bi"] -= h * 20; pose["bd"] += h * 20
+        if cambio and dt < 0.32:   # anticipación: se encoge y luego se estira al cambiar de pose
+            sy *= 1 - 0.07 * math.sin(2 * math.pi * dt / 0.32) * (1 - dt / 0.32)
+        sx = 1 / math.sqrt(sy)
 
         L = dict(torso=150 * s, brazo=78 * s, ante=72 * s, muslo=108 * s, pierna=104 * s, cabeza=70 * s)
         def cad2(o, a1, l1, a2, l2):
@@ -152,29 +258,36 @@ class Persona(Monigote):
         cad = (x, y + dy + resp - baja)
         mv = lambda p: (cad[0] + p[0], cad[1] + p[1])
         rodi, pie_i, rodd, pie_d = mv(rodi), mv(pie_i), mv(rodd), mv(pie_d)
+        # columna curva: cadera -> hombro con un punto de control desplazado (joroba / arqueo)
         hombro = (cad[0] + vec(pose["torso"], L["torso"])[0], cad[1] + vec(pose["torso"], L["torso"])[1])
-        ang_cab = pose["torso"] + pose["cabeza"]
-        ang_pos = pose["torso"] + pose["cabeza"] * 0.3   # la cabeza gira más de lo que se desplaza
+        ux, uy = vec(pose["torso"], 1); nx, ny = -uy, ux
+        bulto = -md * curva * s * self.flex
+        ctrl = ((cad[0] + hombro[0]) / 2 + nx * bulto, (cad[1] + hombro[1]) / 2 + ny * bulto)
+        # el hombro se desplaza un poco con la curva (el pecho se va hacia adelante o atrás)
+        hombro = (hombro[0] - nx * bulto * 0.5, hombro[1] - ny * bulto * 0.5)
+        col = _Columna(hombro, ctrl, cad, s)
+        ang_tor = col.angulo(0)
+        ang_cab = ang_tor + pose["cabeza"]
+        ang_pos = ang_tor + pose["cabeza"] * 0.3
         cab = (hombro[0] + vec(ang_pos, L["cabeza"] * 0.95)[0], hombro[1] + vec(ang_pos, L["cabeza"] * 0.95)[1])
-        hombro_i = (hombro[0] - 34 * s, hombro[1] + 12 * s)
-        hombro_d = (hombro[0] + 34 * s, hombro[1] + 12 * s)
+        hombro_i, hombro_d = col.P(-34, 12), col.P(34, 12)
         codi, mani = cad2(hombro_i, pose["bi"], L["brazo"], pose["ai"], L["ante"])
         codd, mand = cad2(hombro_d, pose["bd"], L["brazo"], pose["ad"], L["ante"])
-        mira = clave["mira"]
 
-        # sombra en el piso
+        # sombra en el piso (no se deforma)
         ctx.save(); ctx.set_source_rgba(0, 0, 0, 0.16)
         ctx.translate(x, y); ctx.scale(1, 0.16); ctx.arc(0, 0, 95 * s * (1 - min(-dy, 80) / 200), 0, 2 * math.pi)
         ctx.fill(); ctx.restore()
+        ctx.save(); ctx.translate(x, y); ctx.scale(sx, sy); ctx.translate(-x, -y)
 
-        R = self.ropa; lw = 7 * s
-        # piernas
+        R = self.ropa; lw = 7 * s; fx = self.flex
+        # piernas (curvas tipo manguera)
         for (r, p) in ((rodi, pie_i), (rodd, pie_d)):
             if R["pantalon"]:
-                _trazo_doble(ctx, [cad, r, p], 26 * s, R["pantalon"], 2.5 * s)
+                _trazo_doble(ctx, _muestras(cad, r, p, fx, 0, 1), 26 * s, R["pantalon"], 2.5 * s)
             else:
                 ctx.set_source_rgb(*NEGRO); ctx.set_line_width(lw); ctx.set_line_cap(cairo.LINE_CAP_ROUND)
-                ctx.move_to(cad[0] + (r[0] - cad[0]) * 0.02, cad[1]); ctx.line_to(*r); ctx.line_to(*p); ctx.stroke()
+                _curva(ctx, cad, r, p, fx); ctx.stroke()
         # zapatos (domo con suela plana, punta hacia donde mira)
         for p, lado in ((pie_i, -1), (pie_d, 1)):
             d = mira if mira else lado * 0.5
@@ -188,24 +301,25 @@ class Persona(Monigote):
             ctx.arc(0, 0, 8 * s, 0, 2 * math.pi); ctx.restore(); ctx.set_source_rgba(1, 1, 1, 0.22); ctx.fill()
             ctx.restore()
 
-        # cabello largo / coleta (detrás de la cabeza)
         self._pelo(ctx, cab, L["cabeza"], ang_cab, mira, atras=True)
-        # torso de ropa
-        self._ropa(ctx, cad, hombro, pose["torso"], s, mira, t)
+        # la corbata se mece con el movimiento
+        vaiven = math.sin(t * 2.5 + sem) * 2 + (math.sin(t * 8) * 5 if moviendo else 0) + (pose["torso"] - 180) * 0.6
+        self._ropa(ctx, col, ang_tor, s, mira, t, vaiven)
         # brazos
         objetos = []
-        for (h, c, m, ang, nombre) in ((hombro_i, codi, mani, pose["ai"], clave["mano_i"]),
-                                       (hombro_d, codd, mand, pose["ad"], clave["mano_d"])):
+        for (h, c, m, nombre) in ((hombro_i, codi, mani, clave["mano_i"]), (hombro_d, codd, mand, clave["mano_d"])):
             ctx.set_source_rgb(*NEGRO); ctx.set_line_width(lw); ctx.set_line_cap(cairo.LINE_CAP_ROUND)
-            ctx.move_to(*h); ctx.line_to(*c); ctx.line_to(*m); ctx.stroke()
+            _curva(ctx, h, c, m, fx); ctx.stroke()
             if R["manga"] == "larga":
-                _trazo_doble(ctx, [h, c, _sobre(c, m, 0.82)], 24 * s, R["color"], 2.6 * s)
-                ctx.set_source_rgb(*NEGRO); ctx.set_line_width(lw)
+                _trazo_doble(ctx, _muestras(h, c, m, fx, 0, 0.84), 24 * s, R["color"], 2.6 * s)
             elif R["manga"] == "corta":
-                ini = _sobre(h, c, -0.12)
-                _manga(ctx, ini, _sobre(h, c, 0.62), 15 * s, 17 * s, R["color"], s)
+                pts = _muestras(h, c, m, fx, 0, 0.32, 6)
+                pre = (2 * pts[0][0] - pts[1][0], 2 * pts[0][1] - pts[1][1])
+                _manga(ctx, pre, pts[-1], 15 * s, 17 * s, R["color"], s)
                 if R["cuello"]:
-                    _manga(ctx, _sobre(h, c, 0.52), _sobre(h, c, 0.62), 16.5 * s, 17 * s, R["cuello"], s)
+                    _manga(ctx, pts[-2], pts[-1], 16.5 * s, 17 * s, R["cuello"], s)
+            q = _control(h, c, m, fx)
+            ang = math.degrees(math.atan2(m[0] - q[0], m[1] - q[1]))   # dirección de la punta del brazo
             objetos.append((m, ang, nombre))
         for (m, ang, nombre) in objetos:
             if nombre and nombre != "telefono":
@@ -213,8 +327,9 @@ class Persona(Monigote):
             self._mano(ctx, m, ang, s, mira)
             if nombre == "telefono":
                 ctx.save(); ctx.translate(m[0] - 6 * s, m[1] - 12 * s); OBJETOS[nombre](ctx, s, ang, mira); ctx.restore()
-        # cabeza
-        self._cabeza(ctx, cab, L["cabeza"], ang_cab, mira, clave["cara"], t, s)
+        boca = max(0.0, math.sin(t * 15 + math.sin(t * 4.1) * 2.5)) if habla else 0.0
+        self._cabeza(ctx, cab, L["cabeza"], ang_cab, mira, clave["cara"], t, s, boca)
+        ctx.restore()
 
     # ------------------------------------------------------------ partes
     def _mano(self, ctx, m, ang, s, mira):
@@ -227,15 +342,16 @@ class Persona(Monigote):
         _contorno(ctx, PIEL, 2.8 * s)
         ctx.restore()
 
-    def _ropa(self, ctx, cad, hombro, ang, s, mira, t):
+    def _ropa(self, ctx, col, ang, s, mira, t, vaiven=0.0):
         R = self.ropa
-        ux, uy = vec(ang, 1)          # de cadera a hombro
-        nx, ny = -uy, ux              # perpendicular
-        def P(a, b):                  # a = a lo ancho, b = a lo largo desde el hombro (positivo hacia abajo)
-            return (hombro[0] + nx * a * s - ux * b * s, hombro[1] + ny * a * s - uy * b * s)
+        P = col.P
         largo = 150 + (80 if R["tipo"] == "vestido" else 26)
         bajo = 62 if R["tipo"] == "vestido" else 50
-        pts = [P(-20, -6), P(-50, 4), P(-56, 22), P(-bajo, largo), P(bajo, largo), P(56, 22), P(50, 4), P(20, -6)]
+        def ancho(b):
+            if b <= 22: return lerp(50, 56, clamp((b - 4) / 18))
+            return lerp(56, bajo, clamp((b - 22) / (largo - 22)))
+        bs = [22 + (largo - 22) * i / 8 for i in range(9)]
+        pts = [P(-20, -6), P(-50, 4)] + [P(-ancho(b), b) for b in bs] + [P(ancho(b), b) for b in reversed(bs)] + [P(50, 4), P(20, -6)]
         ctx.move_to(*pts[0])
         for p in pts[1:]: ctx.line_to(*p)
         ctx.close_path()
@@ -252,7 +368,9 @@ class Persona(Monigote):
         # botones / línea central en camisa
         if R["tipo"] == "camisa":
             ctx.set_source_rgba(0, 0, 0, 0.35); ctx.set_line_width(2 * s)
-            ctx.move_to(*P(0, 4)); ctx.line_to(*P(0, largo)); ctx.stroke()
+            ctx.move_to(*P(0, 4))
+            for b in bs: ctx.line_to(*P(0, b))
+            ctx.stroke()
         # cuello
         col = R["cuello"] or (oscurecer(R["color"], 0.92) if R["tipo"] == "camisa" else None)
         if R["tipo"] == "camisa":
@@ -266,8 +384,9 @@ class Persona(Monigote):
         if R["corbata"]:
             ctx.move_to(*P(-7, 0)); ctx.line_to(*P(7, 0)); ctx.line_to(*P(5, 14)); ctx.line_to(*P(-5, 14))
             ctx.close_path(); _contorno(ctx, R["corbata"], 2.4 * s)
-            ctx.move_to(*P(-5, 14)); ctx.line_to(*P(5, 14)); ctx.line_to(*P(11, 120)); ctx.line_to(*P(0, 136))
-            ctx.line_to(*P(-11, 120)); ctx.close_path(); _contorno(ctx, R["corbata"], 2.4 * s)
+            v = lambda b: vaiven * (b - 14) / 120          # la punta se mece más que el nudo
+            ctx.move_to(*P(-5, 14)); ctx.line_to(*P(5, 14)); ctx.line_to(*P(8 + v(70), 70)); ctx.line_to(*P(11 + v(120), 120))
+            ctx.line_to(*P(v(136), 136)); ctx.line_to(*P(-11 + v(120), 120)); ctx.line_to(*P(-8 + v(70), 70)); ctx.close_path(); _contorno(ctx, R["corbata"], 2.4 * s)
         # bolsillo y gafete
         lado = 1 if (mira or 1) > 0 else -1
         if R["bolsillo"]:
@@ -283,7 +402,7 @@ class Persona(Monigote):
             ctx.move_to(-e.width / 2 - e.x_bearing, -e.height / 2 - e.y_bearing)
             ctx.set_source_rgb(0.1, 0.1, 0.15); ctx.show_text(R["gafete"]); ctx.restore()
 
-    def _cabeza(self, ctx, c, r, ang, mira, cara, t, s):
+    def _cabeza(self, ctx, c, r, ang, mira, cara, t, s, boca=0.0):
         ctx.save(); ctx.translate(*c); ctx.rotate(math.radians(180 - ang))
         ctx.save(); ctx.scale(0.96, 1.0); ctx.arc(0, 0, r, 0, 2 * math.pi); ctx.restore()
         g = cairo.LinearGradient(-r, -r, r, r)
@@ -318,7 +437,11 @@ class Persona(Monigote):
             ctx.line_to(ex + r * 0.13 * math.cos(a), by + r * 0.13 * math.sin(a)); ctx.stroke()
         mx, my = ox * 1.1, r * 0.45
         ctx.set_line_width(r * 0.055)
-        if cara == "feliz":
+        if boca > 0.12:   # hablando: la boca se abre y se cierra
+            ctx.save(); ctx.translate(mx, my + r * 0.02); ctx.scale(r * (0.1 + 0.03 * boca), r * (0.025 + 0.085 * boca))
+            ctx.arc(0, 0, 1, 0, 2 * math.pi); ctx.restore(); ctx.set_source_rgb(0.35, 0.08, 0.1); ctx.fill_preserve()
+            ctx.set_source_rgb(*NEGRO); ctx.set_line_width(r * 0.04); ctx.stroke()
+        elif cara == "feliz":
             ctx.arc(mx, my - r * 0.14, r * 0.17, math.radians(30), math.radians(150)); ctx.stroke()
         elif cara == "sorpresa":
             ctx.save(); ctx.translate(mx, my); ctx.scale(0.07 * r, 0.1 * r); ctx.arc(0, 0, 1, 0, 2 * math.pi)
