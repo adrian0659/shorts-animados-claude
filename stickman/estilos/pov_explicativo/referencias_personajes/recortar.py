@@ -42,18 +42,19 @@ def sin_fondo(im):
     return Image.fromarray(rgba, "RGBA")
 
 
-for clave, h in HOJAS.items():
-    im = Image.open(os.path.join(AQUI, h["archivo"])).convert("RGB")
-    nombres = h["nombres"].split()
-    out = os.path.join(AQUI, f"hoja_{clave}"); os.makedirs(out, exist_ok=True)
-    i = 0
-    for (y0, y1) in h["filas"]:
-        for (x0, x1) in h["cols"]:
-            p = im.crop((x0 + 4, y0 + 4 + h["arriba"], x1 - 4, y1 - 4))
-            p = p.resize((p.width * 2, p.height * 2), Image.LANCZOS)
-            nom = f"{i + 1:02d}_{nombres[i]}"
-            p.save(os.path.join(out, nom + ".png"))
-            if clave == "A":
-                sin_fondo(p).save(os.path.join(out, nom + "_recorte.png"))
-            i += 1
-    print(clave, i, "personajes")
+if __name__ == "__main__":
+    for clave, h in HOJAS.items():
+        im = Image.open(os.path.join(AQUI, h["archivo"])).convert("RGB")
+        nombres = h["nombres"].split()
+        out = os.path.join(AQUI, f"hoja_{clave}"); os.makedirs(out, exist_ok=True)
+        i = 0
+        for (y0, y1) in h["filas"]:
+            for (x0, x1) in h["cols"]:
+                p = im.crop((x0 + 4, y0 + 4 + h["arriba"], x1 - 4, y1 - 4))
+                p = p.resize((p.width * 2, p.height * 2), Image.LANCZOS)
+                nom = f"{i + 1:02d}_{nombres[i]}"
+                p.save(os.path.join(out, nom + ".png"))
+                if clave == "A":
+                    sin_fondo(p).save(os.path.join(out, nom + "_recorte.png"))
+                i += 1
+        print(clave, i, "personajes")

@@ -8,9 +8,11 @@ Imágenes de referencia del usuario (noviembre 2026), guardadas para copiar este
 | `hoja_B_oficios_con_fondo.jpg` | 30 oficios con escenario de color (número arriba) |
 | `hoja_C_30_carreras.jpg` | «30 different careers», cada uno en su escenario |
 | `mecanico_y_cliente.jpg`, `taller_escena.jpg` | Escena del taller (el look de video que se busca) |
-| `hoja_A/`, `hoja_B/`, `hoja_C/` | Cada personaje por separado, al doble de tamaño (`NN_oficio.png`) |
-| `hoja_A/*_recorte.png` | Personajes de la hoja A **con fondo transparente**, listos para poner sobre cualquier escenario |
-| `recortar.py` | Vuelve a generar los cortes y recortes |
+| `hd/hoja_A/`, `hd/hoja_B/`, `hd/hoja_C/` | **Cada personaje ampliado y aclarado (~1030x1430 px)**: `NN_oficio.jpg` |
+| `hd/hoja_A/*_recorte.png` | Personajes de la hoja A en HD **con fondo transparente**, listos para cualquier escenario |
+| `ampliar.py` | Amplía x8 y limpia (Real-ESRGAN anime 6B + Lanczos + niveles/enfoque) y hace los recortes |
+| `recortar.py` | Coordenadas de cada viñeta y función de quitar fondo (la usa `ampliar.py`) |
+| `muestra_antes_despues.png`, `muestra_vertical_hd.jpg` | Comparación y prueba sobre un cuadro vertical 1080x1920 |
 
 Oficios disponibles (A): chef, bombero, doctor, policía, científica, construcción, artista, astronauta, maestra, granjero,
 músico, piloto, empresario, atleta, juez, panadera, detective, cartero, carpintero, marinero, enfermera, electricista,
@@ -32,5 +34,7 @@ repartidor, arqueólogo.
 1. Elegir el recorte (`hoja_A/NN_oficio_recorte.png`) o pedir uno nuevo con la misma pose sobre fondo blanco.
 2. Ponerlo sobre un escenario de `escenarios.py` como capa de imagen, con zoom lento, un poco de balanceo y
    etiquetas/insertos del motor.
-3. Resolución: cada recorte mide ≈ 270x370 px (las hojas originales son de 768x1376). Sirve para planos medios;
-   para primeros planos o pantalla completa conviene la imagen original en alta resolución.
+3. Resolución: cada personaje HD mide ≈ 1030x1430 px, suficiente para ocupar todo el ancho de un video vertical
+   1080x1920. Al ampliar con IA se pierde algo de textura fina, pero la línea queda limpia y los blancos puros.
+   Para regenerarlos: bajar `RealESRGAN_x4plus_anime_6B.pth` (Hugging Face, ximso/RealESRGAN_x4plus_anime_6B) y
+   correr `python3 ampliar.py --modelo ruta.pth` (≈ 3 min en CPU para los 90).
