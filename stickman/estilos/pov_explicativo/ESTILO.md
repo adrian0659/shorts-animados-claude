@@ -126,3 +126,7 @@ Referencia: `cuadros/referencia_comic_pov.jpg` · resultado con código: `comic_
 - **Objeto en la mano** con la clave `objeto`: `telefono`, `tablet` (presupuesto), `llave`, `linterna`, `dinero`.
 - Trajes listos: `mecanico` (azul marino, cuello y ribete rojos, parche) y `cliente` (camisa gris, corbata vino, pelo café).
 - Ejemplo: `python3 videos/demo_personajes.py`.
+
+## Referencias de personajes guardadas — `referencias_personajes/`
+90 personajes de oficios (3 hojas) separados uno por uno y 30 recortados con fondo transparente, más los rasgos del
+estilo. Ver `referencias_personajes/README.md`.
