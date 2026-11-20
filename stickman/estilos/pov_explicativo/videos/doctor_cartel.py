@@ -42,9 +42,8 @@ def diploma(c, w, h, t):
     c.set_source(degradado(0, h, (0.98, 0.96, 0.88), (0.93, 0.89, 0.76))); c.paint()
     rrect(c, 20, 20, w - 40, h - 40, 6); c.set_source_rgb(0.75, 0.6, 0.25); c.set_line_width(6); c.stroke()
     texto(c, "TÍTULO DE", w / 2, h * 0.22, 40, TINTA)
-    texto(c, "MÉDICO CIRUJANO", w / 2, h * 0.4, 52, (0.15, 0.3, 0.55))
-    linea(c, [(w * 0.25, h * 0.62), (w * 0.75, h * 0.62)], 3, TINTA, 0.5)
-    texto(c, "TU NOMBRE", w / 2, h * 0.7, 28, (0.4, 0.4, 0.4), MANO, peso=cairo.FONT_WEIGHT_BOLD)
+    texto(c, "DOCTOR TÚ", w / 2, h * 0.43, 68, (0.15, 0.3, 0.55))
+    linea(c, [(w * 0.25, h * 0.66), (w * 0.75, h * 0.66)], 3, TINTA, 0.5)
     c.arc(w * 0.82, h * 0.8, 40, 0, 7); relleno(c, (0.85, 0.15, 0.15), 3)
     linea(c, [(w * 0.8, h * 0.85), (w * 0.76, h * 0.98)], 14, (0.85, 0.15, 0.15)); linea(c, [(w * 0.84, h * 0.85), (w * 0.88, h * 0.98)], 14, (0.85, 0.15, 0.15))
 

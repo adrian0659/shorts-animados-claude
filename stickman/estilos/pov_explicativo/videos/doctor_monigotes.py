@@ -112,8 +112,8 @@ def escenas():
     d = doc([dict(t=0, pose="parado", x=-150, y=1850, cara="neutral", caminar=True),
              dict(t=r(i, 38.6), pose="parado", x=520, y=1850, cara="neutral", mira=0.0),
              dict(t=r(i, 40.4), pose="encoger", cara="miedo", mira=-0.8, sudor=True)])
-    guardias = [Actor("soldado", [dict(t=0, pose=p, x=x, y=1500, cara="serio", fac=f)], escala=1.0, semilla=10 + k)
-                for k, (x, p, f) in enumerate([(150, "cruzado", 1), (930, "cruzado", -1), (720, "guardia", -1)])]
+    guardias = [Actor("soldado", [dict(t=0, pose="guardia", x=x, y=1500, cara="serio", fac=f, objeto="rifle")], escala=1.0, semilla=10 + k)
+                for k, (x, f) in enumerate([(150, 1), (930, -1), (720, -1)])]
     esc(i, lambda c: rancho(c, "dia"), guardias + [DC.muro_bajo(1420), d,
         Etiqueta("HOMBRES\nARMADOS", r(i, 40.5), 540, 560, (190, 860), tam=70, color=ROJO, curva=0.3),
         Etiqueta("ENORME PROPIEDAD", r(i, 38.6), 540, 300, None, tam=60, rot=-3)],
@@ -247,7 +247,7 @@ def escenas():
     # 21 · peligro
     i = 21
     j = Actor("jefe_traje", [dict(t=0, pose="cadera", x=540, y=1560, cara="enojado")], escala=1.25, semilla=4)
-    guardias = [Actor("soldado", [dict(t=0, pose="cruzado", x=x, y=1600, cara="serio", fac=f)], escala=1.15, semilla=5 + k)
+    guardias = [Actor("soldado", [dict(t=0, pose="guardia", x=x, y=1600, cara="serio", fac=f, objeto="rifle")], escala=1.15, semilla=5 + k)
                 for k, (x, f) in enumerate([(170, 1), (910, -1)])]
     esc(i, lambda c: rancho(c, "noche"), guardias + [j, DC.muro_bajo(1480),
         Etiqueta("PELIGRO", r(i, 107.8), 540, 330, None, tam=130, color=ROJO, halo=(1, 1, 1), rot=-4)],

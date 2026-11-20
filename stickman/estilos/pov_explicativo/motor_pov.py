@@ -468,6 +468,21 @@ def objeto_mano(ctx, obj, x, y, ang, s):
         ctx.set_source(g); ctx.move_to(74, -8); ctx.line_to(260, -50); ctx.line_to(260, 50); ctx.line_to(74, 8); ctx.close_path(); ctx.fill()
     elif obj == "dinero":
         for k in range(3): billete(ctx, 40 + k * 4, -10 - k * 6, 0.8, -0.3 + k * 0.15)
+    elif obj == "rifle":
+        # rifle de caricatura cruzado frente al pecho (independiente del ángulo del antebrazo)
+        ctx.rotate(-math.radians(ang)); ctx.rotate(math.radians(-38))
+        metal, oscuro, madera = (0.2, 0.21, 0.23), (0.1, 0.1, 0.11), (0.42, 0.28, 0.16)
+        ctx.move_to(-120, -10); ctx.line_to(-60, -16); ctx.line_to(-60, 14); ctx.line_to(-118, 22); ctx.close_path()
+        relleno(ctx, madera, 3)                                         # culata
+        rrect(ctx, -62, -16, 120, 26, 5); relleno(ctx, metal, 3)        # cuerpo
+        ctx.move_to(-10, 10); ctx.line_to(8, 10); ctx.line_to(14, 52); ctx.line_to(-2, 54); ctx.close_path()
+        relleno(ctx, oscuro, 3)                                         # cargador
+        ctx.move_to(-40, 10); ctx.line_to(-28, 10); ctx.line_to(-32, 34); ctx.line_to(-44, 34); ctx.close_path()
+        relleno(ctx, madera, 2.5)                                       # empuñadura
+        rrect(ctx, 56, -11, 70, 17, 4); relleno(ctx, metal, 3)          # guardamanos
+        rrect(ctx, 124, -6, 70, 8, 3); relleno(ctx, oscuro, 2.5)        # cañón
+        rrect(ctx, -30, -24, 34, 9, 3); relleno(ctx, oscuro, 2)         # mira
+        linea(ctx, [(-50, -10), (40, -10)], 2, (1, 1, 1), 0.25)
     ctx.restore()
 
 
