@@ -56,3 +56,18 @@ la historia, los personajes y la voz del video nuevo deben ser del usuario).
   usar escenarios ilustrados de fondo.
 - No copies el escenario del taller ni la historia del mecánico: es la referencia del look.
 - Si usas generadores de imágenes con costo, avisa al usuario antes.
+
+## Versión dibujada con código (sin IA, gratis)
+`motor_pov.py` reproduce el estilo sin generar imágenes: monigote con ropa (`Actor`, trajes en `TRAJES`,
+poses en `POSES`), escenarios (`rancho`, `interior`, `ventana`, `camioneta`, `helicoptero`, `mapa_mexico`...),
+`Etiqueta` (texto a mano + flecha curva, opción `tachar` y `palomita`), `Inserto` (recuadro de detalle) y
+`Escena` (fondo cacheado, zoom lento, sacudidas, tinte de noche). Fuentes en `fuentes/` (licencia OFL):
+instálalas en `~/.fonts` o en el sistema antes de renderizar.
+
+Ejemplo completo: `videos/escolta.py` (vertical 9:16, 2:08, 31 escenas, voz de ElevenLabs).
+```
+python3 videos/escolta.py --fotos        # una foto por escena
+python3 videos/escolta.py --voz voz.mp3  # video final en salida/escolta/escolta.mp4
+```
+Flujo: transcribir la voz con tiempos por palabra (faster-whisper) → un corte por frase, 0.15 s antes →
+una escena por frase con 1–3 etiquetas que caen sobre su palabra → fotos de revisión → render en paralelo.
