@@ -822,7 +822,7 @@ class Etiqueta:
 
     def dibujar(self, ctx, t):
         if t < self.t0 or (self.t1 is not None and t > self.t1): return
-        k = rebote((t - self.t0) / 0.32)
+        k = max(0.01, rebote((t - self.t0) / 0.32))
         ctx.save(); ctx.translate(self.x, self.y); ctx.rotate(math.radians(self.rot)); ctx.scale(k, k)
         texto(ctx, self.txt, 0, 0, self.tam, self.color, MARKER, halo=self.halo)
         w, h = medir(ctx, self.txt, self.tam)
@@ -874,7 +874,7 @@ class Inserto:
 
     def dibujar(self, ctx, t):
         if t < self.t0 or (self.t1 is not None and t > self.t1): return
-        k = rebote((t - self.t0) / 0.35)
+        k = max(0.01, rebote((t - self.t0) / 0.35))
         ctx.save(); ctx.translate(self.x + self.w / 2, self.y + self.h / 2); ctx.scale(k, k)
         ctx.translate(-self.w / 2, -self.h / 2)
         ctx.save(); ctx.translate(10, 14); rrect(ctx, 0, 0, self.w, self.h, 22); ctx.set_source_rgba(0, 0, 0, 0.3); ctx.fill(); ctx.restore()
