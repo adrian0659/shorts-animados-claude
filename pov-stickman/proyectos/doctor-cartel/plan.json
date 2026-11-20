@@ -4,7 +4,7 @@
  "fps": 30,
  "voz": "voz.mp3",
  "musica": "musica.mp3",
- "volumen_musica": 0.12,
+ "volumen_musica": 0.18,
  "fundido": 0.3,
  "planos": [
   {
