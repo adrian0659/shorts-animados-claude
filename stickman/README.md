@@ -33,3 +33,7 @@ python3 ejemplos/pulpo.py           # video final: salida/pulpo.mp4
 ## Voz
 El ejemplo usa texto en pantalla, sin narración. Para agregar voz, graba o genera un audio y mézclalo con
 `Mezcla.poner(0, audio)`; ajusta los tiempos del guion a la voz.
+
+## Estilos guardados
+- `estilos/pov_explicativo/ESTILO.md`: monigote ilustrado en escenario detallado, narración en segunda persona,
+  etiquetas escritas a mano con flechas (16:9). Guardado de un video de referencia del usuario.
