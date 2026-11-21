@@ -33,3 +33,20 @@ python3 ejemplos/pulpo.py           # video final: salida/pulpo.mp4
 ## Voz
 El ejemplo usa texto en pantalla, sin narración. Para agregar voz, graba o genera un audio y mézclalo con
 `Mezcla.poner(0, audio)`; ajusta los tiempos del guion a la voz.
+
+## Personaje con volumen, estilo «boceto» (`personaje.py`)
+Segundo modelo de personaje, basado en una hoja de giro de referencia: cabeza blanca grande, ropa con
+volumen, contorno dibujado a mano que «hierve», sombra rayada, grano de papel y fondo sepia sucio.
+Se puede ver **desde cualquier ángulo** (`giro`: 0 frente, 90 perfil, 180 espalda) y girar de forma continua.
+
+```
+python3 ejemplos/doctor.py --hoja   # hoja con 5 vistas -> salida/doctor_hoja.png
+python3 ejemplos/doctor.py          # video de 9 s: gira 360°, mira preocupado, sale caminando
+```
+
+- `Personaje(estilo).dibujar(ctx, t, x, suelo, escala, giro, cara, mira, paso, brazos)`
+  - `cara`: `preocupado, enojado, neutral, sorpresa, feliz` · `mira`: -1..1 · `paso`: fase de caminata o `None`
+  - `brazos`: `{"i": (adelante, afuera, codo), "d": (...)}` en grados
+- Estilo: copia `DOCTOR` y cambia colores o quita `con_gorro`, `con_mascarilla` (sin mascarilla se dibuja la boca).
+- Fondo y acabado: `Lienzo(W, H, fondo_grunge(W, H))` → `ctx = lienzo.nuevo()` → dibujar → `lienzo.rgb(t)`.
+- `ejemplos/taller.py` es el estilo anterior (plano y limpio, tipo caricatura) por si lo prefieres.
