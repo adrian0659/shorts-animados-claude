@@ -1,0 +1,2294 @@
+[
+ {
+  "inicio": 0.0,
+  "fin": 2.8,
+  "texto": "POV: eres el abogado del cártel.",
+  "palabras": [
+   {
+    "p": "POV:",
+    "i": 0.0,
+    "f": 0.56
+   },
+   {
+    "p": "eres",
+    "i": 0.56,
+    "f": 1.12
+   },
+   {
+    "p": "el",
+    "i": 1.4,
+    "f": 1.6
+   },
+   {
+    "p": "abogado",
+    "i": 1.6,
+    "f": 2.06
+   },
+   {
+    "p": "del",
+    "i": 2.06,
+    "f": 2.3
+   },
+   {
+    "p": "cártel.",
+    "i": 2.3,
+    "f": 2.8
+   }
+  ]
+ },
+ {
+  "inicio": 3.44,
+  "fin": 6.34,
+  "texto": "Tienes 26 años y acabas de graduarte de derecho.",
+  "palabras": [
+   {
+    "p": "Tienes",
+    "i": 3.44,
+    "f": 3.88
+   },
+   {
+    "p": "26",
+    "i": 3.88,
+    "f": 4.3
+   },
+   {
+    "p": "años",
+    "i": 4.3,
+    "f": 4.7
+   },
+   {
+    "p": "y",
+    "i": 4.7,
+    "f": 4.94
+   },
+   {
+    "p": "acabas",
+    "i": 4.94,
+    "f": 5.28
+   },
+   {
+    "p": "de",
+    "i": 5.28,
+    "f": 5.36
+   },
+   {
+    "p": "graduarte",
+    "i": 5.36,
+    "f": 5.78
+   },
+   {
+    "p": "de",
+    "i": 5.78,
+    "f": 5.96
+   },
+   {
+    "p": "derecho.",
+    "i": 5.96,
+    "f": 6.34
+   }
+  ]
+ },
+ {
+  "inicio": 6.92,
+  "fin": 8.62,
+  "texto": "Sueñas con tener tu propio despacho,",
+  "palabras": [
+   {
+    "p": "Sueñas",
+    "i": 6.92,
+    "f": 7.14
+   },
+   {
+    "p": "con",
+    "i": 7.14,
+    "f": 7.38
+   },
+   {
+    "p": "tener",
+    "i": 7.38,
+    "f": 7.58
+   },
+   {
+    "p": "tu",
+    "i": 7.58,
+    "f": 7.74
+   },
+   {
+    "p": "propio",
+    "i": 7.74,
+    "f": 8.02
+   },
+   {
+    "p": "despacho,",
+    "i": 8.02,
+    "f": 8.62
+   }
+  ]
+ },
+ {
+  "inicio": 8.88,
+  "fin": 11.84,
+  "texto": "ganar mucho dinero y convertirte en uno de los mejores",
+  "palabras": [
+   {
+    "p": "ganar",
+    "i": 8.88,
+    "f": 9.14
+   },
+   {
+    "p": "mucho",
+    "i": 9.14,
+    "f": 9.5
+   },
+   {
+    "p": "dinero",
+    "i": 9.5,
+    "f": 9.92
+   },
+   {
+    "p": "y",
+    "i": 9.92,
+    "f": 10.34
+   },
+   {
+    "p": "convertirte",
+    "i": 10.34,
+    "f": 10.9
+   },
+   {
+    "p": "en",
+    "i": 10.9,
+    "f": 11.02
+   },
+   {
+    "p": "uno",
+    "i": 11.02,
+    "f": 11.14
+   },
+   {
+    "p": "de",
+    "i": 11.14,
+    "f": 11.26
+   },
+   {
+    "p": "los",
+    "i": 11.26,
+    "f": 11.42
+   },
+   {
+    "p": "mejores",
+    "i": 11.42,
+    "f": 11.84
+   }
+  ]
+ },
+ {
+  "inicio": 11.84,
+  "fin": 12.94,
+  "texto": "abogados de México.",
+  "palabras": [
+   {
+    "p": "abogados",
+    "i": 11.84,
+    "f": 12.42
+   },
+   {
+    "p": "de",
+    "i": 12.42,
+    "f": 12.58
+   },
+   {
+    "p": "México.",
+    "i": 12.58,
+    "f": 12.94
+   }
+  ]
+ },
+ {
+  "inicio": 13.54,
+  "fin": 15.5,
+  "texto": "Pero conseguir clientes no es fácil.",
+  "palabras": [
+   {
+    "p": "Pero",
+    "i": 13.54,
+    "f": 13.72
+   },
+   {
+    "p": "conseguir",
+    "i": 13.72,
+    "f": 14.3
+   },
+   {
+    "p": "clientes",
+    "i": 14.3,
+    "f": 14.86
+   },
+   {
+    "p": "no",
+    "i": 14.86,
+    "f": 15.04
+   },
+   {
+    "p": "es",
+    "i": 15.04,
+    "f": 15.18
+   },
+   {
+    "p": "fácil.",
+    "i": 15.18,
+    "f": 15.5
+   }
+  ]
+ },
+ {
+  "inicio": 16.3,
+  "fin": 19.2,
+  "texto": "Hasta que un día recibes una llamada de un hombre que te",
+  "palabras": [
+   {
+    "p": "Hasta",
+    "i": 16.3,
+    "f": 16.82
+   },
+   {
+    "p": "que",
+    "i": 16.82,
+    "f": 17.0
+   },
+   {
+    "p": "un",
+    "i": 17.0,
+    "f": 17.12
+   },
+   {
+    "p": "día",
+    "i": 17.12,
+    "f": 17.34
+   },
+   {
+    "p": "recibes",
+    "i": 17.34,
+    "f": 17.72
+   },
+   {
+    "p": "una",
+    "i": 17.72,
+    "f": 17.96
+   },
+   {
+    "p": "llamada",
+    "i": 17.96,
+    "f": 18.34
+   },
+   {
+    "p": "de",
+    "i": 18.34,
+    "f": 18.5
+   },
+   {
+    "p": "un",
+    "i": 18.5,
+    "f": 18.64
+   },
+   {
+    "p": "hombre",
+    "i": 18.64,
+    "f": 18.9
+   },
+   {
+    "p": "que",
+    "i": 18.9,
+    "f": 19.1
+   },
+   {
+    "p": "te",
+    "i": 19.1,
+    "f": 19.2
+   }
+  ]
+ },
+ {
+  "inicio": 19.2,
+  "fin": 22.86,
+  "texto": "ofrece $50,000 por representar a uno de sus socios.",
+  "palabras": [
+   {
+    "p": "ofrece",
+    "i": 19.2,
+    "f": 19.4
+   },
+   {
+    "p": "$50",
+    "i": 19.4,
+    "f": 19.88
+   },
+   {
+    "p": ",000",
+    "i": 19.88,
+    "f": 20.4
+   },
+   {
+    "p": "por",
+    "i": 20.4,
+    "f": 21.2
+   },
+   {
+    "p": "representar",
+    "i": 21.2,
+    "f": 21.78
+   },
+   {
+    "p": "a",
+    "i": 21.78,
+    "f": 21.92
+   },
+   {
+    "p": "uno",
+    "i": 21.92,
+    "f": 22.06
+   },
+   {
+    "p": "de",
+    "i": 22.06,
+    "f": 22.18
+   },
+   {
+    "p": "sus",
+    "i": 22.18,
+    "f": 22.34
+   },
+   {
+    "p": "socios.",
+    "i": 22.34,
+    "f": 22.86
+   }
+  ]
+ },
+ {
+  "inicio": 23.38,
+  "fin": 26.36,
+  "texto": "Aceptas sin imaginar en lo que estás a punto de meterte.",
+  "palabras": [
+   {
+    "p": "Aceptas",
+    "i": 23.38,
+    "f": 23.9
+   },
+   {
+    "p": "sin",
+    "i": 23.9,
+    "f": 24.2
+   },
+   {
+    "p": "imaginar",
+    "i": 24.2,
+    "f": 24.62
+   },
+   {
+    "p": "en",
+    "i": 24.62,
+    "f": 24.8
+   },
+   {
+    "p": "lo",
+    "i": 24.8,
+    "f": 24.9
+   },
+   {
+    "p": "que",
+    "i": 24.9,
+    "f": 25.0
+   },
+   {
+    "p": "estás",
+    "i": 25.0,
+    "f": 25.22
+   },
+   {
+    "p": "a",
+    "i": 25.22,
+    "f": 25.4
+   },
+   {
+    "p": "punto",
+    "i": 25.4,
+    "f": 25.66
+   },
+   {
+    "p": "de",
+    "i": 25.66,
+    "f": 25.9
+   },
+   {
+    "p": "meterte.",
+    "i": 25.9,
+    "f": 26.36
+   }
+  ]
+ },
+ {
+  "inicio": 27.32,
+  "fin": 29.0,
+  "texto": "Llegas a una lujosa mansión.",
+  "palabras": [
+   {
+    "p": "Llegas",
+    "i": 27.32,
+    "f": 27.76
+   },
+   {
+    "p": "a",
+    "i": 27.76,
+    "f": 27.92
+   },
+   {
+    "p": "una",
+    "i": 27.92,
+    "f": 28.06
+   },
+   {
+    "p": "lujosa",
+    "i": 28.06,
+    "f": 28.5
+   },
+   {
+    "p": "mansión.",
+    "i": 28.5,
+    "f": 29.0
+   }
+  ]
+ },
+ {
+  "inicio": 29.0,
+  "fin": 32.68,
+  "texto": "Te reciben varios hombres armados y te conducen hasta una oficina.",
+  "palabras": [
+   {
+    "p": "Te",
+    "i": 29.0,
+    "f": 29.5
+   },
+   {
+    "p": "reciben",
+    "i": 29.5,
+    "f": 29.86
+   },
+   {
+    "p": "varios",
+    "i": 29.86,
+    "f": 30.12
+   },
+   {
+    "p": "hombres",
+    "i": 30.12,
+    "f": 30.38
+   },
+   {
+    "p": "armados",
+    "i": 30.38,
+    "f": 30.92
+   },
+   {
+    "p": "y",
+    "i": 30.92,
+    "f": 31.2
+   },
+   {
+    "p": "te",
+    "i": 31.2,
+    "f": 31.3
+   },
+   {
+    "p": "conducen",
+    "i": 31.3,
+    "f": 31.76
+   },
+   {
+    "p": "hasta",
+    "i": 31.76,
+    "f": 31.94
+   },
+   {
+    "p": "una",
+    "i": 31.94,
+    "f": 32.16
+   },
+   {
+    "p": "oficina.",
+    "i": 32.16,
+    "f": 32.68
+   }
+  ]
+ },
+ {
+  "inicio": 33.18,
+  "fin": 36.14,
+  "texto": "Frente a ti está uno de los hombres más poderosos de la",
+  "palabras": [
+   {
+    "p": "Frente",
+    "i": 33.18,
+    "f": 33.42
+   },
+   {
+    "p": "a",
+    "i": 33.42,
+    "f": 33.6
+   },
+   {
+    "p": "ti",
+    "i": 33.6,
+    "f": 33.72
+   },
+   {
+    "p": "está",
+    "i": 33.72,
+    "f": 34.18
+   },
+   {
+    "p": "uno",
+    "i": 34.18,
+    "f": 34.38
+   },
+   {
+    "p": "de",
+    "i": 34.38,
+    "f": 34.5
+   },
+   {
+    "p": "los",
+    "i": 34.5,
+    "f": 34.62
+   },
+   {
+    "p": "hombres",
+    "i": 34.62,
+    "f": 34.92
+   },
+   {
+    "p": "más",
+    "i": 34.92,
+    "f": 35.32
+   },
+   {
+    "p": "poderosos",
+    "i": 35.32,
+    "f": 35.88
+   },
+   {
+    "p": "de",
+    "i": 35.88,
+    "f": 36.04
+   },
+   {
+    "p": "la",
+    "i": 36.04,
+    "f": 36.14
+   }
+  ]
+ },
+ {
+  "inicio": 36.14,
+  "fin": 36.74,
+  "texto": "organización.",
+  "palabras": [
+   {
+    "p": "organización.",
+    "i": 36.14,
+    "f": 36.74
+   }
+  ]
+ },
+ {
+  "inicio": 37.18,
+  "fin": 40.2,
+  "texto": "Te explica que necesita un abogado de confianza y te ofreces",
+  "palabras": [
+   {
+    "p": "Te",
+    "i": 37.18,
+    "f": 37.4
+   },
+   {
+    "p": "explica",
+    "i": 37.4,
+    "f": 37.72
+   },
+   {
+    "p": "que",
+    "i": 37.72,
+    "f": 37.84
+   },
+   {
+    "p": "necesita",
+    "i": 37.84,
+    "f": 38.1
+   },
+   {
+    "p": "un",
+    "i": 38.1,
+    "f": 38.42
+   },
+   {
+    "p": "abogado",
+    "i": 38.42,
+    "f": 38.76
+   },
+   {
+    "p": "de",
+    "i": 38.76,
+    "f": 38.92
+   },
+   {
+    "p": "confianza",
+    "i": 38.92,
+    "f": 39.56
+   },
+   {
+    "p": "y",
+    "i": 39.56,
+    "f": 39.76
+   },
+   {
+    "p": "te",
+    "i": 39.76,
+    "f": 39.86
+   },
+   {
+    "p": "ofreces",
+    "i": 39.86,
+    "f": 40.2
+   }
+  ]
+ },
+ {
+  "inicio": 40.2,
+  "fin": 43.08,
+  "texto": "$100,000 por encargarte de sus asuntos legales.",
+  "palabras": [
+   {
+    "p": "$100",
+    "i": 40.2,
+    "f": 40.44
+   },
+   {
+    "p": ",000",
+    "i": 40.44,
+    "f": 40.86
+   },
+   {
+    "p": "por",
+    "i": 40.86,
+    "f": 41.42
+   },
+   {
+    "p": "encargarte",
+    "i": 41.42,
+    "f": 41.92
+   },
+   {
+    "p": "de",
+    "i": 41.92,
+    "f": 42.08
+   },
+   {
+    "p": "sus",
+    "i": 42.08,
+    "f": 42.24
+   },
+   {
+    "p": "asuntos",
+    "i": 42.24,
+    "f": 42.66
+   },
+   {
+    "p": "legales.",
+    "i": 42.66,
+    "f": 43.08
+   }
+  ]
+ },
+ {
+  "inicio": 43.56,
+  "fin": 45.64,
+  "texto": "Nunca habías visto tanto dinero junto.",
+  "palabras": [
+   {
+    "p": "Nunca",
+    "i": 43.56,
+    "f": 44.0
+   },
+   {
+    "p": "habías",
+    "i": 44.0,
+    "f": 44.22
+   },
+   {
+    "p": "visto",
+    "i": 44.22,
+    "f": 44.56
+   },
+   {
+    "p": "tanto",
+    "i": 44.56,
+    "f": 44.94
+   },
+   {
+    "p": "dinero",
+    "i": 44.94,
+    "f": 45.24
+   },
+   {
+    "p": "junto.",
+    "i": 45.24,
+    "f": 45.64
+   }
+  ]
+ },
+ {
+  "inicio": 46.24,
+  "fin": 46.8,
+  "texto": "Aceptas.",
+  "palabras": [
+   {
+    "p": "Aceptas.",
+    "i": 46.24,
+    "f": 46.8
+   }
+  ]
+ },
+ {
+  "inicio": 47.22,
+  "fin": 49.5,
+  "texto": "En pocos meses comienzas a representar a varios",
+  "palabras": [
+   {
+    "p": "En",
+    "i": 47.22,
+    "f": 47.38
+   },
+   {
+    "p": "pocos",
+    "i": 47.38,
+    "f": 47.68
+   },
+   {
+    "p": "meses",
+    "i": 47.68,
+    "f": 47.94
+   },
+   {
+    "p": "comienzas",
+    "i": 47.94,
+    "f": 48.44
+   },
+   {
+    "p": "a",
+    "i": 48.44,
+    "f": 48.58
+   },
+   {
+    "p": "representar",
+    "i": 48.58,
+    "f": 49.14
+   },
+   {
+    "p": "a",
+    "i": 49.14,
+    "f": 49.22
+   },
+   {
+    "p": "varios",
+    "i": 49.22,
+    "f": 49.5
+   }
+  ]
+ },
+ {
+  "inicio": 49.5,
+  "fin": 50.92,
+  "texto": "integrantes de la organización.",
+  "palabras": [
+   {
+    "p": "integrantes",
+    "i": 49.5,
+    "f": 50.08
+   },
+   {
+    "p": "de",
+    "i": 50.08,
+    "f": 50.24
+   },
+   {
+    "p": "la",
+    "i": 50.24,
+    "f": 50.34
+   },
+   {
+    "p": "organización.",
+    "i": 50.34,
+    "f": 50.92
+   }
+  ]
+ },
+ {
+  "inicio": 51.24,
+  "fin": 53.4,
+  "texto": "Tu trabajo consiste en defenderlos legalmente,",
+  "palabras": [
+   {
+    "p": "Tu",
+    "i": 51.24,
+    "f": 51.34
+   },
+   {
+    "p": "trabajo",
+    "i": 51.34,
+    "f": 51.6
+   },
+   {
+    "p": "consiste",
+    "i": 51.6,
+    "f": 51.98
+   },
+   {
+    "p": "en",
+    "i": 51.98,
+    "f": 52.26
+   },
+   {
+    "p": "defenderlos",
+    "i": 52.26,
+    "f": 52.74
+   },
+   {
+    "p": "legalmente,",
+    "i": 52.74,
+    "f": 53.4
+   }
+  ]
+ },
+ {
+  "inicio": 53.64,
+  "fin": 55.84,
+  "texto": "preparar sus estrategias judiciales y revisar",
+  "palabras": [
+   {
+    "p": "preparar",
+    "i": 53.64,
+    "f": 53.98
+   },
+   {
+    "p": "sus",
+    "i": 53.98,
+    "f": 54.12
+   },
+   {
+    "p": "estrategias",
+    "i": 54.12,
+    "f": 54.62
+   },
+   {
+    "p": "judiciales",
+    "i": 54.62,
+    "f": 55.34
+   },
+   {
+    "p": "y",
+    "i": 55.34,
+    "f": 55.46
+   },
+   {
+    "p": "revisar",
+    "i": 55.46,
+    "f": 55.84
+   }
+  ]
+ },
+ {
+  "inicio": 55.84,
+  "fin": 57.14,
+  "texto": "contratos y documentos.",
+  "palabras": [
+   {
+    "p": "contratos",
+    "i": 55.84,
+    "f": 56.38
+   },
+   {
+    "p": "y",
+    "i": 56.38,
+    "f": 56.54
+   },
+   {
+    "p": "documentos.",
+    "i": 56.54,
+    "f": 57.14
+   }
+  ]
+ },
+ {
+  "inicio": 57.14,
+  "fin": 59.32,
+  "texto": "Tus honorarios son extraordinarios.",
+  "palabras": [
+   {
+    "p": "Tus",
+    "i": 57.14,
+    "f": 57.52
+   },
+   {
+    "p": "honorarios",
+    "i": 57.52,
+    "f": 58.02
+   },
+   {
+    "p": "son",
+    "i": 58.02,
+    "f": 58.26
+   },
+   {
+    "p": "extraordinarios.",
+    "i": 58.26,
+    "f": 59.32
+   }
+  ]
+ },
+ {
+  "inicio": 59.66,
+  "fin": 62.86,
+  "texto": "Compras una casa, un automóvil de lujo y comienzas a vivir",
+  "palabras": [
+   {
+    "p": "Compras",
+    "i": 59.66,
+    "f": 59.96
+   },
+   {
+    "p": "una",
+    "i": 59.96,
+    "f": 60.14
+   },
+   {
+    "p": "casa,",
+    "i": 60.14,
+    "f": 60.5
+   },
+   {
+    "p": "un",
+    "i": 60.78,
+    "f": 60.9
+   },
+   {
+    "p": "automóvil",
+    "i": 60.9,
+    "f": 61.34
+   },
+   {
+    "p": "de",
+    "i": 61.34,
+    "f": 61.48
+   },
+   {
+    "p": "lujo",
+    "i": 61.48,
+    "f": 61.88
+   },
+   {
+    "p": "y",
+    "i": 61.88,
+    "f": 62.14
+   },
+   {
+    "p": "comienzas",
+    "i": 62.14,
+    "f": 62.56
+   },
+   {
+    "p": "a",
+    "i": 62.56,
+    "f": 62.72
+   },
+   {
+    "p": "vivir",
+    "i": 62.72,
+    "f": 62.86
+   }
+  ]
+ },
+ {
+  "inicio": 62.86,
+  "fin": 63.94,
+  "texto": "como un millonario.",
+  "palabras": [
+   {
+    "p": "como",
+    "i": 62.86,
+    "f": 63.2
+   },
+   {
+    "p": "un",
+    "i": 63.2,
+    "f": 63.44
+   },
+   {
+    "p": "millonario.",
+    "i": 63.44,
+    "f": 63.94
+   }
+  ]
+ },
+ {
+  "inicio": 64.32,
+  "fin": 66.5,
+  "texto": "Pero hay algo que no puedes contarle a nadie.",
+  "palabras": [
+   {
+    "p": "Pero",
+    "i": 64.32,
+    "f": 64.46
+   },
+   {
+    "p": "hay",
+    "i": 64.46,
+    "f": 64.64
+   },
+   {
+    "p": "algo",
+    "i": 64.64,
+    "f": 64.86
+   },
+   {
+    "p": "que",
+    "i": 64.86,
+    "f": 65.06
+   },
+   {
+    "p": "no",
+    "i": 65.06,
+    "f": 65.26
+   },
+   {
+    "p": "puedes",
+    "i": 65.26,
+    "f": 65.64
+   },
+   {
+    "p": "contarle",
+    "i": 65.64,
+    "f": 66.18
+   },
+   {
+    "p": "a",
+    "i": 66.18,
+    "f": 66.22
+   },
+   {
+    "p": "nadie.",
+    "i": 66.22,
+    "f": 66.5
+   }
+  ]
+ },
+ {
+  "inicio": 67.04,
+  "fin": 69.02,
+  "texto": "¿Quiénes son realmente tus clientes?",
+  "palabras": [
+   {
+    "p": "¿Quiénes",
+    "i": 67.04,
+    "f": 67.46
+   },
+   {
+    "p": "son",
+    "i": 67.46,
+    "f": 67.62
+   },
+   {
+    "p": "realmente",
+    "i": 67.62,
+    "f": 68.22
+   },
+   {
+    "p": "tus",
+    "i": 68.22,
+    "f": 68.52
+   },
+   {
+    "p": "clientes?",
+    "i": 68.52,
+    "f": 69.02
+   }
+  ]
+ },
+ {
+  "inicio": 69.52,
+  "fin": 71.56,
+  "texto": "Una mañana recibes una llamada urgente.",
+  "palabras": [
+   {
+    "p": "Una",
+    "i": 69.52,
+    "f": 69.7
+   },
+   {
+    "p": "mañana",
+    "i": 69.7,
+    "f": 70.06
+   },
+   {
+    "p": "recibes",
+    "i": 70.06,
+    "f": 70.62
+   },
+   {
+    "p": "una",
+    "i": 70.62,
+    "f": 70.82
+   },
+   {
+    "p": "llamada",
+    "i": 70.82,
+    "f": 71.18
+   },
+   {
+    "p": "urgente.",
+    "i": 71.18,
+    "f": 71.56
+   }
+  ]
+ },
+ {
+  "inicio": 72.0,
+  "fin": 74.16,
+  "texto": "El jefe de la organización ha sido detenido.",
+  "palabras": [
+   {
+    "p": "El",
+    "i": 72.0,
+    "f": 72.1
+   },
+   {
+    "p": "jefe",
+    "i": 72.1,
+    "f": 72.36
+   },
+   {
+    "p": "de",
+    "i": 72.36,
+    "f": 72.48
+   },
+   {
+    "p": "la",
+    "i": 72.48,
+    "f": 72.58
+   },
+   {
+    "p": "organización",
+    "i": 72.58,
+    "f": 73.18
+   },
+   {
+    "p": "ha",
+    "i": 73.18,
+    "f": 73.42
+   },
+   {
+    "p": "sido",
+    "i": 73.42,
+    "f": 73.64
+   },
+   {
+    "p": "detenido.",
+    "i": 73.64,
+    "f": 74.16
+   }
+  ]
+ },
+ {
+  "inicio": 74.46,
+  "fin": 77.22,
+  "texto": "Necesitan que te presentes inmediatamente para encargarte",
+  "palabras": [
+   {
+    "p": "Necesitan",
+    "i": 74.46,
+    "f": 74.9
+   },
+   {
+    "p": "que",
+    "i": 74.9,
+    "f": 75.02
+   },
+   {
+    "p": "te",
+    "i": 75.02,
+    "f": 75.12
+   },
+   {
+    "p": "presentes",
+    "i": 75.12,
+    "f": 75.6
+   },
+   {
+    "p": "inmediatamente",
+    "i": 75.6,
+    "f": 76.4
+   },
+   {
+    "p": "para",
+    "i": 76.4,
+    "f": 76.74
+   },
+   {
+    "p": "encargarte",
+    "i": 76.74,
+    "f": 77.22
+   }
+  ]
+ },
+ {
+  "inicio": 77.22,
+  "fin": 77.92,
+  "texto": "de su defensa.",
+  "palabras": [
+   {
+    "p": "de",
+    "i": 77.22,
+    "f": 77.38
+   },
+   {
+    "p": "su",
+    "i": 77.38,
+    "f": 77.5
+   },
+   {
+    "p": "defensa.",
+    "i": 77.5,
+    "f": 77.92
+   }
+  ]
+ },
+ {
+  "inicio": 78.36,
+  "fin": 81.14,
+  "texto": "Llegas al despacho y encuentras decenas de documentos,",
+  "palabras": [
+   {
+    "p": "Llegas",
+    "i": 78.36,
+    "f": 78.56
+   },
+   {
+    "p": "al",
+    "i": 78.56,
+    "f": 78.72
+   },
+   {
+    "p": "despacho",
+    "i": 78.72,
+    "f": 79.14
+   },
+   {
+    "p": "y",
+    "i": 79.14,
+    "f": 79.32
+   },
+   {
+    "p": "encuentras",
+    "i": 79.32,
+    "f": 79.74
+   },
+   {
+    "p": "decenas",
+    "i": 79.74,
+    "f": 80.24
+   },
+   {
+    "p": "de",
+    "i": 80.24,
+    "f": 80.42
+   },
+   {
+    "p": "documentos,",
+    "i": 80.42,
+    "f": 81.14
+   }
+  ]
+ },
+ {
+  "inicio": 81.32,
+  "fin": 83.58,
+  "texto": "abogados y familiares esperando respuestas.",
+  "palabras": [
+   {
+    "p": "abogados",
+    "i": 81.32,
+    "f": 81.76
+   },
+   {
+    "p": "y",
+    "i": 81.76,
+    "f": 82.04
+   },
+   {
+    "p": "familiares",
+    "i": 82.04,
+    "f": 82.6
+   },
+   {
+    "p": "esperando",
+    "i": 82.6,
+    "f": 82.98
+   },
+   {
+    "p": "respuestas.",
+    "i": 82.98,
+    "f": 83.58
+   }
+  ]
+ },
+ {
+  "inicio": 83.58,
+  "fin": 87.0,
+  "texto": "Ahora estás frente al caso más importante de tu carrera",
+  "palabras": [
+   {
+    "p": "Ahora",
+    "i": 83.58,
+    "f": 84.18
+   },
+   {
+    "p": "estás",
+    "i": 84.18,
+    "f": 84.66
+   },
+   {
+    "p": "frente",
+    "i": 84.66,
+    "f": 84.9
+   },
+   {
+    "p": "al",
+    "i": 84.9,
+    "f": 85.08
+   },
+   {
+    "p": "caso",
+    "i": 85.08,
+    "f": 85.32
+   },
+   {
+    "p": "más",
+    "i": 85.32,
+    "f": 85.68
+   },
+   {
+    "p": "importante",
+    "i": 85.68,
+    "f": 86.26
+   },
+   {
+    "p": "de",
+    "i": 86.26,
+    "f": 86.46
+   },
+   {
+    "p": "tu",
+    "i": 86.46,
+    "f": 86.58
+   },
+   {
+    "p": "carrera",
+    "i": 86.58,
+    "f": 87.0
+   }
+  ]
+ },
+ {
+  "inicio": 87.0,
+  "fin": 89.34,
+  "texto": "y también al más peligroso.",
+  "palabras": [
+   {
+    "p": "y",
+    "i": 87.0,
+    "f": 87.44
+   },
+   {
+    "p": "también",
+    "i": 87.44,
+    "f": 87.84
+   },
+   {
+    "p": "al",
+    "i": 87.84,
+    "f": 88.28
+   },
+   {
+    "p": "más",
+    "i": 88.28,
+    "f": 88.54
+   },
+   {
+    "p": "peligroso.",
+    "i": 88.54,
+    "f": 89.34
+   }
+  ]
+ },
+ {
+  "inicio": 89.5,
+  "fin": 92.48,
+  "texto": "Conforme avanza el proceso, empiezas a recibir amenazas.",
+  "palabras": [
+   {
+    "p": "Conforme",
+    "i": 89.5,
+    "f": 89.84
+   },
+   {
+    "p": "avanza",
+    "i": 89.84,
+    "f": 90.18
+   },
+   {
+    "p": "el",
+    "i": 90.18,
+    "f": 90.34
+   },
+   {
+    "p": "proceso,",
+    "i": 90.34,
+    "f": 90.66
+   },
+   {
+    "p": "empiezas",
+    "i": 91.06,
+    "f": 91.4
+   },
+   {
+    "p": "a",
+    "i": 91.4,
+    "f": 91.58
+   },
+   {
+    "p": "recibir",
+    "i": 91.58,
+    "f": 91.82
+   },
+   {
+    "p": "amenazas.",
+    "i": 91.82,
+    "f": 92.48
+   }
+  ]
+ },
+ {
+  "inicio": 92.9,
+  "fin": 96.04,
+  "texto": "Algunos periodistas investigan tus conexiones y las autoridades",
+  "palabras": [
+   {
+    "p": "Algunos",
+    "i": 92.9,
+    "f": 93.3
+   },
+   {
+    "p": "periodistas",
+    "i": 93.3,
+    "f": 93.74
+   },
+   {
+    "p": "investigan",
+    "i": 93.74,
+    "f": 94.32
+   },
+   {
+    "p": "tus",
+    "i": 94.32,
+    "f": 94.48
+   },
+   {
+    "p": "conexiones",
+    "i": 94.48,
+    "f": 95.06
+   },
+   {
+    "p": "y",
+    "i": 95.06,
+    "f": 95.36
+   },
+   {
+    "p": "las",
+    "i": 95.36,
+    "f": 95.52
+   },
+   {
+    "p": "autoridades",
+    "i": 95.52,
+    "f": 96.04
+   }
+  ]
+ },
+ {
+  "inicio": 96.04,
+  "fin": 98.4,
+  "texto": "comienzan a revisar tus movimientos financieros.",
+  "palabras": [
+   {
+    "p": "comienzan",
+    "i": 96.04,
+    "f": 96.56
+   },
+   {
+    "p": "a",
+    "i": 96.56,
+    "f": 96.7
+   },
+   {
+    "p": "revisar",
+    "i": 96.7,
+    "f": 97.1
+   },
+   {
+    "p": "tus",
+    "i": 97.1,
+    "f": 97.24
+   },
+   {
+    "p": "movimientos",
+    "i": 97.24,
+    "f": 97.72
+   },
+   {
+    "p": "financieros.",
+    "i": 97.72,
+    "f": 98.4
+   }
+  ]
+ },
+ {
+  "inicio": 98.82,
+  "fin": 100.8,
+  "texto": "Tu familia nota que estás diferente.",
+  "palabras": [
+   {
+    "p": "Tu",
+    "i": 98.82,
+    "f": 98.94
+   },
+   {
+    "p": "familia",
+    "i": 98.94,
+    "f": 99.22
+   },
+   {
+    "p": "nota",
+    "i": 99.22,
+    "f": 99.6
+   },
+   {
+    "p": "que",
+    "i": 99.6,
+    "f": 99.82
+   },
+   {
+    "p": "estás",
+    "i": 99.82,
+    "f": 100.08
+   },
+   {
+    "p": "diferente.",
+    "i": 100.08,
+    "f": 100.8
+   }
+  ]
+ },
+ {
+  "inicio": 101.44,
+  "fin": 104.32,
+  "texto": "Por primera vez entiendes que ganar millones de dólares",
+  "palabras": [
+   {
+    "p": "Por",
+    "i": 101.44,
+    "f": 101.58
+   },
+   {
+    "p": "primera",
+    "i": 101.58,
+    "f": 101.88
+   },
+   {
+    "p": "vez",
+    "i": 101.88,
+    "f": 102.24
+   },
+   {
+    "p": "entiendes",
+    "i": 102.24,
+    "f": 102.9
+   },
+   {
+    "p": "que",
+    "i": 102.9,
+    "f": 103.0
+   },
+   {
+    "p": "ganar",
+    "i": 103.0,
+    "f": 103.32
+   },
+   {
+    "p": "millones",
+    "i": 103.32,
+    "f": 103.66
+   },
+   {
+    "p": "de",
+    "i": 103.66,
+    "f": 103.96
+   },
+   {
+    "p": "dólares",
+    "i": 103.96,
+    "f": 104.32
+   }
+  ]
+ },
+ {
+  "inicio": 104.32,
+  "fin": 106.1,
+  "texto": "también puede tener un precio.",
+  "palabras": [
+   {
+    "p": "también",
+    "i": 104.32,
+    "f": 105.04
+   },
+   {
+    "p": "puede",
+    "i": 105.04,
+    "f": 105.36
+   },
+   {
+    "p": "tener",
+    "i": 105.36,
+    "f": 105.68
+   },
+   {
+    "p": "un",
+    "i": 105.68,
+    "f": 105.84
+   },
+   {
+    "p": "precio.",
+    "i": 105.84,
+    "f": 106.1
+   }
+  ]
+ },
+ {
+  "inicio": 106.7,
+  "fin": 108.36,
+  "texto": "Una noche recibes una llamada.",
+  "palabras": [
+   {
+    "p": "Una",
+    "i": 106.7,
+    "f": 106.88
+   },
+   {
+    "p": "noche",
+    "i": 106.88,
+    "f": 107.18
+   },
+   {
+    "p": "recibes",
+    "i": 107.18,
+    "f": 107.76
+   },
+   {
+    "p": "una",
+    "i": 107.76,
+    "f": 107.94
+   },
+   {
+    "p": "llamada.",
+    "i": 107.94,
+    "f": 108.36
+   }
+  ]
+ },
+ {
+  "inicio": 108.72,
+  "fin": 111.4,
+  "texto": "Uno de tus antiguos clientes quiere que representes a otro",
+  "palabras": [
+   {
+    "p": "Uno",
+    "i": 108.72,
+    "f": 108.86
+   },
+   {
+    "p": "de",
+    "i": 108.86,
+    "f": 109.0
+   },
+   {
+    "p": "tus",
+    "i": 109.0,
+    "f": 109.16
+   },
+   {
+    "p": "antiguos",
+    "i": 109.16,
+    "f": 109.58
+   },
+   {
+    "p": "clientes",
+    "i": 109.58,
+    "f": 110.02
+   },
+   {
+    "p": "quiere",
+    "i": 110.02,
+    "f": 110.24
+   },
+   {
+    "p": "que",
+    "i": 110.24,
+    "f": 110.4
+   },
+   {
+    "p": "representes",
+    "i": 110.4,
+    "f": 111.02
+   },
+   {
+    "p": "a",
+    "i": 111.02,
+    "f": 111.18
+   },
+   {
+    "p": "otro",
+    "i": 111.18,
+    "f": 111.4
+   }
+  ]
+ },
+ {
+  "inicio": 111.4,
+  "fin": 112.76,
+  "texto": "integrante de la organización.",
+  "palabras": [
+   {
+    "p": "integrante",
+    "i": 111.4,
+    "f": 111.9
+   },
+   {
+    "p": "de",
+    "i": 111.9,
+    "f": 112.04
+   },
+   {
+    "p": "la",
+    "i": 112.04,
+    "f": 112.16
+   },
+   {
+    "p": "organización.",
+    "i": 112.16,
+    "f": 112.76
+   }
+  ]
+ },
+ {
+  "inicio": 112.76,
+  "fin": 115.52,
+  "texto": "Te ofrece el doble de tus honorarios anteriores.",
+  "palabras": [
+   {
+    "p": "Te",
+    "i": 112.76,
+    "f": 113.14
+   },
+   {
+    "p": "ofrece",
+    "i": 113.14,
+    "f": 113.46
+   },
+   {
+    "p": "el",
+    "i": 113.46,
+    "f": 113.8
+   },
+   {
+    "p": "doble",
+    "i": 113.8,
+    "f": 114.2
+   },
+   {
+    "p": "de",
+    "i": 114.2,
+    "f": 114.36
+   },
+   {
+    "p": "tus",
+    "i": 114.36,
+    "f": 114.48
+   },
+   {
+    "p": "honorarios",
+    "i": 114.48,
+    "f": 114.94
+   },
+   {
+    "p": "anteriores.",
+    "i": 114.94,
+    "f": 115.52
+   }
+  ]
+ },
+ {
+  "inicio": 115.86,
+  "fin": 118.16,
+  "texto": "Pero esta vez decides rechazar el trabajo.",
+  "palabras": [
+   {
+    "p": "Pero",
+    "i": 115.86,
+    "f": 116.02
+   },
+   {
+    "p": "esta",
+    "i": 116.02,
+    "f": 116.24
+   },
+   {
+    "p": "vez",
+    "i": 116.24,
+    "f": 116.54
+   },
+   {
+    "p": "decides",
+    "i": 116.54,
+    "f": 117.12
+   },
+   {
+    "p": "rechazar",
+    "i": 117.12,
+    "f": 117.62
+   },
+   {
+    "p": "el",
+    "i": 117.62,
+    "f": 117.84
+   },
+   {
+    "p": "trabajo.",
+    "i": 117.84,
+    "f": 118.16
+   }
+  ]
+ },
+ {
+  "inicio": 118.56,
+  "fin": 120.1,
+  "texto": "Ya no quieres seguir involucrado.",
+  "palabras": [
+   {
+    "p": "Ya",
+    "i": 118.56,
+    "f": 118.72
+   },
+   {
+    "p": "no",
+    "i": 118.72,
+    "f": 118.88
+   },
+   {
+    "p": "quieres",
+    "i": 118.88,
+    "f": 119.18
+   },
+   {
+    "p": "seguir",
+    "i": 119.18,
+    "f": 119.46
+   },
+   {
+    "p": "involucrado.",
+    "i": 119.46,
+    "f": 120.1
+   }
+  ]
+ },
+ {
+  "inicio": 121.06,
+  "fin": 123.72,
+  "texto": "Cierras tu despacho, abandonas los lujos",
+  "palabras": [
+   {
+    "p": "Cierras",
+    "i": 121.06,
+    "f": 121.7
+   },
+   {
+    "p": "tu",
+    "i": 121.7,
+    "f": 121.84
+   },
+   {
+    "p": "despacho,",
+    "i": 121.84,
+    "f": 122.32
+   },
+   {
+    "p": "abandonas",
+    "i": 122.68,
+    "f": 123.12
+   },
+   {
+    "p": "los",
+    "i": 123.12,
+    "f": 123.26
+   },
+   {
+    "p": "lujos",
+    "i": 123.26,
+    "f": 123.72
+   }
+  ]
+ },
+ {
+  "inicio": 123.72,
+  "fin": 125.2,
+  "texto": "y decides comenzar de nuevo.",
+  "palabras": [
+   {
+    "p": "y",
+    "i": 123.72,
+    "f": 123.98
+   },
+   {
+    "p": "decides",
+    "i": 123.98,
+    "f": 124.3
+   },
+   {
+    "p": "comenzar",
+    "i": 124.3,
+    "f": 124.86
+   },
+   {
+    "p": "de",
+    "i": 124.86,
+    "f": 124.98
+   },
+   {
+    "p": "nuevo.",
+    "i": 124.98,
+    "f": 125.2
+   }
+  ]
+ },
+ {
+  "inicio": 125.54,
+  "fin": 127.58,
+  "texto": "Conservas tus conocimientos, tu título",
+  "palabras": [
+   {
+    "p": "Conservas",
+    "i": 125.54,
+    "f": 125.98
+   },
+   {
+    "p": "tus",
+    "i": 125.98,
+    "f": 126.1
+   },
+   {
+    "p": "conocimientos,",
+    "i": 126.1,
+    "f": 126.84
+   },
+   {
+    "p": "tu",
+    "i": 127.16,
+    "f": 127.22
+   },
+   {
+    "p": "título",
+    "i": 127.22,
+    "f": 127.58
+   }
+  ]
+ },
+ {
+  "inicio": 127.58,
+  "fin": 129.58,
+  "texto": "y una enorme experiencia profesional.",
+  "palabras": [
+   {
+    "p": "y",
+    "i": 127.58,
+    "f": 127.9
+   },
+   {
+    "p": "una",
+    "i": 127.9,
+    "f": 128.08
+   },
+   {
+    "p": "enorme",
+    "i": 128.08,
+    "f": 128.46
+   },
+   {
+    "p": "experiencia",
+    "i": 128.46,
+    "f": 129.02
+   },
+   {
+    "p": "profesional.",
+    "i": 129.02,
+    "f": 129.58
+   }
+  ]
+ },
+ {
+  "inicio": 129.88,
+  "fin": 133.02,
+  "texto": "Pero nunca vuelves a aceptar un cliente sin investigar quién es.",
+  "palabras": [
+   {
+    "p": "Pero",
+    "i": 129.88,
+    "f": 130.1
+   },
+   {
+    "p": "nunca",
+    "i": 130.1,
+    "f": 130.42
+   },
+   {
+    "p": "vuelves",
+    "i": 130.42,
+    "f": 130.84
+   },
+   {
+    "p": "a",
+    "i": 130.84,
+    "f": 130.98
+   },
+   {
+    "p": "aceptar",
+    "i": 130.98,
+    "f": 131.32
+   },
+   {
+    "p": "un",
+    "i": 131.32,
+    "f": 131.44
+   },
+   {
+    "p": "cliente",
+    "i": 131.44,
+    "f": 131.8
+   },
+   {
+    "p": "sin",
+    "i": 131.8,
+    "f": 131.94
+   },
+   {
+    "p": "investigar",
+    "i": 131.94,
+    "f": 132.52
+   },
+   {
+    "p": "quién",
+    "i": 132.52,
+    "f": 132.74
+   },
+   {
+    "p": "es.",
+    "i": 132.74,
+    "f": 133.02
+   }
+  ]
+ },
+ {
+  "inicio": 133.26,
+  "fin": 135.56,
+  "texto": "Porque descubriste algo que ningún profesor",
+  "palabras": [
+   {
+    "p": "Porque",
+    "i": 133.26,
+    "f": 133.48
+   },
+   {
+    "p": "descubriste",
+    "i": 133.48,
+    "f": 134.08
+   },
+   {
+    "p": "algo",
+    "i": 134.08,
+    "f": 134.38
+   },
+   {
+    "p": "que",
+    "i": 134.38,
+    "f": 134.58
+   },
+   {
+    "p": "ningún",
+    "i": 134.58,
+    "f": 135.0
+   },
+   {
+    "p": "profesor",
+    "i": 135.0,
+    "f": 135.56
+   }
+  ]
+ },
+ {
+  "inicio": 135.56,
+  "fin": 136.84,
+  "texto": "te enseñó en la universidad.",
+  "palabras": [
+   {
+    "p": "te",
+    "i": 135.56,
+    "f": 135.72
+   },
+   {
+    "p": "enseñó",
+    "i": 135.72,
+    "f": 136.08
+   },
+   {
+    "p": "en",
+    "i": 136.08,
+    "f": 136.14
+   },
+   {
+    "p": "la",
+    "i": 136.14,
+    "f": 136.22
+   },
+   {
+    "p": "universidad.",
+    "i": 136.22,
+    "f": 136.84
+   }
+  ]
+ },
+ {
+  "inicio": 137.32,
+  "fin": 140.0,
+  "texto": "Puedes pasar años estudiando para defender la ley.",
+  "palabras": [
+   {
+    "p": "Puedes",
+    "i": 137.32,
+    "f": 137.64
+   },
+   {
+    "p": "pasar",
+    "i": 137.64,
+    "f": 137.9
+   },
+   {
+    "p": "años",
+    "i": 137.9,
+    "f": 138.36
+   },
+   {
+    "p": "estudiando",
+    "i": 138.36,
+    "f": 139.0
+   },
+   {
+    "p": "para",
+    "i": 139.0,
+    "f": 139.22
+   },
+   {
+    "p": "defender",
+    "i": 139.22,
+    "f": 139.56
+   },
+   {
+    "p": "la",
+    "i": 139.56,
+    "f": 139.8
+   },
+   {
+    "p": "ley.",
+    "i": 139.8,
+    "f": 140.0
+   }
+  ]
+ },
+ {
+  "inicio": 140.0,
+  "fin": 143.4,
+  "texto": "Pero una sola decisión puede cambiar toda tu vida.",
+  "palabras": [
+   {
+    "p": "Pero",
+    "i": 140.0,
+    "f": 140.54
+   },
+   {
+    "p": "una",
+    "i": 140.54,
+    "f": 140.82
+   },
+   {
+    "p": "sola",
+    "i": 140.82,
+    "f": 141.2
+   },
+   {
+    "p": "decisión",
+    "i": 141.2,
+    "f": 141.86
+   },
+   {
+    "p": "puede",
+    "i": 141.86,
+    "f": 142.18
+   },
+   {
+    "p": "cambiar",
+    "i": 142.18,
+    "f": 142.52
+   },
+   {
+    "p": "toda",
+    "i": 142.52,
+    "f": 142.92
+   },
+   {
+    "p": "tu",
+    "i": 142.92,
+    "f": 143.18
+   },
+   {
+    "p": "vida.",
+    "i": 143.18,
+    "f": 143.4
+   }
+  ]
+ }
+]
