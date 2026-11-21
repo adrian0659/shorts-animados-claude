@@ -153,7 +153,7 @@ def _flashes(i, t0, t1):
 yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 VIG = (1 - 0.42 * np.clip(np.hypot((xx - W / 2) / (W * 0.62), (yy - H / 2) / (H * 0.62)) - 0.35, 0, 1) ** 1.5)[..., None]
 _rng = np.random.default_rng(4)
-GRANO = [(VIG * (1 + 0.05 * (_rng.random((H, W), np.float32) - 0.5)[..., None])).astype(np.float32) for _ in range(4)]
+GRANO = [(VIG * (1 + 0.035 * (_rng.random((H, W), np.float32) - 0.5)[..., None])).astype(np.float32) for _ in range(4)]
 del yy, xx
 
 # ------------------------------------------------------------------ subtítulos
@@ -299,7 +299,10 @@ def obturador():
     return n * (np.exp(-t * 90) + 0.6 * np.exp(-np.maximum(0, t - 0.04) * 120) * (t > 0.04)) * 0.4
 
 def dinero():
-    return snd.ding(1568, 0.7) * 0.8 + np.pad(snd.ding(2093, 0.6) * 0.6, (int(SR * 0.08), 0))[:int(SR * 0.7)]
+    a = snd.ding(1568, 0.7) * 0.8
+    b = np.pad(snd.ding(2093, 0.6) * 0.6, (int(SR * 0.08), 0))
+    b = np.pad(b, (0, max(0, len(a) - len(b))))[:len(a)]
+    return a + b
 
 def construir_audio(ruta):
     voz = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", os.path.join(AQUI, "voz.mp3"), "-f", "f32le",
@@ -347,7 +350,7 @@ if __name__ == "__main__":
     nombre = "abogado_cartel.mp4" if (desde, hasta) == (0.0, DUR) else f"tramo_{desde:g}_{hasta:g}.mp4"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
            "-r", str(FPS), "-i", "-", "-ss", str(desde), "-i", audio, "-map", "0:v", "-map", "1:a",
-           "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
+           "-c:v", "libx264", "-preset", "medium", "-crf", "22", "-pix_fmt", "yuv420p",
            "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", f"{sal}/{nombre}"]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     total = int((hasta - desde) * FPS)
