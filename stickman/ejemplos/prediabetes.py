@@ -332,25 +332,73 @@ short.zoom(40.4, 45.2, 1.08, 560, 880)
 short.zoom(47.4, 52.2, 1.08, 560, 880)
 short.zoom(61.0, 63.4, 1.08, 540, 1100)
 
-# ---------------- sonido
-mez = snd.Mezcla(DUR)
-mez.poner(0, snd.musica(DUR), 0.5)
+# ---------------- voz (una toma por línea del guion en voz/01.mp3 … voz/14.mp3)
+# Si están todas, el video se re-cronometra para seguir a la voz: cada tramo del guion dura lo que
+# dura su frase (+ una pausa corta) y el tiempo "viejo" de cada cuadro se obtiene interpolando.
+import subprocess, numpy as np
+VOZ_DIR = os.path.join(os.path.dirname(__file__), "..", "voz")
+PAUSA = 0.35
+
+def cargar_voz(ruta):
+    """Decodifica a 44.1 kHz mono y quita el silencio del principio y del final."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", ruta, "-ac", "1", "-ar", str(snd.SR), "-f", "f32le", "-"],
+                         capture_output=True, check=True).stdout
+    a = np.frombuffer(raw, np.float32).astype(np.float64)
+    voz = np.nonzero(np.abs(a) > 0.02)[0]
+    return a[max(0, voz[0] - 400): voz[-1] + 2000] if len(voz) else a
+
+clips = [os.path.join(VOZ_DIR, f"{i:02d}.mp3") for i in range(1, len(guion) + 1)]
+CON_VOZ = all(os.path.exists(c) for c in clips) and "--sin-voz" not in sys.argv
+viejos = [g[0] for g in guion] + [DUR]          # límites de tramo en el tiempo original
+if CON_VOZ:
+    voces = [cargar_voz(c) for c in clips]
+    nuevos = [viejos[0]]
+    for v in voces: nuevos.append(nuevos[-1] + len(v) / snd.SR + PAUSA)
+    nuevos[-1] += 0.6                             # colchón al final
+else:
+    nuevos = list(viejos)
+viejos = [0.0] + viejos; nuevos = [0.0] + nuevos
+DUR_FINAL = nuevos[-1]
+
+def a_viejo(T): return float(np.interp(T, nuevos, viejos))
+def a_nuevo(t): return float(np.interp(t, viejos, nuevos))
+
+_cuadro = short.cuadro
+short.cuadro = lambda T: _cuadro(a_viejo(T))
+short.dur = DUR_FINAL
+
+# ---------------- sonido (los tiempos se escriben en el reloj original y se convierten)
+class MezclaRetimed(snd.Mezcla):
+    def poner(self, t, sonido, vol=1.0, nuevo=False):
+        super().poner(t if nuevo else a_nuevo(t), sonido, vol)
+
+FX = 0.3 if CON_VOZ else 1.0                      # con voz, música y efectos ~10 dB abajo
+mez = MezclaRetimed(DUR_FINAL)
+mez.poner(0, snd.musica(DUR_FINAL), 0.5 * FX * 0.8, nuevo=True)
 for tt in (8.4, 17.4, 21.6, 27.6, 34.6, 38.6, 45.6, 52.6, 56.6, 63.6, 68.2):
-    mez.poner(tt - 0.15, snd.whoosh(), 0.5)
-mez.poner(1.6, snd.boing(), 0.9); mez.poner(1.8, snd.ding(), 0.6)
-for tt in (5.0, 5.2, 5.4): mez.poner(tt, snd.pop(), 0.8)
-mez.poner(10.4, snd.pop(), 0.8)
-for tt in (22.4, 24.6, 25.8, 28.4, 29.8, 31.2, 32.6, 35.2, 59.4): mez.poner(tt, snd.pop(), 0.7)
-for tt in (41.8, 48.8): mez.poner(tt, snd.ding(440, 1.2), 0.7)
-for tt in (35.6, 36.4): mez.poner(tt, snd.latido(), 0.8)
-mez.poner(53.0, snd.tada(), 0.8); mez.poner(61.4, snd.ding(), 0.7)
-mez.poner(68.6, snd.tada(), 0.8)
-for tt in Subtitulos(guion).palabras_tiempos(): mez.poner(tt, snd.pop(0.05), 0.1)
+    mez.poner(tt - 0.15, snd.whoosh(), 0.5 * FX)
+mez.poner(1.6, snd.boing(), 0.9 * FX); mez.poner(1.8, snd.ding(), 0.6 * FX)
+for tt in (5.0, 5.2, 5.4): mez.poner(tt, snd.pop(), 0.8 * FX)
+mez.poner(10.4, snd.pop(), 0.8 * FX)
+for tt in (22.4, 24.6, 25.8, 28.4, 29.8, 31.2, 32.6, 35.2, 59.4): mez.poner(tt, snd.pop(), 0.7 * FX)
+for tt in (41.8, 48.8): mez.poner(tt, snd.ding(440, 1.2), 0.7 * FX)
+for tt in (35.6, 36.4): mez.poner(tt, snd.latido(), 0.8 * FX)
+mez.poner(53.0, snd.tada(), 0.8 * FX); mez.poner(61.4, snd.ding(), 0.7 * FX)
+mez.poner(68.6, snd.tada(), 0.8 * FX)
+if CON_VOZ:
+    for t0, v in zip(nuevos[1:-1], voces):
+        mez.poner(t0 + 0.05, v / max(1e-6, np.abs(v).max()) * 0.9, 1.0, nuevo=True)
+else:
+    for tt in Subtitulos(guion).palabras_tiempos(): mez.poner(tt, snd.pop(0.05), 0.1)
 
 if __name__ == "__main__":
+    print("con voz" if CON_VOZ else "sin voz", f"- duración {DUR_FINAL:.1f} s")
     if "--fotos" in sys.argv:
         for tt in (3.5, 7.5, 12.0, 16.5, 20.5, 27.0, 34.0, 37.5, 44.0, 51.0, 55.5, 62.8, 67.0, 71.0):
-            short.foto(tt, f"salida/pd_{tt:04.1f}.png"); print("foto", tt)
+            short.foto(a_nuevo(tt), f"salida/pd_{tt:04.1f}.png"); print("foto", tt)
     else:
-        mez.guardar("salida/prediabetes.wav")
+        mez.guardar("salida/prediabetes_mezcla.wav")
+        # volumen final de redes: -14 LUFS
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", "salida/prediabetes_mezcla.wav",
+                        "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "44100", "salida/prediabetes.wav"], check=True)
         short.render("salida/prediabetes.mp4", audio="salida/prediabetes.wav")
