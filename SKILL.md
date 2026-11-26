@@ -53,6 +53,12 @@ sigue `realista/REALISTA.md`. Ahí está el proceso, cada pieza (piel, herida, h
 salieron y cómo bajar el tiempo de render. Hay dos ejemplos completos: `realista/blender/puntadas_brazo/` (9 s) y
 `realista/blender/puntadas_pierna/` (31 s). La cámara se mide con `realista/herramientas/camara_fase.py`.
 
+## Dramas con animales realistas (diálogo + subtítulos karaoke)
+Si piden un drama tipo «karma» (jefe abusivo, trabajadores leales, animales fotorrealistas con cuerpo humano que
+hablan), NO uses three.js ni Blender: sigue `drama/DRAMA.md`. Las tomas se generan con IA (imagen o video con voz);
+`drama/prompts.py` escribe los prompts desde `historia.json` y `drama/montar.py` une las tomas y pone los
+subtítulos. Ejemplo completo: `drama/ejemplos/la_receta/`.
+
 ## Reglas del estilo
 - Voz en español, una sola voz pareja, de corrido: 3.2–3.8 palabras por segundo, casi sin silencios.
 - Sin subtítulos en la versión principal (el estilo de referencia sale sin ellos). Si quieres una versión con

@@ -1,0 +1,86 @@
+{
+  "titulo": "La receta",
+  "acento": "Mexican Spanish",
+  "personajes": {
+    "LUCIA": {
+      "nombre": "Lucía (panadera)",
+      "pronombre": "She",
+      "voz": "warm, firm female mid-30s",
+      "bloque": "A female chocolate Labrador with a realistic dog head and a human body, gentle amber eyes, wearing a white double-breasted baker jacket with sleeves rolled up, a dark brown canvas apron dusted with flour, and a red bandana tied over her head.",
+      "corto": "a female chocolate Labrador baker in a white jacket, flour-dusted brown apron and red bandana",
+      "lugar_ref": "COCINA"
+    },
+    "TONO": {
+      "nombre": "Toño (ayudante)",
+      "voz": "young, cheerful male early-20s",
+      "bloque": "A young male Beagle with a realistic dog head and a human body, wearing a plain white t-shirt, a cream cotton apron and a white paper baker cap, a small towel over his shoulder.",
+      "corto": "a young male Beagle baker's assistant in a white t-shirt, cream apron and paper cap",
+      "lugar_ref": "COCINA"
+    },
+    "ALFONSO": {
+      "nombre": "Don Alfonso (dueño)",
+      "voz": "deep, calm, condescending male 60s",
+      "bloque": "An older male English Bulldog with a realistic dog head and a human body, heavy jowls and a cold stare, wearing a charcoal grey three-piece suit, a white shirt, a navy silk tie, a gold pocket-watch chain across the vest and a gold signet ring.",
+      "corto": "an older English Bulldog boss in a charcoal three-piece suit with a gold watch chain",
+      "lugar_ref": "OFICINA"
+    },
+    "RAQUEL": {
+      "nombre": "Raquel (cajera)",
+      "pronombre": "She",
+      "voz": "polite, nervous female late-20s",
+      "bloque": "A female Dalmatian with a realistic dog head and a human body, wearing a burgundy polo shirt with a small embroidered golden wheat logo, a black name tag and small pearl earrings.",
+      "corto": "a female Dalmatian cashier in a burgundy polo shirt",
+      "lugar_ref": "TIENDA"
+    },
+    "CLIENTE": {
+      "nombre": "Don Ramiro (cliente)",
+      "voz": "raspy, friendly elderly male 70s",
+      "bloque": "An elderly male Basset Hound with a realistic dog head and a human body, long droopy ears, wearing a beige knitted cardigan over a light blue shirt and round wire glasses, holding a paper bag of bread.",
+      "corto": "an elderly Basset Hound customer in a beige cardigan and round glasses",
+      "lugar_ref": "TIENDA"
+    },
+    "NUEVO": {
+      "nombre": "Panadero nuevo",
+      "voz": "nervous, apologetic male 30s",
+      "bloque": "A male Greyhound with a realistic dog head and a human body, wearing a brand-new spotless white baker jacket and a tall white chef hat, looking unsure.",
+      "corto": "two Greyhound bakers in spotless new white jackets and tall chef hats",
+      "lugar_ref": "COCINA"
+    }
+  },
+  "lugares": {
+    "OFICINA": "A small luxurious office above a bakery: dark walnut desk with a brass desk lamp, stacks of cash and a ledger, framed old photos of the bakery on the walls, a window looking down onto the busy shop.",
+    "TIENDA": "An elegant traditional Mexican bakery shop called \"La Espiga Dorada\" with the name painted in gold on the window: glass display cases full of conchas and sweet bread, wooden trays and tongs, warm hanging lamps, a long line of dog-headed customers reaching out the door.",
+    "COCINA": "The bakery's back kitchen at dawn: large steel ovens glowing orange, flour in the air, wooden worktables with dough, metal racks full of fresh bread trays.",
+    "CALLE": "A quiet street corner at sunrise in a Mexican neighborhood: a folding table with a white cloth, a small portable oven, baskets of fresh conchas, a hand-written chalkboard that says \"PAN DE LUCÍA\", golden morning light."
+  },
+  "tomas": [
+    {"habla": "LUCIA", "frase": "Don Alfonso, ya vendemos el triple. Queremos un aumento.", "tono": "respectful but firm", "lugar": "OFICINA", "otros": ["TONO", "ALFONSO"], "accion": "She stands in front of the desk with her hands together while the boss counts money without looking up.", "camara": "medium shot"},
+    {"habla": "ALFONSO", "frase": "Panaderos hay en cada esquina, Lucía.", "tono": "calm and dismissive", "lugar": "OFICINA", "accion": "He keeps counting bills and barely raises his eyes.", "camara": "close-up"},
+    {"habla": "TONO", "frase": "Pero el pan de nata es receta de ella, jefe.", "tono": "frustrated", "lugar": "OFICINA", "otros": ["LUCIA"], "accion": "He opens his hands toward the Labrador.", "camara": "medium shot"},
+    {"habla": "ALFONSO", "frase": "Si no les gusta, ahí está la puerta.", "tono": "cold, slow", "lugar": "OFICINA", "accion": "He points at the door with his pen without standing up.", "camara": "close-up"},
+    {"habla": "CLIENTE", "frase": "Señorita, ¿quién hace este pan? Está buenísimo.", "tono": "delighted", "lugar": "TIENDA", "otros": ["RAQUEL"], "accion": "He takes a bite of a concha at the counter, eyes widening.", "camara": "medium shot"},
+    {"habla": "RAQUEL", "frase": "Lucía, nuestra panadera. Lo hace desde las cuatro.", "tono": "proud", "lugar": "TIENDA", "accion": "She hands over a paper bag across the counter.", "camara": "medium close-up"},
+    {"habla": "CLIENTE", "frase": "Con razón hay fila hasta la calle.", "tono": "amused", "lugar": "TIENDA", "accion": "He turns to look at the long line behind him.", "camara": "over-the-shoulder"},
+    {"habla": "LUCIA", "frase": "Masa con paciencia, Toño. Ese es todo el secreto.", "tono": "warm, teaching", "lugar": "COCINA", "otros": ["TONO"], "accion": "She pulls a tray of golden conchas from the oven.", "camara": "medium shot"},
+    {"habla": "TONO", "frase": "Ya se acabó otra charola, jefa.", "tono": "excited", "lugar": "COCINA", "accion": "He comes in through the swinging door holding an empty tray.", "camara": "medium shot"},
+    {"habla": "RAQUEL", "frase": "Don Alfonso, ya no alcanza el pan para la fila.", "tono": "worried but happy", "lugar": "OFICINA", "otros": ["ALFONSO"], "accion": "She leans in the office doorway.", "camara": "medium shot"},
+    {"habla": "ALFONSO", "frase": "Perfecto. Y ya encontré quién lo haga más barato.", "tono": "smug", "lugar": "OFICINA", "accion": "He slides two resumes with prices written on them across the desk.", "camara": "close-up"},
+    {"habla": "RAQUEL", "frase": "¿Va a cambiar a Lucía? Ella levantó este lugar.", "tono": "shocked", "lugar": "OFICINA", "accion": "She steps forward, hand on her chest.", "camara": "medium close-up"},
+    {"habla": "ALFONSO", "frase": "Lo barato me deja más. Así de simple.", "tono": "flat and cold", "lugar": "OFICINA", "accion": "He leans back in his leather chair and checks his pocket watch.", "camara": "close-up"},
+    {"habla": "ALFONSO", "frase": "Ellos son los nuevos panaderos. Ustedes ya no.", "tono": "dismissive", "lugar": "COCINA", "otros": ["NUEVO", "LUCIA", "TONO"], "accion": "He points at the two new bakers while the Labrador and the Beagle stand by the oven.", "camara": "wide medium shot"},
+    {"habla": "LUCIA", "frase": "¿Después de cinco años nos corre así, Don Alfonso?", "tono": "hurt, controlled", "lugar": "COCINA", "accion": "She slowly unties her apron.", "camara": "close-up"},
+    {"habla": "ALFONSO", "frase": "Déjeme la receta en la mesa y váyase.", "tono": "cold", "lugar": "COCINA", "accion": "He taps the worktable with two fingers.", "camara": "medium close-up"},
+    {"habla": "LUCIA", "frase": "La receta se la dejo. Las manos me las llevo.", "tono": "quiet and dignified", "lugar": "COCINA", "accion": "She places a worn notebook on the table and turns to leave.", "camara": "close-up"},
+    {"habla": "RAQUEL", "frase": "Don Alfonso, nos están devolviendo el pan.", "tono": "anxious", "lugar": "TIENDA", "otros": ["ALFONSO"], "accion": "She holds up a returned paper bag; the shop is half empty.", "camara": "medium shot"},
+    {"habla": "CLIENTE", "frase": "Esto ya no sabe igual. ¿Dónde está la señorita Lucía?", "tono": "disappointed", "lugar": "TIENDA", "accion": "He puts a half-eaten concha back on the counter.", "camara": "medium close-up"},
+    {"habla": "RAQUEL", "frase": "Ya no trabaja aquí, señor.", "tono": "sad, low", "lugar": "TIENDA", "accion": "She lowers her eyes.", "camara": "close-up"},
+    {"habla": "CLIENTE", "frase": "Qué lástima. Yo venía por su pan.", "tono": "sad", "lugar": "TIENDA", "accion": "He puts on his hat and walks toward the door.", "camara": "medium shot"},
+    {"habla": "ALFONSO", "frase": "¡Sigan la receta al pie de la letra!", "tono": "angry, shouting", "lugar": "COCINA", "otros": ["NUEVO"], "accion": "He slams the notebook open on the worktable.", "camara": "medium shot"},
+    {"habla": "NUEVO", "frase": "La seguimos, patrón, pero la masa no sube igual.", "tono": "nervous", "lugar": "COCINA", "accion": "He holds up a tray of flat, pale conchas.", "camara": "medium close-up"},
+    {"habla": "ALFONSO", "frase": "¿Y la fila? ¿Dónde está la gente?", "tono": "stunned, quiet", "lugar": "TIENDA", "accion": "He stands alone in the empty shop, full display cases behind him.", "camara": "medium shot"},
+    {"habla": "TONO", "frase": "Una mesa y un hornito, jefa. Con eso empezamos.", "tono": "hopeful", "lugar": "CALLE", "otros": ["LUCIA"], "accion": "He unfolds the table and sets the little oven on it.", "camara": "medium shot"},
+    {"habla": "LUCIA", "frase": "Poquito a poquito, pero con la misma paciencia.", "tono": "smiling, calm", "lugar": "CALLE", "accion": "She arranges fresh conchas in a basket.", "camara": "close-up"},
+    {"habla": "CLIENTE", "frase": "¡Aquí estaba! Deme diez de nata, señorita.", "tono": "overjoyed", "lugar": "CALLE", "otros": ["LUCIA"], "accion": "He arrives at the stand with a small line forming behind him.", "camara": "medium shot"},
+    {"habla": "LUCIA", "frase": "Y esta vez, todo lo que ganemos es nuestro, Toño.", "tono": "emotional, proud", "lugar": "CALLE", "otros": ["TONO"], "accion": "She hands a bag to the customer and smiles at the Beagle.", "camara": "medium close-up"}
+  ]
+}
