@@ -37,12 +37,18 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "drama"))
+import montar as _montar  # noqa: E402
 from montar import (FUENTES, W, H, FPS, ENC, run, duracion, transcribir,  # noqa: E402
                     agrupar, escribir_ass)
 
-MARGEN = 40           # margen a los lados de la viñeta
-CAJA_ALTO = 1180      # alto máximo de la viñeta (deja libres título y subtítulos)
-CENTRO_Y = 820        # centro vertical de la viñeta
+# Zona segura de TikTok/Reels/Shorts en 1080x1920: arriba ~180 px van las pestañas, abajo ~480 px la
+# descripción y la música, y a la derecha (x > ~950, y 800–1700) los botones de like/comentar/compartir.
+_montar.ALTURA = 0.71  # borde inferior de los subtítulos (y ≈ 1363), encima de la descripción
+MARGEN_IZQ = 40       # margen izquierdo de la viñeta
+MARGEN_DER = 140      # margen derecho más grande: ahí están los botones de la app
+CAJA_ALTO = 920       # alto máximo de la viñeta: de y ≈ 340 a y ≈ 1260
+CENTRO_Y = 800        # centro vertical de la viñeta
+TITULO_Y = 200        # el título va debajo de las pestañas de TikTok
 BORDE = 6             # borde blanco tipo recorte
 ENTRADA = 0.08        # la imagen cambia un poco antes de su palabra
 AUD_EXT = [".mp3", ".wav", ".m4a", ".aac", ".ogg"]
@@ -95,11 +101,11 @@ def fondo(img):
 
 def cuadro(img, bg, r):
     x, y, w, h = r
-    esc = min((W - 2 * MARGEN) / w, CAJA_ALTO / h)
+    esc = min((W - MARGEN_IZQ - MARGEN_DER) / w, CAJA_ALTO / h)
     fw, fh = int(w * esc), int(h * esc)
     vineta = img.resize((fw, fh), Image.BICUBIC, box=(x, y, x + w, y + h))
     out = bg.copy()
-    px, py = (W - fw) // 2, CENTRO_Y - fh // 2
+    px, py = MARGEN_IZQ + (W - MARGEN_IZQ - MARGEN_DER - fw) // 2, CENTRO_Y - fh // 2
     d = ImageDraw.Draw(out)
     d.rectangle([px - BORDE + 14, py - BORDE + 18, px + fw + BORDE + 14, py + fh + BORDE + 18], fill=(0, 0, 0))
     d.rectangle([px - BORDE, py - BORDE, px + fw + BORDE, py + fh + BORDE], fill=(255, 255, 255))
@@ -127,15 +133,42 @@ def cuadricula(proy):
     print(f"Cuadrículas en {dest}")
 
 
+def extraer_pdf(proy, pdf):
+    """Convierte cada página del PDF en paginas/pag-001.jpg… y hace una hoja índice para elegir."""
+    dest = proy / "paginas"
+    dest.mkdir(parents=True, exist_ok=True)
+    run(["pdftoppm", "-jpeg", "-jpegopt", "quality=92", "-r", "200", str(pdf), str(dest / "pag")])
+    paginas = sorted(dest.glob("pag-*.jpg"))
+    if not paginas:
+        sys.exit("No salió ninguna página del PDF")
+    # Hoja índice: miniaturas numeradas, 6 por fila
+    tw, th, cols = 240, 370, 6
+    filas = (len(paginas) + cols - 1) // cols
+    hoja = Image.new("RGB", (cols * tw, filas * (th + 30)), (30, 30, 30))
+    d = ImageDraw.Draw(hoja)
+    f = ImageFont.load_default(size=24)
+    for i, p in enumerate(paginas):
+        im = Image.open(p).convert("RGB")
+        im.thumbnail((tw - 10, th - 10))
+        x, y = (i % cols) * tw, (i // cols) * (th + 30)
+        hoja.paste(im, (x + 5, y + 5))
+        d.text((x + 8, y + th), p.stem, fill=(255, 230, 0), font=f)
+    hoja.save(proy / "indice_paginas.jpg", quality=85)
+    print(f"{len(paginas)} páginas en {dest}  ·  índice: {proy / 'indice_paginas.jpg'}")
+
+
 def main():
     ap = argparse.ArgumentParser(description="Short explicativo de cómics con viñetas animadas.")
     ap.add_argument("proyecto", type=Path)
     ap.add_argument("--sin-subtitulos", action="store_true")
     ap.add_argument("--musica", type=Path, help="música de fondo (18 dB debajo de la voz)")
     ap.add_argument("--cuadricula", action="store_true", help="solo dibuja cuadrículas sobre las páginas")
+    ap.add_argument("--pdf", type=Path, help="solo saca las páginas de este PDF a paginas/ con una hoja índice")
     ap.add_argument("--idioma", default="es")
     a = ap.parse_args()
     proy = a.proyecto.resolve()
+    if a.pdf:
+        return extraer_pdf(proy, a.pdf.resolve())
     if a.cuadricula:
         return cuadricula(proy)
 
@@ -196,10 +229,13 @@ def main():
     if not a.sin_subtitulos:
         ass = trabajo / "subs.ass"
         escribir_ass(agrupar(palabras, [t for t, _ in tiempos[1:]]), ass)
+        # subtítulos centrados en la misma zona que la viñeta (lejos de los botones)
+        ass.write_text(ass.read_text(encoding="utf-8").replace(",90,90,", f",{MARGEN_IZQ},{MARGEN_DER},", 1),
+                       encoding="utf-8")
         if guion.get("titulo"):
             texto = ass.read_text(encoding="utf-8")
             texto = texto.replace("[Events]", "Style: Titulo,Barlow Condensed ExtraBold,104,&H0000E5FF,"
-                                  "&H0000E5FF,&H00000000,&H96000000,0,0,0,0,100,100,1,0,1,8,3,8,60,60,70,1"
+                                  "&H0000E5FF,&H00000000,&H96000000,0,0,0,0,100,100,1,0,1,8,3,8,60,60," + str(TITULO_Y) + ",1"
                                   "\n\n[Events]")
             texto += (f"Dialogue: 1,0:00:00.00,0:00:03.00,Titulo,,0,0,0,,{{\\fad(0,250)}}"
                       f"{guion['titulo'].upper()}\n")

@@ -34,6 +34,8 @@ Esto no es asesoría legal; es lo que suelen hacer los canales de análisis de c
 1. **Tema y datos.** Escribe `GUION.md` con las fuentes arriba y el texto de la narración.
 2. **Voz.** Graba tu voz o genérala (ElevenLabs u otra) y guárdala como `voz.mp3` en la carpeta del proyecto.
 3. **Páginas.** Pon las páginas o viñetas en `paginas/` (jpg o png, la mejor resolución que tengas).
+   Si tienes el cómic en PDF: `python3 comic/montar_comic.py PROYECTO --pdf comic.pdf` saca cada página a
+   `paginas/pag-01.jpg…` y hace `indice_paginas.jpg` con todas en miniatura para elegir.
 4. **Cuadrícula.** `python3 comic/montar_comic.py PROYECTO --cuadricula` saca cada página con líneas al 10 %
    en `_cuadricula/` para medir los rectángulos fácilmente.
 5. **Escenas.** En `escenas.json`, una escena por viñeta:
@@ -48,6 +50,11 @@ Esto no es asesoría legal; es lo que suelen hacer los canales de análisis de c
    correr. Opcional: `--musica musica.mp3`.
 
 Instalación: Python 3, ffmpeg y `pip install faster-whisper numpy pillow`.
+
+## Formato TikTok / Reels / Shorts
+El video sale en 1080x1920 y respeta la **zona segura** de las apps: nada importante en los 180 px de arriba
+(pestañas), en los 480 px de abajo (descripción y música) ni en la franja derecha (botones). Por eso la viñeta
+va un poco cargada a la izquierda y los subtítulos quedan a ~71 % de la altura.
 
 ## Ideas de temas
 - ¿Por qué Hulk era gris en su primer cómic? (ejemplo en `ejemplos/hulk_gris/`)
