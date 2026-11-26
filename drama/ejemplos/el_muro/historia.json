@@ -1,0 +1,86 @@
+{
+  "titulo": "El muro",
+  "acento": "Mexican Spanish",
+  "personajes": {
+    "CHUY": {
+      "nombre": "Don Chuy (maestro albañil)",
+      "voz": "deep, weathered, calm male late-50s",
+      "bloque": "An older male Boxer with a realistic dog head and a human body, grey hair on the muzzle and tired wise eyes, wearing a faded blue denim work shirt with rolled sleeves covered in cement dust, beige work pants, a worn yellow hard hat and a leather tool belt with a trowel.",
+      "corto": "an older Boxer bricklayer in a dusty denim shirt and worn yellow hard hat",
+      "lugar_ref": "OBRA"
+    },
+    "PEDRO": {
+      "nombre": "Pedro (ayudante)",
+      "voz": "young, energetic male early-20s",
+      "bloque": "A young male Mexican Xoloitzcuintle with a realistic hairless dark grey dog head and a human body, alert upright ears, wearing a sweat-stained white tank top under an open orange reflective vest, cement-stained jeans and a white hard hat.",
+      "corto": "a young Xoloitzcuintle worker in an orange reflective vest and white hard hat",
+      "lugar_ref": "OBRA"
+    },
+    "ARQ": {
+      "nombre": "Arquitecto Mauricio",
+      "voz": "smooth, arrogant, polished male 40s",
+      "bloque": "A male Afghan Hound with a realistic dog head and a human body, long perfectly groomed silky golden hair, wearing a slim-fit navy blue suit with no tie, a crisp white shirt, a silver luxury watch, designer sunglasses pushed on top of his head and spotless white sneakers, holding a rolled blueprint.",
+      "corto": "an arrogant Afghan Hound architect in a slim navy suit with sunglasses on his head",
+      "lugar_ref": "CASETA"
+    },
+    "INV": {
+      "nombre": "Licenciada Vega (inversionista)",
+      "pronombre": "She",
+      "voz": "confident, sharp female 50s",
+      "bloque": "A female Doberman with a realistic dog head and a human body, sharp intelligent eyes, wearing an elegant cream-colored pantsuit, a white hard hat, a thin gold necklace and holding a leather folder.",
+      "corto": "a female Doberman investor in a cream pantsuit and white hard hat",
+      "lugar_ref": "OBRA"
+    },
+    "NUEVO": {
+      "nombre": "Maestro nuevo",
+      "voz": "careless, then nervous male 30s",
+      "bloque": "A male Pointer with a realistic dog head and a human body, wearing a brand-new spotless grey work shirt, clean jeans and a shiny new orange hard hat, holding a paint roller.",
+      "corto": "a Pointer worker in a spotless new grey shirt and shiny orange hard hat",
+      "lugar_ref": "LOBBY"
+    },
+    "INSPECTOR": {
+      "nombre": "Inspector",
+      "voz": "dry, serious male 60s",
+      "bloque": "An older male Miniature Schnauzer with a realistic dog head and a human body, bushy grey eyebrows and beard, wearing round glasses, a white hard hat, a high-visibility yellow vest over a white shirt and holding a clipboard and a small rubber mallet.",
+      "corto": "a serious Schnauzer building inspector in a yellow vest with a clipboard",
+      "lugar_ref": "LOBBY"
+    }
+  },
+  "lugares": {
+    "OBRA": "A large construction site of a modern five-story office building at midday: exposed concrete columns, steel scaffolding, piles of red bricks and rebar, cement mixer, dust in the sunlight, city skyline in the background.",
+    "CASETA": "A small air-conditioned site office trailer on the construction site: a desk covered in blueprints, an architectural scale model of the glass building, a framed rendering on the wall and a window showing the scaffolding outside.",
+    "LOBBY": "The ground-floor lobby of the new building almost finished: a tall freshly painted white concrete wall, polished floor protected with plastic, construction lamps, a few paint buckets, cool daylight from big glass windows.",
+    "CHICA": "A small humble construction site in a working-class Mexican neighborhood at golden hour: a two-story house being built with red bricks, a wooden ladder, a wheelbarrow, and a hand-painted metal sign on the fence that says \"CONSTRUCCIONES DON CHUY\"."
+  },
+  "tomas": [
+    {"habla": "CHUY", "frase": "Arquitecto, acabamos el muro dos semanas antes. Nos debe el extra.", "tono": "respectful but firm", "lugar": "OBRA", "otros": ["PEDRO", "ARQ"], "accion": "He takes off his hard hat and holds it against his chest while the architect looks at his phone.", "camara": "medium shot"},
+    {"habla": "ARQ", "frase": "El extra es que tengan trabajo, Don Chuy.", "tono": "smug, smiling", "lugar": "OBRA", "accion": "He keeps scrolling on his phone and does not look up.", "camara": "close-up"},
+    {"habla": "PEDRO", "frase": "Le metimos noches y domingos, arquitecto.", "tono": "frustrated", "lugar": "OBRA", "otros": ["CHUY"], "accion": "He points at the scaffolding behind him.", "camara": "medium shot"},
+    {"habla": "ARQ", "frase": "Albañiles me sobran. A ustedes los cambio por cualquiera.", "tono": "cold and dismissive", "lugar": "OBRA", "accion": "He puts his sunglasses on and turns away.", "camara": "close-up"},
+    {"habla": "INV", "frase": "Arquitecto, la obra va perfecta. ¿Quién levantó esa estructura?", "tono": "impressed", "lugar": "OBRA", "otros": ["ARQ"], "accion": "She looks up at the concrete structure, shading her eyes from the sun.", "camara": "medium shot"},
+    {"habla": "ARQ", "frase": "Es mi diseño, licenciada. Todo salió de mi cabeza.", "tono": "proud, charming", "lugar": "OBRA", "accion": "He unrolls the blueprint with a big smile.", "camara": "medium close-up"},
+    {"habla": "CHUY", "frase": "Ni las manos se ensució, Pedro, y ahí está presumiendo.", "tono": "quiet, bitter", "lugar": "OBRA", "otros": ["PEDRO"], "accion": "He watches from the scaffolding, wiping sweat with his forearm.", "camara": "medium shot"},
+    {"habla": "PEDRO", "frase": "Así es esto, maestro. Unos sudan y otros cobran.", "tono": "resigned", "lugar": "OBRA", "accion": "He lifts a heavy bucket of cement.", "camara": "medium close-up"},
+    {"habla": "INV", "frase": "El lunes traigo a la junta para la inspección final.", "tono": "businesslike", "lugar": "OBRA", "accion": "She closes her leather folder and shakes her finger slightly as a reminder.", "camara": "medium close-up"},
+    {"habla": "ARQ", "frase": "Consígueme una cuadrilla más barata. Para mañana.", "tono": "low, scheming", "lugar": "CASETA", "accion": "He talks on his phone, leaning back with his feet on the desk.", "camara": "medium shot"},
+    {"habla": "CHUY", "frase": "¿Nos está corriendo a una semana de entregar?", "tono": "shocked, controlled", "lugar": "CASETA", "otros": ["PEDRO", "ARQ"], "accion": "He stands in the trailer doorway holding his hard hat.", "camara": "medium shot"},
+    {"habla": "ARQ", "frase": "Ustedes ya cumplieron. Los nuevos cobran la mitad.", "tono": "flat, bored", "lugar": "CASETA", "accion": "He signs a paper without looking at them.", "camara": "close-up"},
+    {"habla": "PEDRO", "frase": "El muro del lobby todavía no lleva el refuerzo.", "tono": "urgent, worried", "lugar": "CASETA", "otros": ["CHUY"], "accion": "He steps forward and taps the blueprint on the desk.", "camara": "medium close-up"},
+    {"habla": "ARQ", "frase": "Ese ya no es su problema. Recojan sus cosas.", "tono": "cold", "lugar": "CASETA", "accion": "He points at the door with his pen.", "camara": "close-up"},
+    {"habla": "CHUY", "frase": "Con el cemento no se juega, arquitecto. Usted sabrá.", "tono": "calm, dignified warning", "lugar": "CASETA", "accion": "He puts his trowel in his tool belt and turns to leave.", "camara": "close-up"},
+    {"habla": "NUEVO", "frase": "¿Refuerzo? A mí nadie me dijo nada, jefe.", "tono": "careless", "lugar": "LOBBY", "otros": ["ARQ"], "accion": "He shrugs, holding a paint roller.", "camara": "medium shot"},
+    {"habla": "ARQ", "frase": "Tú nomás píntalo y que se vea bonito.", "tono": "impatient", "lugar": "LOBBY", "accion": "He waves his hand at the wall while checking his watch.", "camara": "medium close-up"},
+    {"habla": "INSPECTOR", "frase": "Arquitecto, este muro tiene una grieta de arriba abajo.", "tono": "serious", "lugar": "LOBBY", "otros": ["ARQ", "INV"], "accion": "He runs his finger along a long crack in the white wall.", "camara": "medium shot"},
+    {"habla": "ARQ", "frase": "Es la pintura nada más. Es superficial.", "tono": "nervous, forced smile", "lugar": "LOBBY", "accion": "He laughs nervously and adjusts his collar.", "camara": "close-up"},
+    {"habla": "INSPECTOR", "frase": "No es pintura. Esto no aguanta ni un temblor.", "tono": "dry, final", "lugar": "LOBBY", "accion": "He taps the wall with a small rubber mallet and a chunk of concrete falls to the floor.", "camara": "medium close-up"},
+    {"habla": "INV", "frase": "¿Quién hizo esta parte de la obra?", "tono": "cold, demanding", "lugar": "LOBBY", "otros": ["ARQ"], "accion": "She turns slowly toward the architect.", "camara": "close-up"},
+    {"habla": "NUEVO", "frase": "Nosotros, licenciada. Nos dijeron que nomás pintáramos.", "tono": "scared", "lugar": "LOBBY", "accion": "He hides the paint roller behind his back.", "camara": "medium shot"},
+    {"habla": "INV", "frase": "¿Y dónde está la cuadrilla que hizo todo lo demás?", "tono": "suspicious", "lugar": "LOBBY", "otros": ["ARQ"], "accion": "She steps closer to the architect.", "camara": "medium close-up"},
+    {"habla": "ARQ", "frase": "Los tuve que dejar ir, licenciada.", "tono": "small, ashamed", "lugar": "LOBBY", "accion": "He looks down, sweating, sunglasses in his hand.", "camara": "close-up"},
+    {"habla": "INV", "frase": "Entonces el contrato también lo dejo ir yo.", "tono": "icy, calm", "lugar": "LOBBY", "accion": "She hands him back the leather folder and walks away.", "camara": "medium close-up"},
+    {"habla": "INV", "frase": "Don Chuy, me dijeron que esa estructura la levantó usted.", "tono": "respectful", "lugar": "CHICA", "otros": ["CHUY", "PEDRO"], "accion": "She arrives at the small site, stepping around a wheelbarrow.", "camara": "medium shot"},
+    {"habla": "CHUY", "frase": "Con estas manos y con este muchacho, licenciada.", "tono": "humble, proud", "lugar": "CHICA", "otros": ["PEDRO"], "accion": "He wipes his hands on a rag and puts a hand on the young worker's shoulder.", "camara": "medium close-up"},
+    {"habla": "INV", "frase": "La obra nueva es suya. Ponga usted el precio.", "tono": "warm, decisive", "lugar": "CHICA", "accion": "She offers a handshake.", "camara": "close-up"},
+    {"habla": "CHUY", "frase": "Ándale, Pedro. Esta vez el extra lo cobramos nosotros.", "tono": "emotional, smiling", "lugar": "CHICA", "otros": ["PEDRO"], "accion": "He shakes her hand and smiles at the young worker beside him.", "camara": "medium close-up"}
+  ]
+}
