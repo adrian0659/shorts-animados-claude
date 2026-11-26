@@ -33,6 +33,15 @@ Probada en **Alejandro Magno en Gaugamela** (47 mil contra 100 mil, con 100,000 
 **Nuevo (noviembre 2026): shorts 3D realistas en Blender**, del video «Cómo hacer shorts 3D ultra realistas con Claude»:
 puntadas en el brazo y en la pierna, con piel, herida, hilo y vello que se ven reales. Todo en `realista/`.
 
+## Videos de cómic «¿Sabías que…?» (comando `/video-comic`)
+En Claude Code, dentro de esta carpeta, escribe por ejemplo:
+
+> /video-comic ¿Sabías que el Doctor Doom eliminó a Thanos? https://drive.google.com/file/d/…
+
+Claude saca las páginas del cómic (.cbr, .cbz, .pdf o enlace de Drive), escribe el guion fiel a las viñetas,
+genera la voz «Cómics» en ElevenLabs, arma las tomas con la cámara recorriendo la página y entrega el MP4 vertical.
+Todo está en `.claude/skills/video-comic/`. Ejemplo terminado: `videos/doom_thanos/`.
+
 ## Qué trae
 | Carpeta | Qué es |
 |---|---|
