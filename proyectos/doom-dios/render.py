@@ -1,6 +1,6 @@
 """Render del short de cómic: viñetas del PDF con zoom lento, cortes en las palabras de la voz.
 
-Uso:  python3 render.py <comic.pdf> [--preview]
+Uso:  python3 render.py <comic.pdf> [--preview] [--voz v.mp3 --palabras p.json --salida s.mp4]
 Sale: doom_dios.mp4 (1080x1920, 30 fps) o preview.jpg con el primer cuadro de cada toma.
 """
 import json, subprocess, sys, os, tempfile
@@ -78,8 +78,9 @@ def lamina(pdf, toma, cache, w, h):
 def main():
     pdf = sys.argv[1]
     preview = "--preview" in sys.argv
-    palabras = json.load(open(os.path.join(HERE, "palabras.json")))
-    voz = os.path.join(HERE, "voz.mp3")
+    arg = lambda k, d: sys.argv[sys.argv.index(k) + 1] if k in sys.argv else d
+    palabras = json.load(open(os.path.join(HERE, arg("--palabras", "palabras.json"))))
+    voz = os.path.join(HERE, arg("--voz", "voz.mp3"))
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                                          "-of", "csv=p=0", voz]))
     total = dur + 0.4
@@ -115,7 +116,7 @@ def main():
             ff.stdin.write(fr.tobytes())
         print(f"toma {i + 1}/{len(TOMAS)}", flush=True)
     ff.stdin.close(); ff.wait()
-    out = os.path.join(HERE, "doom_dios.mp4")
+    out = os.path.join(HERE, arg("--salida", "doom_dios.mp4"))
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", sin_audio, "-i", voz,
                     "-af", "apad,loudnorm=I=-14:TP=-1.5:LRA=11", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
                     "-ar", "48000", "-shortest", out], check=True)
