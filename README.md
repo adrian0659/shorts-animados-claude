@@ -42,6 +42,7 @@ puntadas en el brazo y en la pierna, con piel, herida, hilo y vello que se ven r
 | `plantillas/audio/` | Sonido sintetizado: efectos, música, mezcla con la voz y volumen final |
 | `plantillas/scripts/` | Fotos sueltas, hojas lado a lado, unir el trabajo de los agentes y revisión cuadro por cuadro |
 | `drama/` | **Nuevo:** dramas cortos con animales realistas y diálogo (estilo «karma»): guía (`DRAMA.md`), generador de prompts, montaje con subtítulos karaoke y una historia de ejemplo |
+| `comic/` | **Nuevo:** shorts explicativos de cómics: narrador + viñetas con zoom y paneo sincronizados con la voz + subtítulos karaoke (`COMIC.md`, `montar_comic.py`, ejemplo de Hulk) |
 | `realista/` | Shorts 3D realistas en Blender: guía (`REALISTA.md`), dos escenas completas (brazo y pierna con puntadas), medición de cámara y recursos con su licencia |
 | `herramientas/medir_30fps.py` | Mide cualquier short a 30 cuadros por segundo: hojas, cortes, movimiento de cámara, color |
 | `referencias/BIBLIA_DE_ESTILO.md` | La fórmula del guion y de la imagen medida en 20 shorts de referencia |

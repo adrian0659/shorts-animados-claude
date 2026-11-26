@@ -59,6 +59,11 @@ hablan), NO uses three.js ni Blender: sigue `drama/DRAMA.md`. Las tomas se gener
 `drama/prompts.py` escribe los prompts desde `historia.json` y `drama/montar.py` une las tomas y pone los
 subtítulos. Ejemplo completo: `drama/ejemplos/la_receta/`.
 
+## Explicativos de cómics (narrador + viñetas)
+Si piden explicar historias o datos de cómics (Marvel, DC, manga) con las viñetas reales, sigue `comic/COMIC.md`:
+guion con fuentes, `voz.mp3`, páginas en `paginas/`, `escenas.json` y `comic/montar_comic.py`. Ejemplo:
+`comic/ejemplos/hulk_gris/`. Nunca uses escenas de películas ni descargues escaneos piratas.
+
 ## Reglas del estilo
 - Voz en español, una sola voz pareja, de corrido: 3.2–3.8 palabras por segundo, casi sin silencios.
 - Sin subtítulos en la versión principal (el estilo de referencia sale sin ellos). Si quieres una versión con

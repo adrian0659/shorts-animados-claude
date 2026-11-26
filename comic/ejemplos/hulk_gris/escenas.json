@@ -1,0 +1,16 @@
+{
+  "titulo": "Hulk no era verde",
+  "escenas": [
+    {"imagen": "paginas/hulk1_portada.jpg", "de": [0, 0, 1, 1], "a": [0.15, 0.2, 0.7, 0.55]},
+    {"imagen": "paginas/hulk1_portada.jpg", "empieza": "Mayo de 1962", "de": [0, 0, 1, 0.3]},
+    {"imagen": "paginas/hulk1_gamma.jpg", "empieza": "Bruce Banner se lanza", "de": [0, 0, 1, 0.5], "a": [0, 0.5, 1, 0.5]},
+    {"imagen": "paginas/hulk1_transformacion.jpg", "empieza": "y esa misma noche", "de": [0, 0, 1, 1], "a": [0.2, 0.3, 0.6, 0.4]},
+    {"imagen": "paginas/hulk1_transformacion.jpg", "empieza": "Stan Lee eligió", "de": [0.2, 0.3, 0.6, 0.4]},
+    {"imagen": "paginas/hulk1_tonos.jpg", "empieza": "Pero había un problema", "de": [0, 0, 1, 1]},
+    {"imagen": "paginas/hulk1_tonos.jpg", "empieza": "En unas páginas", "de": [0, 0, 0.5, 0.5], "a": [0.5, 0.5, 0.5, 0.5]},
+    {"imagen": "paginas/hulk2_portada.jpg", "empieza": "Así que en el número dos", "de": [0, 0, 1, 1], "a": [0.15, 0.25, 0.7, 0.5]},
+    {"imagen": "paginas/joe_fixit.jpg", "empieza": "Pero el gris nunca", "de": [0, 0, 1, 1]},
+    {"imagen": "paginas/joe_fixit.jpg", "empieza": "un Hulk más chico", "de": [0.1, 0.1, 0.8, 0.6], "a": [0.25, 0.15, 0.5, 0.4]},
+    {"imagen": "paginas/hulk_moderno.jpg", "empieza": "O sea", "de": [0, 0, 1, 1], "a": [0.2, 0.15, 0.6, 0.5]}
+  ]
+}
