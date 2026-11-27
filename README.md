@@ -42,6 +42,15 @@ Claude saca las páginas del cómic (.cbr, .cbz, .pdf o enlace de Drive), escrib
 genera la voz «Cómics» en ElevenLabs, arma las tomas con la cámara recorriendo la página y entrega el MP4 vertical.
 Todo está en `.claude/skills/video-comic/`. Ejemplo terminado: `videos/doom_thanos/`.
 
+**Usarla en cualquier otro proyecto (se instala una sola vez):**
+- Mac / Linux (Terminal):
+  `curl -fsSL https://raw.githubusercontent.com/adrian0659/shorts-animados-claude/main/instalar-video-comic.sh | bash`
+- Windows (PowerShell):
+  `irm https://raw.githubusercontent.com/adrian0659/shorts-animados-claude/main/instalar-video-comic.ps1 | iex`
+
+Copia la skill a `~/.claude/skills/video-comic` y revisa ffmpeg, Python y unar. Después, en cualquier carpeta,
+abre Claude Code y escribe `/video-comic`. Vuelve a correr el mismo comando para actualizarla.
+
 ## Qué trae
 | Carpeta | Qué es |
 |---|---|

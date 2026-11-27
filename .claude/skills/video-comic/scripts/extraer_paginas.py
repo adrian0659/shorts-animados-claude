@@ -34,7 +34,12 @@ def tipo(p):
 
 t = tipo(ent); src = os.path.join(tmp, "x"); os.makedirs(src)
 if t == "rar":
-    subprocess.run(["unar", "-q", "-f", "-o", src, ent], check=True)
+    for cmd in (["unar", "-q", "-f", "-o", src, ent], ["7z", "x", "-y", f"-o{src}", ent],
+                ["7zz", "x", "-y", f"-o{src}", ent], ["tar", "-xf", ent, "-C", src]):
+        if shutil.which(cmd[0]) and subprocess.run(cmd, capture_output=True).returncode == 0:
+            break
+    else:
+        raise SystemExit("No pude abrir el .cbr: instala unar o 7-Zip (o manda el cómic en .cbz o .pdf)")
 elif t == "zip":
     zipfile.ZipFile(ent).extractall(src)
 elif t == "pdf":

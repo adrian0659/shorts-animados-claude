@@ -10,11 +10,13 @@ argument-hint: "[tema o escena] [enlace o archivo del cómic]"
 
 # Video de cómic «¿Sabías que…?»
 
-Formato probado en `videos/doom_thanos/` («¿Sabías que el Doctor Doom eliminó a Thanos?», Secret Wars #8):
+Formato probado en «Doom vs Thanos» y «Wolverine crucificado» (planes en `ejemplos/` de esta skill) («¿Sabías que el Doctor Doom eliminó a Thanos?», Secret Wars #8):
 vertical 1080×1920, 30 fps, ~60 s, una voz narrando de corrido, la cámara recorriendo las páginas del cómic.
 Habla siempre en español sencillo con la persona. Una pregunta a la vez solo si falta algo imprescindible.
 
-Herramientas (en `.claude/skills/video-comic/scripts/`, llámalas con su ruta completa):
+Herramientas en la carpeta `scripts/` de ESTA skill (la ruta base te la da el sistema al cargar la skill;
+si no, búscala en `.claude/skills/video-comic/` del proyecto o en `~/.claude/skills/video-comic/`).
+Llámalas con su ruta completa. Funciona en cualquier proyecto o carpeta:
 - `extraer_paginas.py ENTRADA CARPETA` → páginas numeradas + hojas de revisión con cuadrícula de coordenadas.
 - `palabras.py VOZ.mp3 palabras.json` → tiempos por palabra (Whisper local).
 - `render.py plan.json --fotos` → una foto por toma para revisar encuadres (segundos).
@@ -24,7 +26,7 @@ Si falta algo, instálalo (apt-get install -y unar / pip install …) y avisa en
 
 ## Proceso (hazlo de corrido; solo detente donde dice «espera»)
 
-1. **Carpeta del proyecto**: `videos/<tema_corto>/` (p. ej. `videos/hulk_vs_thor/`). Ahí va todo.
+1. **Carpeta del proyecto** (en la carpeta de trabajo actual): `videos/<tema_corto>/` (p. ej. `videos/hulk_vs_thor/`). Ahí va todo.
 
 2. **Cómic.** Si la persona ya dio enlace o archivo en `$ARGUMENTS` o en el chat, úsalo; si no, pídeselo
    (acepta .cbr, .cbz, .pdf, carpeta de imágenes o enlace de Google Drive compartido «cualquiera con el enlace»).
@@ -58,7 +60,7 @@ Si falta algo, instálalo (apt-get install -y unar / pip install …) y avisa en
 
 5. **Tiempos**: `python3 …/palabras.py voz_tomaN.mp3 palabras.json`.
 
-6. **Plan de tomas** `plan.json` (ejemplo completo: `videos/doom_thanos/plan.json`; formato al inicio de `render.py`).
+6. **Plan de tomas** `plan.json` (ejemplos completos: `ejemplos/plan_doom_thanos.json` de esta skill; formato al inicio de `render.py`).
    - Una toma cada 1.3–2.5 s, empezando cuando empieza la frase o la palabra clave.
    - Abre con el momento más fuerte (adelanto del clímax) durante el gancho, como la referencia.
    - Encadena viñetas **de la misma página** en tomas seguidas: la cámara se desliza entre ellas (se ve como
@@ -71,7 +73,7 @@ Si falta algo, instálalo (apt-get install -y unar / pip install …) y avisa en
    - Los anchos de arriba son para páginas de ~2000 px. Si las páginas miden otra cosa (p. ej. capturas de celular
      de 1284 px), multiplica por ancho_página/2000. Las capturas se recortan solas (franjas negras fuera).
    - **Clip de película** al inicio (si la persona manda uno): toma `{"t":0,"clip":"comic/clip.mov","desde":0}`.
-     Se ve a pantalla completa sin su audio; la voz va encima. Ejemplo: `videos/wolverine_crucificado/plan.json`.
+     Se ve a pantalla completa sin su audio; la voz va encima. Ejemplo: `ejemplos/plan_wolverine_crucificado.json` (la versión final ya no usa clip).
    - **Sonidos de escena** (pocos y suaves, la persona los pidió así): `"sonido": ["viento"|"bofetada"|"crujido"|
      "clavos"|"trueno"|"lluvia"|"rugido"]` solo donde la narración lo cuenta (golpe, tormenta, desierto…).
 
@@ -82,7 +84,7 @@ Si falta algo, instálalo (apt-get install -y unar / pip install …) y avisa en
    tiene video y audio y la duración. Volumen final −14 LUFS (lo hace el script).
 
 9. **Entrega**: manda el MP4 con SendUserFile (display render). Resume en pocas líneas: qué se ve, tiempos clave,
-   costo de voz. Commit y push de `plan.json`, voces, `palabras.json` y MP4 (las páginas del cómic NO se suben:
+   costo de voz. Si la carpeta es un repositorio git: commit y push de `plan.json`, voces, `palabras.json` y MP4 (las páginas del cómic NO se suben:
    `comic/` va en `.gitignore`). Recuerda una vez el aviso de derechos: las viñetas son del editor; las
    plataformas pueden silenciar o quitar el video.
 
