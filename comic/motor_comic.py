@@ -43,6 +43,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paneles  # noqa: E402
 
 ANCHO, ALTO, FPS = 1080, 1920, 30
+MIN_ANCHO = float(os.environ.get("MIN_ANCHO", 0.45))  # fracción del ancho de página
 
 
 # ---------------------------------------------------------------- tiempos con Whisper
@@ -141,6 +142,9 @@ def caja_de(v, base):
     img = pagina(ruta)
     if "caja" in v:
         return ruta, v["caja"]
+    if "caja_rel" in v:  # fracciones de la página: [x0, y0, x1, y1] entre 0 y 1
+        a, b, c, d = v["caja_rel"]
+        return ruta, [a * img.width, b * img.height, c * img.width, d * img.height]
     if "panel" in v:
         if ruta not in _cajas:
             _cajas[ruta] = paneles.detectar(ruta)[1]
@@ -167,6 +171,10 @@ def vista(img, caja, mov, u):
         vh, vw = bh, bh * aspecto
     else:
         vw, vh = bw, bw / aspecto
+    # nunca acercarse tanto que se vea borroso: la vista mide al menos MIN_ANCHO de la página
+    if vw < MIN_ANCHO * img.width:
+        k = MIN_ANCHO * img.width / vw
+        vw, vh = vw * k, vh * k
     if mov == "auto":
         r = (bw / bh) / aspecto
         if r > 1.35:
