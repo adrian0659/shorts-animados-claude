@@ -1,0 +1,16 @@
+{
+  "name": "logan-comic",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "remotion render src/index.ts LoganComic out/video_mudo.mp4 --codec h264 --crf 18"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.522",
+    "@types/react": "^19.0.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.522",
+    "typescript": "^5.6.0"
+  }
+}
