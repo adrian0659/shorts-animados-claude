@@ -1,0 +1,840 @@
+{
+ "salida": "salida/strange_doom.mp4",
+ "voz": "voz.mp3",
+ "tomas": [
+  {
+   "texto": "¿Sabías que Doctor Doom bajó al infierno…",
+   "img": "paginas/dsddtat-045.jpg",
+   "mov": "pan_abajo",
+   "panel": 0
+  },
+  {
+   "texto": "para rescatar el alma de su MADRE?",
+   "img": "paginas/dsddtat-032.jpg",
+   "mov": "zoom_in",
+   "panel": 1,
+   "impacto": true
+  },
+  {
+   "texto": "En una cueva del Himalaya vive el hechicero más viejo del mundo: el Anciano Genghis.",
+   "img": "paginas/dsddtat-004.jpg",
+   "mov": "pan_abajo",
+   "panel": 0
+  },
+  {
+   "texto": "Hace años, un joven desfigurado llegó a pedirle que le enseñara magia.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-005.jpg",
+     "mov": "auto",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-005.jpg",
+     "mov": "auto",
+     "panel": 0
+    }
+   ]
+  },
+  {
+   "texto": "Su nombre era Victor von Doom.",
+   "img": "paginas/dsddtat-005.jpg",
+   "mov": "zoom_in",
+   "panel": 2
+  },
+  {
+   "texto": "Genghis lo mandó con unos monjes del Tíbet.",
+   "img": "paginas/dsddtat-006.jpg",
+   "mov": "pan_abajo",
+   "panel": 0
+  },
+  {
+   "texto": "Ahí Victor aprendió todo lo que sabían, hasta convertirse en su maestro.",
+   "img": "paginas/dsddtat-007.jpg",
+   "mov": "auto",
+   "panel": 0
+  },
+  {
+   "texto": "Les ordenó forjarle una armadura, y se puso la máscara aún al rojo vivo.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-007.jpg",
+     "mov": "zoom_in",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-007.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "Desde ese día, Victor von Doom dejó de existir.",
+   "img": "paginas/dsddtat-007.jpg",
+   "mov": "pan_izq",
+   "panel": 3
+  },
+  {
+   "texto": "Nació… DOCTOR DOOM.",
+   "img": "paginas/dsddtat-007.jpg",
+   "mov": "zoom_in",
+   "caja_rel": [
+    0.5,
+    0.62,
+    0.98,
+    0.98
+   ],
+   "impacto": true
+  },
+  {
+   "texto": "Años después, Genghis lanzó un llamado mágico",
+   "img": "paginas/dsddtat-009.jpg",
+   "mov": "zoom_in",
+   "panel": 1
+  },
+  {
+   "texto": "que se escuchó en todo el mundo:",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-010.jpg",
+     "mov": "auto",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-010.jpg",
+     "mov": "auto",
+     "panel": 2
+    },
+    {
+     "img": "paginas/dsddtat-010.jpg",
+     "mov": "auto",
+     "panel": 3
+    },
+    {
+     "img": "paginas/dsddtat-010.jpg",
+     "mov": "auto",
+     "panel": 4
+    }
+   ]
+  },
+  {
+   "texto": "convocó a los hechiceros más poderosos al Templo de los Tres, en la selva de Indonesia.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-011.jpg",
+     "mov": "zoom_in",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-013.jpg",
+     "mov": "zoom_out",
+     "panel": 0
+    }
+   ]
+  },
+  {
+   "texto": "Doctor Strange viajó hasta allá…",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-012.jpg",
+     "mov": "auto",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-013.jpg",
+     "mov": "pan_der",
+     "panel": 1
+    }
+   ]
+  },
+  {
+   "texto": "pero no fue el último en llegar.",
+   "img": "paginas/dsddtat-014.jpg",
+   "mov": "pan_der",
+   "panel": 5
+  },
+  {
+   "texto": "Entre los magos apareció Doctor Doom.",
+   "img": "paginas/dsddtat-015.jpg",
+   "mov": "zoom_in",
+   "panel": 4,
+   "impacto": true
+  },
+  {
+   "texto": "Y Genghis reveló el motivo de la reunión:",
+   "img": "paginas/dsddtat-016.jpg",
+   "mov": "auto",
+   "panel": 0
+  },
+  {
+   "texto": "cada cien años, un torneo decide quién es el Hechicero Supremo.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-017.jpg",
+     "mov": "auto",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-016.jpg",
+     "mov": "zoom_in",
+     "caja_rel": [
+      0.03,
+      0.5,
+      0.45,
+      0.88
+     ]
+    }
+   ]
+  },
+  {
+   "texto": "El premio: un deseo concedido.",
+   "img": "paginas/dsddtat-018.jpg",
+   "mov": "auto",
+   "panel": 0
+  },
+  {
+   "texto": "La prueba era liberar a Genghis de un cristal gigante.",
+   "img": "paginas/dsddtat-019.jpg",
+   "mov": "zoom_in",
+   "panel": 5
+  },
+  {
+   "texto": "Pero el cristal devolvía cada hechizo cien veces más fuerte,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-020.jpg",
+     "mov": "pan_der",
+     "panel": 2
+    },
+    {
+     "img": "paginas/dsddtat-021.jpg",
+     "mov": "pan_izq",
+     "panel": 0,
+     "impacto": true
+    }
+   ]
+  },
+  {
+   "texto": "y los magos fueron cayendo uno tras otro, hipnotizados.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-022.jpg",
+     "mov": "auto",
+     "panel": 5
+    },
+    {
+     "img": "paginas/dsddtat-022.jpg",
+     "mov": "pan_der",
+     "panel": 7
+    },
+    {
+     "img": "paginas/dsddtat-023.jpg",
+     "mov": "pan_izq",
+     "panel": 1
+    }
+   ]
+  },
+  {
+   "texto": "Solo quedaron dos de pie:",
+   "img": "paginas/dsddtat-024.jpg",
+   "mov": "pan_der",
+   "panel": 3
+  },
+  {
+   "texto": "Strange… y Doom.",
+   "img": "paginas/dsddtat-024.jpg",
+   "mov": "zoom_in",
+   "panel": 2,
+   "impacto": true
+  },
+  {
+   "texto": "Strange usó su cuerpo astral para llegar al cristal,",
+   "img": "paginas/dsddtat-025.jpg",
+   "mov": "pan_der",
+   "panel": 6
+  },
+  {
+   "texto": "y con el Ojo de Agamotto descubrió el secreto:",
+   "img": "paginas/dsddtat-025.jpg",
+   "mov": "zoom_in",
+   "panel": 2
+  },
+  {
+   "texto": "solo había que pedirle a Genghis que saliera.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-026.jpg",
+     "mov": "auto",
+     "panel": 4
+    },
+    {
+     "img": "paginas/dsddtat-026.jpg",
+     "mov": "pan_abajo",
+     "panel": 5
+    }
+   ]
+  },
+  {
+   "texto": "Así, Strange se convirtió en el Hechicero Supremo.",
+   "img": "paginas/dsddtat-027.jpg",
+   "mov": "zoom_in",
+   "panel": 1,
+   "impacto": true
+  },
+  {
+   "texto": "Pero había una trampa:",
+   "img": "paginas/dsddtat-028.jpg",
+   "mov": "zoom_in",
+   "panel": 2
+  },
+  {
+   "texto": "el Hechicero Supremo no recibe el deseo… lo concede.",
+   "img": "paginas/dsddtat-028.jpg",
+   "mov": "zoom_in",
+   "panel": 1
+  },
+  {
+   "texto": "Y Doom era el único que había resistido al cristal.",
+   "img": "paginas/dsddtat-028.jpg",
+   "mov": "zoom_in",
+   "panel": 3
+  },
+  {
+   "texto": "Su deseo: que Strange lo ayudara a liberar el alma de su madre,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-029.jpg",
+     "mov": "pan_der",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-029.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "atrapada por el demonio MEFISTO.",
+   "img": "paginas/dsddtat-034.jpg",
+   "mov": "zoom_in",
+   "caja_rel": [
+    0.45,
+    0.86,
+    0.98,
+    1.0
+   ],
+   "impacto": true
+  },
+  {
+   "texto": "Strange no tuvo opción.",
+   "img": "paginas/dsddtat-028.jpg",
+   "mov": "zoom_in",
+   "panel": 5
+  },
+  {
+   "texto": "Viajó con Doom a Latveria, donde la gente lo recibió como a un héroe.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-030.jpg",
+     "mov": "pan_abajo",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-031.jpg",
+     "mov": "pan_abajo",
+     "panel": 0
+    }
+   ]
+  },
+  {
+   "texto": "En el castillo, frente al retrato de su madre Cynthia,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-032.jpg",
+     "mov": "pan_der",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-032.jpg",
+     "mov": "pan_arriba",
+     "panel": 1
+    }
+   ]
+  },
+  {
+   "texto": "Doom confesó que llevaba toda su vida intentando salvarla.",
+   "img": "paginas/dsddtat-033.jpg",
+   "mov": "pan_der",
+   "panel": 4
+  },
+  {
+   "texto": "Su sirviente Boris le contó a Strange la verdad.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-034.jpg",
+     "mov": "pan_der",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-033.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "Cynthia era una gitana que, para proteger a su pueblo,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-034.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    },
+    {
+     "img": "paginas/dsddtat-034.jpg",
+     "mov": "auto",
+     "panel": 1
+    }
+   ]
+  },
+  {
+   "texto": "hizo un pacto con Mefisto.",
+   "img": "paginas/dsddtat-034.jpg",
+   "mov": "zoom_in",
+   "impacto": true,
+   "caja_rel": [
+    0.66,
+    0.5,
+    0.98,
+    0.79
+   ]
+  },
+  {
+   "texto": "Pero no pudo controlar ese poder:",
+   "img": "paginas/dsddtat-036.jpg",
+   "mov": "pan_der",
+   "panel": 0,
+   "impacto": true
+  },
+  {
+   "texto": "una noche murieron todos los niños de la aldea.",
+   "img": "paginas/dsddtat-036.jpg",
+   "mov": "pan_abajo",
+   "panel": 3
+  },
+  {
+   "texto": "Ella misma murió poco después,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-037.jpg",
+     "mov": "zoom_in",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-037.jpg",
+     "mov": "auto",
+     "panel": 3
+    }
+   ]
+  },
+  {
+   "texto": "y Mefisto se quedó con su alma.",
+   "img": "paginas/dsddtat-061.jpg",
+   "mov": "pan_der",
+   "panel": 1
+  },
+  {
+   "texto": "Desde entonces, Doom estudió magia y ciencia con un solo propósito.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-039.jpg",
+     "mov": "auto",
+     "panel": 4
+    },
+    {
+     "img": "paginas/dsddtat-040.jpg",
+     "mov": "pan_der",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-041.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "Durante semanas, Strange le enseñó hechizos…",
+   "img": "paginas/dsddtat-042.jpg",
+   "mov": "pan_der",
+   "panel": 1
+  },
+  {
+   "texto": "y Doom, en secreto, mejoraba su armadura.",
+   "img": "paginas/dsddtat-042.jpg",
+   "mov": "pan_der",
+   "panel": 2
+  },
+  {
+   "texto": "En la noche de San Juan abrieron un portal al infierno.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-043.jpg",
+     "mov": "auto",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-044.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "Tormentas, demonios, cuervos gigantes…",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-051.jpg",
+     "mov": "pan_der",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-046.jpg",
+     "mov": "auto",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-050.jpg",
+     "mov": "pan_izq",
+     "panel": 0
+    }
+   ]
+  },
+  {
+   "texto": "hasta que Mefisto los separó.",
+   "img": "paginas/dsddtat-047.jpg",
+   "mov": "pan_abajo",
+   "panel": 0,
+   "impacto": true
+  },
+  {
+   "texto": "A Strange lo atrapó en una ilusión:",
+   "img": "paginas/dsddtat-053.jpg",
+   "mov": "pan_abajo",
+   "panel": 0
+  },
+  {
+   "texto": "lo hizo revivir el accidente que le destrozó las manos,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-056.jpg",
+     "mov": "pan_der",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-056.jpg",
+     "mov": "zoom_in",
+     "panel": 2,
+     "impacto": true
+    }
+   ]
+  },
+  {
+   "texto": "y la búsqueda desesperada del Anciano.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-057.jpg",
+     "mov": "pan_der",
+     "panel": 2
+    },
+    {
+     "img": "paginas/dsddtat-057.jpg",
+     "mov": "auto",
+     "panel": 6
+    },
+    {
+     "img": "paginas/dsddtat-058.jpg",
+     "mov": "pan_izq",
+     "panel": 5
+    }
+   ]
+  },
+  {
+   "texto": "Pero Strange rompió la ilusión con la Luz de Agamotto.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-059.jpg",
+     "mov": "pan_der",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-059.jpg",
+     "mov": "pan_der",
+     "panel": 2,
+     "impacto": true
+    }
+   ]
+  },
+  {
+   "texto": "Mientras tanto, Mefisto le ofreció a Doom el planeta entero…",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-060.jpg",
+     "mov": "pan_abajo",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-060.jpg",
+     "mov": "pan_abajo",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "y Doom lo rechazó.",
+   "img": "paginas/dsddtat-061.jpg",
+   "mov": "zoom_in",
+   "panel": 0
+  },
+  {
+   "texto": "Solo quería una cosa: el alma de su madre.",
+   "img": "paginas/dsddtat-061.jpg",
+   "mov": "zoom_in",
+   "panel": 2
+  },
+  {
+   "texto": "Y aquí viene la TRAICIÓN.",
+   "img": "paginas/dsddtat-064.jpg",
+   "mov": "zoom_in",
+   "panel": 4,
+   "impacto": true
+  },
+  {
+   "texto": "Doom entregó a Strange a cambio del alma de su madre.",
+   "img": "paginas/dsddtat-065.jpg",
+   "mov": "pan_der",
+   "panel": 0
+  },
+  {
+   "texto": "Mefisto atrapó a Strange en un cristal",
+   "img": "paginas/dsddtat-065.jpg",
+   "mov": "zoom_in",
+   "panel": 1
+  },
+  {
+   "texto": "y le dio a Cynthia un cuerpo nuevo.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-065.jpg",
+     "mov": "pan_abajo",
+     "panel": 3
+    },
+    {
+     "img": "paginas/dsddtat-066.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "Pero cuando ella supo que su hijo había traicionado a alguien para salvarla,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-067.jpg",
+     "mov": "pan_der",
+     "panel": 3
+    },
+    {
+     "img": "paginas/dsddtat-067.jpg",
+     "mov": "zoom_in",
+     "panel": 1
+    }
+   ]
+  },
+  {
+   "texto": "lo rechazó:",
+   "img": "paginas/dsddtat-068.jpg",
+   "mov": "zoom_in",
+   "panel": 0
+  },
+  {
+   "texto": "«Tú no eres mi hijo».",
+   "img": "paginas/dsddtat-068.jpg",
+   "mov": "zoom_in",
+   "panel": 1,
+   "impacto": true
+  },
+  {
+   "texto": "Y en ese instante se convirtió en piedra.",
+   "img": "paginas/dsddtat-068.jpg",
+   "mov": "pan_abajo",
+   "panel": 3
+  },
+  {
+   "texto": "Pero todo era parte del plan.",
+   "img": "paginas/dsddtat-069.jpg",
+   "mov": "zoom_in",
+   "panel": 1,
+   "impacto": true
+  },
+  {
+   "texto": "Doom había escondido en la capa de Strange un dispositivo que rompió el cristal.",
+   "img": "paginas/dsddtat-069.jpg",
+   "mov": "pan_der",
+   "panel": 2
+  },
+  {
+   "texto": "Juntos se enfrentaron a Mefisto,",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-070.jpg",
+     "mov": "zoom_in",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-071.jpg",
+     "mov": "pan_der",
+     "panel": 3
+    }
+   ]
+  },
+  {
+   "texto": "y Doom le disparó un proyectil de antimateria…",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-074.jpg",
+     "mov": "zoom_in",
+     "panel": 4
+    },
+    {
+     "img": "paginas/dsddtat-074.jpg",
+     "mov": "pan_der",
+     "panel": 5,
+     "impacto": true
+    }
+   ]
+  },
+  {
+   "texto": "pero el demonio era invencible en su reino.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-075.jpg",
+     "mov": "zoom_in",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-073.jpg",
+     "mov": "pan_abajo",
+     "panel": 0
+    }
+   ]
+  },
+  {
+   "texto": "Entonces Strange entendió la verdad:",
+   "img": "paginas/dsddtat-076.jpg",
+   "mov": "zoom_in",
+   "caja_rel": [
+    0.6,
+    0.0,
+    1.0,
+    0.45
+   ]
+  },
+  {
+   "texto": "al rechazar la traición de su hijo, Cynthia se había redimido ella sola.",
+   "img": "paginas/dsddtat-077.jpg",
+   "mov": "pan_abajo",
+   "panel": 3
+  },
+  {
+   "texto": "Con el poder de los Vishanti rompió la estatua,",
+   "img": "paginas/dsddtat-076.jpg",
+   "mov": "pan_abajo",
+   "caja_rel": [
+    0.0,
+    0.45,
+    0.6,
+    1.0
+   ],
+   "impacto": true
+  },
+  {
+   "texto": "y su alma subió al cielo, libre de Mefisto para siempre.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-077.jpg",
+     "mov": "zoom_in",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-078.jpg",
+     "mov": "zoom_in",
+     "panel": 0
+    }
+   ]
+  },
+  {
+   "texto": "De vuelta en Latveria, Strange le preguntó a Doom si había planeado todo.",
+   "vinetas": [
+    {
+     "img": "paginas/dsddtat-079.jpg",
+     "mov": "zoom_in",
+     "panel": 0
+    },
+    {
+     "img": "paginas/dsddtat-080.jpg",
+     "mov": "pan_der",
+     "panel": 1
+    },
+    {
+     "img": "paginas/dsddtat-080.jpg",
+     "mov": "zoom_in",
+     "panel": 2
+    }
+   ]
+  },
+  {
+   "texto": "Doom solo respondió:",
+   "img": "paginas/dsddtat-079.jpg",
+   "mov": "zoom_in",
+   "panel": 7
+  },
+  {
+   "texto": "«Mi madre por fin es libre».",
+   "img": "paginas/dsddtat-080.jpg",
+   "mov": "zoom_in",
+   "panel": 3
+  },
+  {
+   "texto": "El precio fue su amor.",
+   "img": "paginas/dsddtat-066.jpg",
+   "mov": "pan_der",
+   "panel": 5
+  },
+  {
+   "texto": "Pero, al menos por ahora… su alma sigue siendo suya.",
+   "img": "paginas/dsddtat-080.jpg",
+   "mov": "zoom_out",
+   "panel": 3
+  },
+  {
+   "texto": "¿Crees que Doom es un villano…",
+   "img": "paginas/dsddtat-081.jpg",
+   "mov": "pan_der",
+   "panel": 0
+  },
+  {
+   "texto": "o un hijo que hizo lo que tenía que hacer?",
+   "img": "paginas/dsddtat-082.jpg",
+   "mov": "zoom_in",
+   "caja_rel": [
+    0.02,
+    0.0,
+    0.3,
+    0.26
+   ]
+  }
+ ]
+}
