@@ -68,6 +68,12 @@ Si falta algo, instálalo (apt-get install -y unar / pip install …) y avisa en
    - Efectos: `golpe` en cortes fuertes, `sacudir` en golpes/explosiones, `flash` en revelaciones, `impacto`
      solo en EL momento (hace silencio tenso antes, golpe fuerte y crujido).
    - Termina en la viñeta más icónica con `golpe`.
+   - Los anchos de arriba son para páginas de ~2000 px. Si las páginas miden otra cosa (p. ej. capturas de celular
+     de 1284 px), multiplica por ancho_página/2000. Las capturas se recortan solas (franjas negras fuera).
+   - **Clip de película** al inicio (si la persona manda uno): toma `{"t":0,"clip":"comic/clip.mov","desde":0}`.
+     Se ve a pantalla completa sin su audio; la voz va encima. Ejemplo: `videos/wolverine_crucificado/plan.json`.
+   - **Sonidos de escena** (pocos y suaves, la persona los pidió así): `"sonido": ["viento"|"bofetada"|"crujido"|
+     "clavos"|"trueno"|"lluvia"|"rugido"]` solo donde la narración lo cuenta (golpe, tormenta, desierto…).
 
 7. **Revisión rápida**: `python3 …/render.py plan.json --fotos` y mira `revision_tomas/hoja_tomas.jpg`
    (y fotos sueltas si dudas). Corrige encuadres que corten globos o caras, o que repitan viñeta.

@@ -20,6 +20,10 @@ Rutas relativas = relativas a la carpeta del plan.
   cx,cy  centro de la cámara en píxeles de la página (usa revision/cuadricula_XXX.jpg)
   ancho  ancho de la ventana en px de página. La altura es ancho*16/9. Más ancho = se ve más página.
          Para que una viñeta se vea completa: ancho >= ancho de la viñeta (y >= alto*9/16).
+  clip   (en vez de pag/cx/cy/ancho) video para insertar, p. ej. un clip de la película; "desde": segundo inicial.
+         Se ve a pantalla completa sin su audio (la voz va encima).
+  sonido lista de efectos de ambiente para esa escena (pocos, suaves): "viento", "bofetada", "crujido",
+         "clavos", "trueno", "lluvia" (sigue sonando hasta la última toma que también diga "lluvia"), "rugido".
   fx     efectos: "golpe" (zoom de entrada), "sacudir", "flash", "impacto" (flash + golpe fuerte + crujido,
          con silencio tenso justo antes; úsalo en EL momento del video).
 Movimiento (estilo del video de referencia): dentro de la misma página la cámara se desliza de una toma a la
@@ -41,8 +45,22 @@ base = os.path.dirname(os.path.abspath(plan_path))
 plan = json.load(open(plan_path))
 rel = lambda p: p if os.path.isabs(p) else os.path.join(base, p)
 PAGES, VOZ, OUT = rel(plan["paginas"]), rel(plan["voz"]), rel(plan.get("salida", "video.mp4"))
-KEYS = [(s["t"], s["pag"], s["cx"], s["cy"], s["ancho"], s.get("fx", [])) for s in plan["tomas"]]
-KEYS.sort(key=lambda k: k[0])
+TOMAS = sorted(plan["tomas"], key=lambda s: s["t"])
+KEYS = [(s["t"], s.get("pag", "clip"), s.get("cx", 0), s.get("cy", 0), s.get("ancho", 1), s.get("fx", []))
+        for s in TOMAS]
+
+_clips = {}
+def clip_frame(k, dt):
+    s = TOMAS[k]; ruta = rel(s["clip"])
+    if ruta not in _clips:
+        cw, ch = 576, 1024
+        raw = subprocess.check_output(["ffmpeg", "-v", "error", "-i", ruta, "-vf",
+              f"fps={FPS},scale={cw}:{ch}:force_original_aspect_ratio=increase,crop={cw}:{ch}",
+              "-f", "rawvideo", "-pix_fmt", "rgb24", "-"])
+        _clips[ruta] = np.frombuffer(raw, np.uint8).reshape(-1, ch, cw, 3)
+    fr = _clips[ruta]
+    i = min(len(fr) - 1, int((dt + s.get("desde", 0)) * FPS))
+    return np.asarray(Image.fromarray(fr[i]).resize((W, H), Image.BICUBIC)).astype(np.float32)
 
 _cache = {}
 def page(n):
@@ -62,7 +80,7 @@ def cam(t):
     t0, n, cx, cy, w, _ = KEYS[i]
     t1 = KEYS[i + 1][0] if i + 1 < len(KEYS) else t0 + 3
     w = w * (1 - 0.07 * ease((t - t0) / max(0.5, t1 - t0)))      # acercamiento lento
-    if i > 0 and KEYS[i - 1][1] == n:                               # deslizamiento en la misma página
+    if i > 0 and KEYS[i - 1][1] == n and n != "clip":                               # deslizamiento en la misma página
         _, _, px, py, pw, _ = KEYS[i - 1]
         u = ease((t - t0) / PAN)
         cx, cy = px + (cx - px) * u, py + (cy - py) * u
@@ -75,6 +93,9 @@ def vignette():
     return np.clip(1.0 - 0.35 * np.clip(d - 0.6, 0, 1) ** 1.5, 0, 1)[..., None].astype(np.float32)
 
 def render(t, rng):
+    i0 = max(k for k, s in enumerate(KEYS) if s[0] <= t)
+    if KEYS[i0][1] == "clip":
+        return clip_frame(i0, t - KEYS[i0][0])
     i, n, cx, cy, w = cam(t)
     efx = KEYS[i][5]; dt = t - KEYS[i][0]
     if "golpe" in efx or "impacto" in efx:
@@ -155,6 +176,43 @@ def audio(dur, cortes, wav):
         elif {"golpe", "sacudir", "flash"} & set(s[5]):
             boom(s[0], 0.8)
     for c in cortes: whoosh(c, 0.5)
+    # --- sonidos de ambiente por escena (pocos y suaves) ---
+    amb = np.zeros(n)
+    def suave(x, k):  # pasa bajos con promedio móvil
+        return np.convolve(x, np.ones(k) / k, mode="same")
+    def ventana(t0, t1, a=0.4):
+        return np.clip((t - t0) / a, 0, 1) * np.clip((t1 - t) / a, 0, 1)
+    fin = lambda k: TOMAS[k + 1]["t"] if k + 1 < len(TOMAS) else dur
+    ruido = rng.standard_normal(n)
+    lluvia = [s["t"] for s in TOMAS if "lluvia" in s.get("sonido", [])]
+    if lluvia:
+        k_ult = max(k for k, s in enumerate(TOMAS) if "lluvia" in s.get("sonido", []))
+        amb += 0.35 * (ruido - suave(ruido, 6)) * ventana(lluvia[0], fin(k_ult), 1.0)
+    for k, s in enumerate(TOMAS):
+        t0 = s["t"]; t1 = fin(k); x = t - t0; pos = x >= 0
+        for so in s.get("sonido", []):
+            if so == "viento":
+                v = suave(ruido, 60) * 6 * (0.6 + 0.4 * np.sin(2 * np.pi * 0.4 * t))
+                amb += 0.5 * v * ventana(t0, t1 + 0.5, 0.6)
+            elif so == "bofetada":
+                amb += 1.6 * pos * (ruido - suave(ruido, 3)) * np.exp(-np.maximum(x, 0) * 45)
+            elif so == "crujido":
+                amb += 1.4 * ((x > 0) & (x < 0.6)) * ruido * (rng.random(n) < 0.015) * np.exp(-np.maximum(x, 0) * 4)
+            elif so == "clavos":
+                for d in (0.15, 0.55, 0.95):
+                    y = x - d; m = y >= 0; e = np.exp(-np.maximum(y, 0) * 18)
+                    amb += 0.7 * m * e * (np.sin(2 * np.pi * 1850 * t) + 0.6 * np.sin(2 * np.pi * 2730 * t)
+                                          + 0.8 * (ruido - suave(ruido, 4)) * np.exp(-np.maximum(y, 0) * 60))
+            elif so == "trueno":
+                ret = suave(ruido, 200) * 14
+                amb += 1.2 * pos * (ret * np.exp(-np.maximum(x, 0) * 0.9) * np.clip(x / 0.08, 0, 1)
+                                    + 0.6 * (ruido - suave(ruido, 3)) * np.exp(-np.maximum(x, 0) * 25))
+            elif so == "rugido":
+                f = 85 + 10 * np.sin(2 * np.pi * 7 * t)
+                saw = 2 * ((np.cumsum(f / SR)) % 1) - 1
+                amb += 0.6 * ((x > 0) & (x < 1.2)) * saw * (0.5 + 0.5 * suave(np.abs(ruido), 300) * 2) \
+                       * np.clip(x / 0.1, 0, 1) * np.clip((1.2 - x) / 0.3, 0, 1)
+    sfx = sfx + amb * (np.max(np.abs(sfx)) / (np.max(np.abs(amb)) + 1e-9)) * 0.55 if np.any(amb) else sfx
     v = np.zeros(n); v[:min(n, len(voz))] = voz[:n]
     rms = lambda x: np.sqrt(np.mean(x[np.abs(x) > 1e-4] ** 2) + 1e-12)
     mus *= rms(v) / rms(mus) * 10 ** (-13 / 20)
@@ -168,7 +226,7 @@ def audio(dur, cortes, wav):
 
 def video():
     dur = duracion(); nfr = int(dur * FPS)
-    cortes_f = [round(s[0] * FPS) for k, s in enumerate(KEYS) if k > 0 and s[1] != KEYS[k - 1][1]]
+    cortes_f = [round(s[0] * FPS) for k, s in enumerate(KEYS) if k > 0 and (s[1] != KEYS[k - 1][1] or s[1] == "clip")]
     vid, wav = OUT + ".tmp.mp4", OUT + ".tmp.wav"
     audio(dur, [c / FPS for c in cortes_f], wav)
     vig = vignette(); rng = np.random.default_rng(7)

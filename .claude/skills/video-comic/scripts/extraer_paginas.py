@@ -52,6 +52,12 @@ except OSError: font = ImageFont.load_default()
 minis = []
 for i, f in enumerate(imgs):
     im = Image.open(f).convert("RGB")
+    # capturas de pantalla del celular: quitar las franjas negras de arriba/abajo/lados
+    import numpy as np
+    g8 = np.asarray(im.convert("L"))
+    filas = np.where(g8.mean(1) > 25)[0]; cols = np.where(g8.mean(0) > 25)[0]
+    if len(filas) and len(cols):
+        im = im.crop((int(cols[0]), int(filas[0]), int(cols[-1]) + 1, int(filas[-1]) + 1))
     im.save(os.path.join(pag_dir, f"pagina_{i:03d}.jpg"), quality=95)
     # cuadrícula: líneas cada 200 px con la coordenada escrita
     g = im.copy(); d = ImageDraw.Draw(g)
