@@ -67,3 +67,5 @@ Claude sigue `SKILL.md`: tema y datos, guion, voz, plan de tomas en `story.ts`, 
 ## Créditos y licencia
 Basada en [claude-animated-shorts](https://github.com/mromidev/claude-animated-shorts) de Mr omi.
 El código y los documentos son MIT (ver `LICENSE`). Los cuadros de referencia vienen solo para estudiar el estilo.
+
+**Nuevo: shorts narrados de cómic** («¿Sabías que...?»): páginas de cómic + voz, con paneos por viñeta sincronizados a la narración. Todo en `comic/`.

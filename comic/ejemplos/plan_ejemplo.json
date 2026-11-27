@@ -1,0 +1,17 @@
+{"salida":"salida/prueba.mp4","voz":"voz.wav","tomas":[
+{"texto":"¿Sabías que Venom visitó a un niño con cáncer y le contó cómo mató a Spider-Man?","img":"paginas/p0.jpg","panel":0,"impacto":true},
+{"texto":"Dije Mitty Quinto.","img":"paginas/p0.jpg","panel":1,"mov":"zoom_in"},
+{"texto":"Luego de percatarse que un niño llamado Marcus era su mayor fan, Venom decidió visitarlo.","vinetas":[{"img":"paginas/p0.jpg","panel":2},{"img":"paginas/p0.jpg","panel":3}]},
+{"texto":"Al verlo, Marcus no pudo contener la emoción.","img":"paginas/p0.jpg","panel":4},
+{"texto":"Sin dudarlo, le pidió a Venom que le contara la vez que luchó contra Spider-Man en Navidad.","vinetas":[{"img":"paginas/p1.jpg","panel":0},{"img":"paginas/p1.jpg","panel":1}]},
+{"texto":"Venom, encantado, le relató la historia describiendo cómo había matado a Spider-Man","img":"paginas/p1.jpg","panel":2},
+{"texto":"y cómo usó sus restos para redecorar la pista de patinaje.","img":"paginas/p1.jpg","panel":3},
+{"texto":"Marcus, sabiendo que no le quedaba mucho tiempo, le pidió a Eddie un último favor.","img":"paginas/p1.jpg","panel":4},
+{"texto":"Quería probar un poco del simbionte para sentirse sano y fuerte como él.","img":"paginas/p2.jpg","panel":0},
+{"texto":"Al principio, Eddie dudaba, pero finalmente accedió.","img":"paginas/p2.jpg","panel":1},
+{"texto":"Marcus, lleno de ambición, arrancó un gran trozo del simbionte y le dijo que nunca alcanzaría su máximo potencial mientras estuviera con Eddie.","vinetas":[{"img":"paginas/p2.jpg","panel":2},{"img":"paginas/p2.jpg","panel":3}]},
+{"texto":"El simbionte, atraído por la ambición de Marcus, extirpó el cáncer del niño y se lo transfirió a Eddie.","img":"paginas/p2.jpg","panel":4,"impacto":true},
+{"texto":"Brock suplicó a Venom que no lo abandonara, pero este con frialdad respondió:","img":"paginas/p0.jpg"},
+{"texto":"Jamás te olvidaré. Al menos no por ahora.","img":"paginas/p1.jpg","panel":0,"mov":"zoom_out"},
+{"texto":"Naciendo así el Venom más peligroso del multiverso.","img":"paginas/p2.jpg","panel":4,"impacto":true}
+]}
