@@ -1,6 +1,6 @@
 # Guion — ¿Quién es Doctor Doom? (Los Libros de Muerte, 2006)
 
-Ed Brubaker (guion), Pablo Raimondi (dibujo). Origen completo de Doom. ~3 min 20 s (~560 palabras).
+Ed Brubaker (guion), Pablo Raimondi (dibujo). Origen completo de Doom. ~3 min 45 s (644 palabras).
 
 | Págs. | Narración |
 |---|---|
@@ -16,7 +16,7 @@ Ed Brubaker (guion), Pablo Raimondi (dibujo). Origen completo de Doom. ~3 min 20
 | 56-66 | Ahí lo encontró Valeria, su amor de la infancia. Por un momento volvió a ser feliz. Pero unos agentes la tomaron como rehén… y Victor descubrió que un anciano los protegía con magia. Antes de morir, le reveló un secreto: en el Tíbet había un templo esperándolo. |
 | 67-75 | Victor dejó a Valeria atrás y escaló el Himalaya. El frío casi lo mata, un yeti lo atacó… y cuando cayó en la nieve, unos monjes lo rescataron. |
 | 76-81 | Durante cinco años aprendió todos sus secretos, hasta que los monjes se inclinaron ante él y lo llamaron Maestro. Y viendo las noticias, descubrió que Reed Richards era famoso… y que el asesino de sus padres ahora era el Rey Vladimir de Latveria. |
-| 84-86 | Entonces ordenó a los monjes forjarle una armadura. Y cuando la máscara estuvo lista… aún ardiendo, se la puso. Desde ese día, Victor von Doom dejó de existir. Nació… Doctor Doom. |
+| 84-86 | Entonces ordenó a los monjes forjarle una armadura. Y cuando la máscara estuvo lista, aún humeante… se la puso. Desde ese día, Victor von Doom dejó de existir. Nació… Doctor Doom. |
 | 87-104 | Volvió a Latveria y encontró a su pueblo esclavizado. Las balas no lo tocaban. Reunió a los gitanos, construyó un ejército de robots… y comenzó una revolución. |
 | 99-101 | Valeria regresó a buscarlo, pero ya no reconoció al niño que había amado. «Lo único que has hecho es construir mejores muros entre tú y el mundo». |
 | 105-122 | El Rey Vladimir mató a su mensajero, y Doom marchó sobre la capital. Los soldados del rey se negaron a disparar… y se apartaron a su paso. Doom encontró al rey escondido en la catedral, y lo mató con sus propias manos. |
