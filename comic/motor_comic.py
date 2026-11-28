@@ -245,14 +245,15 @@ def lista_vistas(plan, tiempos):
 def hoja_fotos(vistas, base, salida):
     fotos = []
     for v, t0, t1 in vistas:
-        im = cuadro(v, base, 0.5, 1.0).resize((216, 384))
+        tw, th = (216, 384) if ALTO > ANCHO else (384, 216)
+        im = cuadro(v, base, 0.5, 1.0).resize((tw, th))
         ImageDraw.Draw(im).text((6, 6), f"{t0:.1f}s", fill="yellow")
         fotos.append(im)
     cols = 8
     filas = (len(fotos) + cols - 1) // cols
-    hoja = Image.new("RGB", (cols * 216, filas * 384), "black")
+    hoja = Image.new("RGB", (cols * tw, filas * th), "black")
     for i, f in enumerate(fotos):
-        hoja.paste(f, ((i % cols) * 216, (i // cols) * 384))
+        hoja.paste(f, ((i % cols) * tw, (i // cols) * th))
     hoja.save(salida, quality=85)
     print(f"Hoja de revisión: {salida}")
 
@@ -304,6 +305,9 @@ def main():
     base = os.path.dirname(os.path.abspath(ruta_plan))
     with open(ruta_plan) as fh:
         plan = json.load(fh)
+    global ANCHO, ALTO
+    if plan.get("formato") == "horizontal":  # 16:9 para YouTube
+        ANCHO, ALTO = 1920, 1080
     tiempos, total = tiempos_tomas(plan, base)
     for tm, (a, b) in zip(plan["tomas"], tiempos):
         print(f"{a:6.2f}-{b:6.2f}  {tm.get('texto', '')[:70]}")

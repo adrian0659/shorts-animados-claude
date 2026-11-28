@@ -1,0 +1,1138 @@
+{
+ "salida": "salida/quien_es_doom.mp4",
+ "voz": "voz.mp3",
+ "formato": "horizontal",
+ "tomas": [
+  {
+   "texto": "¿Sabías que el villano más temido de Marvel…",
+   "img": "paginas/p-003.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "empezó siendo un niño gitano",
+   "img": "paginas/p-005.jpg",
+   "caja_rel": [
+    0.45,
+    0.38,
+    1,
+    0.72
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "que solo quería salvar a su MADRE?",
+   "img": "paginas/p-004.jpg",
+   "caja_rel": [
+    0,
+    0.62,
+    0.6,
+    1
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Esta es la historia de Victor von Doom.",
+   "img": "paginas/p-010.jpg",
+   "caja_rel": [
+    0.3,
+    0,
+    1,
+    0.35
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Victor nació en Latveria, en una tribu de gitanos perseguida por el cruel Barón.",
+   "vinetas": [
+    {
+     "img": "paginas/p-004.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.45
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-006.jpg",
+     "caja_rel": [
+      0,
+      0.55,
+      1,
+      1
+     ],
+     "mov": "pan_der"
+    }
+   ]
+  },
+  {
+   "texto": "Su madre, Cynthia, era bruja,",
+   "img": "paginas/p-006.jpg",
+   "caja_rel": [
+    0,
+    0.45,
+    0.6,
+    1
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "y para proteger a su pueblo hizo un pacto con un demonio.",
+   "img": "paginas/p-007.jpg",
+   "caja_rel": [
+    0,
+    0,
+    0.6,
+    0.5
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Pero no pudo controlar ese poder:",
+   "img": "paginas/p-007.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.45
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "una noche murieron todos los niños de la aldea,",
+   "img": "paginas/p-007.jpg",
+   "caja_rel": [
+    0.25,
+    0.1,
+    1,
+    0.45
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "y ella cayó bajo la espada de un soldado.",
+   "img": "paginas/p-007.jpg",
+   "caja_rel": [
+    0.2,
+    0.45,
+    1,
+    0.8
+   ],
+   "mov": "pan_abajo"
+  },
+  {
+   "texto": "Años después, la esposa del Barón enfermó de cáncer.",
+   "img": "paginas/p-013.jpg",
+   "caja_rel": [
+    0.3,
+    0.15,
+    1,
+    0.5
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Su padre, que era curandero, no pudo salvarla, y el Barón lo culpó.",
+   "img": "paginas/p-014.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.45
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Huyeron a las montañas en pleno invierno…",
+   "img": "paginas/p-015.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.4
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "y su padre murió congelado, abrazándolo para darle calor.",
+   "img": "paginas/p-016.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.8
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Victor juró venganza.",
+   "img": "paginas/p-017.jpg",
+   "caja_rel": [
+    0.3,
+    0.75,
+    1,
+    1
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Entonces descubrió los libros de magia de su madre,",
+   "img": "paginas/p-018.jpg",
+   "caja_rel": [
+    0,
+    0.6,
+    0.7,
+    0.85
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "y supo que su alma estaba atrapada en el infierno.",
+   "vinetas": [
+    {
+     "img": "paginas/p-018.jpg",
+     "caja_rel": [
+      0.7,
+      0.6,
+      1,
+      1
+     ],
+     "mov": "pan_abajo"
+    },
+    {
+     "img": "paginas/p-020.jpg",
+     "caja_rel": [
+      0,
+      0.2,
+      1,
+      0.8
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "Desde ese día, su único destino fue rescatarla.",
+   "img": "paginas/p-020.jpg",
+   "caja_rel": [
+    0,
+    0.25,
+    1,
+    0.75
+   ],
+   "mov": "zoom_out"
+  },
+  {
+   "texto": "Combinó magia y ciencia,",
+   "img": "paginas/p-019.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.4
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "y a los dieciséis años ya era el líder de su clan.",
+   "img": "paginas/p-019.jpg",
+   "caja_rel": [
+    0,
+    0.4,
+    1,
+    0.75
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Una noche, un soldado del Barón intentó matarlo.",
+   "img": "paginas/p-021.jpg",
+   "caja_rel": [
+    0,
+    0.55,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Victor lo estranguló con sus propias manos…",
+   "img": "paginas/p-022.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.45
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "y no sintió nada.",
+   "img": "paginas/p-023.jpg",
+   "caja_rel": [
+    0,
+    0.25,
+    1,
+    0.5
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "«Ahora sí soy el hijo de mi madre».",
+   "img": "paginas/p-023.jpg",
+   "caja_rel": [
+    0,
+    0.55,
+    1,
+    1
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Su genio llegó hasta Estados Unidos.",
+   "img": "paginas/p-025.jpg",
+   "caja_rel": [
+    0,
+    0.6,
+    1,
+    0.9
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "El ejército le ofreció estudiar en la mejor universidad, a cambio de inventar armas para ellos.",
+   "vinetas": [
+    {
+     "img": "paginas/p-026.jpg",
+     "caja_rel": [
+      0,
+      0.4,
+      1,
+      0.85
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-028.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.35
+     ],
+     "mov": "pan_der"
+    }
+   ]
+  },
+  {
+   "texto": "Ahí conoció a otro estudiante brillante: Reed Richards.",
+   "img": "paginas/p-029.jpg",
+   "caja_rel": [
+    0,
+    0.15,
+    0.6,
+    0.5
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Pero Victor lo despreciaba.",
+   "img": "paginas/p-030.jpg",
+   "caja_rel": [
+    0.35,
+    0.4,
+    1,
+    0.65
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Mientras todos se divertían,",
+   "img": "paginas/p-033.jpg",
+   "caja_rel": [
+    0,
+    0.35,
+    1,
+    0.85
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "él construía en secreto una máquina para viajar al más allá…",
+   "img": "paginas/p-037.jpg",
+   "caja_rel": [
+    0,
+    0.3,
+    1,
+    0.7
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "y salvar a su madre.",
+   "img": "paginas/p-039.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.3
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Reed revisó sus cálculos y le advirtió que estaban mal.",
+   "img": "paginas/p-039.jpg",
+   "caja_rel": [
+    0,
+    0.45,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Victor no lo escuchó.",
+   "img": "paginas/p-040.jpg",
+   "caja_rel": [
+    0,
+    0,
+    0.7,
+    0.6
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "La máquina EXPLOTÓ.",
+   "img": "paginas/p-040.jpg",
+   "caja_rel": [
+    0,
+    0.6,
+    1,
+    1
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Por un instante vio al demonio que tenía a su madre.",
+   "img": "paginas/p-041.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Despertó en un hospital, con la cara destrozada,",
+   "img": "paginas/p-042.jpg",
+   "caja_rel": [
+    0,
+    0.3,
+    1,
+    0.65
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "expulsado de la universidad.",
+   "img": "paginas/p-042.jpg",
+   "caja_rel": [
+    0,
+    0.1,
+    1,
+    0.3
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Huyó a Europa, vendado, roto, atormentado por pesadillas.",
+   "vinetas": [
+    {
+     "img": "paginas/p-049.jpg",
+     "caja_rel": [
+      0,
+      0.3,
+      1,
+      0.5
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-048.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-049.jpg",
+     "caja_rel": [
+      0,
+      0.5,
+      1,
+      1
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "Rechazó al ejército, a la KGB, a todos.",
+   "vinetas": [
+    {
+     "img": "paginas/p-053.jpg",
+     "caja_rel": [
+      0,
+      0.3,
+      1,
+      0.65
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-054.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.5
+     ],
+     "mov": "zoom_in",
+     "impacto": true
+    }
+   ]
+  },
+  {
+   "texto": "Solo quería que lo dejaran en paz.",
+   "img": "paginas/p-054.jpg",
+   "caja_rel": [
+    0,
+    0.65,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Ahí lo encontró Valeria, su amor de la infancia.",
+   "vinetas": [
+    {
+     "img": "paginas/p-056.jpg",
+     "caja_rel": [
+      0,
+      0.6,
+      1,
+      1
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-057.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.4
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "Por un momento volvió a ser feliz.",
+   "img": "paginas/p-059.jpg",
+   "caja_rel": [
+    0.33,
+    0,
+    1,
+    0.3
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Pero unos agentes la tomaron como rehén…",
+   "img": "paginas/p-062.jpg",
+   "caja_rel": [
+    0,
+    0.65,
+    1,
+    1
+   ],
+   "mov": "pan_der",
+   "impacto": true
+  },
+  {
+   "texto": "y Victor descubrió que un anciano los protegía con magia.",
+   "vinetas": [
+    {
+     "img": "paginas/p-064.jpg",
+     "caja_rel": [
+      0,
+      0.15,
+      0.65,
+      0.65
+     ],
+     "mov": "zoom_in"
+    },
+    {
+     "img": "paginas/p-065.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.45
+     ],
+     "mov": "pan_der"
+    }
+   ]
+  },
+  {
+   "texto": "Antes de morir, le reveló un secreto:",
+   "img": "paginas/p-066.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.27
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "en el Tíbet había un templo esperándolo.",
+   "img": "paginas/p-066.jpg",
+   "caja_rel": [
+    0,
+    0.55,
+    1,
+    0.85
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Victor dejó a Valeria atrás",
+   "img": "paginas/p-067.jpg",
+   "caja_rel": [
+    0.3,
+    0.2,
+    1,
+    1
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "y escaló el Himalaya.",
+   "img": "paginas/p-068.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.85
+   ],
+   "mov": "pan_abajo"
+  },
+  {
+   "texto": "El frío casi lo mata,",
+   "img": "paginas/p-071.jpg",
+   "caja_rel": [
+    0,
+    0.55,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "un yeti lo atacó…",
+   "img": "paginas/p-072.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.85
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "y cuando cayó en la nieve, unos monjes lo rescataron.",
+   "vinetas": [
+    {
+     "img": "paginas/p-075.jpg",
+     "caja_rel": [
+      0.3,
+      0.65,
+      1,
+      1
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-076.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "mov": "pan_der"
+    }
+   ]
+  },
+  {
+   "texto": "Durante cinco años aprendió todos sus secretos,",
+   "img": "paginas/p-077.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.6
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "hasta que los monjes se inclinaron ante él y lo llamaron Maestro.",
+   "img": "paginas/p-078.jpg",
+   "caja_rel": [
+    0,
+    0.35,
+    1,
+    0.75
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Y viendo las noticias, descubrió que Reed Richards era famoso…",
+   "vinetas": [
+    {
+     "img": "paginas/p-080.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.55
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-081.jpg",
+     "caja_rel": [
+      0,
+      0.45,
+      1,
+      0.75
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "y que el asesino de sus padres ahora era el Rey Vladimir de Latveria.",
+   "img": "paginas/p-080.jpg",
+   "caja_rel": [
+    0,
+    0.55,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Entonces ordenó a los monjes forjarle una armadura.",
+   "img": "paginas/p-084.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Y cuando la máscara estuvo lista, aún humeante…",
+   "img": "paginas/p-086.jpg",
+   "caja_rel": [
+    0,
+    0,
+    0.6,
+    0.32
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "se la puso.",
+   "img": "paginas/p-085.jpg",
+   "caja_rel": [
+    0.65,
+    0.5,
+    1,
+    1
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Desde ese día, Victor von Doom dejó de existir.",
+   "img": "paginas/p-086.jpg",
+   "caja_rel": [
+    0,
+    0.33,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Nació… DOCTOR DOOM.",
+   "img": "paginas/p-086.jpg",
+   "caja_rel": [
+    0,
+    0.35,
+    1,
+    1
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Volvió a Latveria y encontró a su pueblo esclavizado.",
+   "img": "paginas/p-088.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.55
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Las balas no lo tocaban.",
+   "img": "paginas/p-090.jpg",
+   "caja_rel": [
+    0,
+    0.25,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Reunió a los gitanos,",
+   "img": "paginas/p-095.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.55
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "construyó un ejército de robots…",
+   "img": "paginas/p-102.jpg",
+   "caja_rel": [
+    0,
+    0.2,
+    1,
+    0.45
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "y comenzó una revolución.",
+   "img": "paginas/p-104.jpg",
+   "caja_rel": [
+    0,
+    0.4,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Valeria regresó a buscarlo, pero ya no reconoció al niño que había amado.",
+   "vinetas": [
+    {
+     "img": "paginas/p-099.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.45
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-100.jpg",
+     "caja_rel": [
+      0,
+      0.15,
+      1,
+      0.35
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "«Lo único que has hecho es construir mejores muros entre tú y el mundo».",
+   "img": "paginas/p-100.jpg",
+   "caja_rel": [
+    0,
+    0.65,
+    1,
+    1
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "El Rey Vladimir mató a su mensajero,",
+   "img": "paginas/p-105.jpg",
+   "caja_rel": [
+    0,
+    0.55,
+    1,
+    0.75
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "y Doom marchó sobre la capital.",
+   "img": "paginas/p-109.jpg",
+   "caja_rel": [
+    0,
+    0.15,
+    1,
+    0.85
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Los soldados del rey se negaron a disparar…",
+   "img": "paginas/p-117.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    0.45
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "y se apartaron a su paso.",
+   "img": "paginas/p-118.jpg",
+   "caja_rel": [
+    0,
+    0.25,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Doom encontró al rey escondido en la catedral,",
+   "img": "paginas/p-120.jpg",
+   "caja_rel": [
+    0,
+    0.15,
+    1,
+    0.55
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "y lo mató con sus propias manos.",
+   "img": "paginas/p-121.jpg",
+   "caja_rel": [
+    0.3,
+    0,
+    1,
+    0.6
+   ],
+   "mov": "pan_abajo"
+  },
+  {
+   "texto": "Victor von Doom fue coronado monarca de Latveria.",
+   "vinetas": [
+    {
+     "img": "paginas/p-123.jpg",
+     "caja_rel": [
+      0.35,
+      0.35,
+      1,
+      0.8
+     ],
+     "mov": "pan_der"
+    },
+    {
+     "img": "paginas/p-123.jpg",
+     "caja_rel": [
+      0.3,
+      0.78,
+      1,
+      1
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "Pero nunca tuvo paz.",
+   "img": "paginas/p-132.jpg",
+   "caja_rel": [
+    0,
+    0.1,
+    1,
+    0.9
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "Cada año baja a sus mazmorras a enfrentar al demonio que tiene a su madre.",
+   "vinetas": [
+    {
+     "img": "paginas/p-124.jpg",
+     "caja_rel": [
+      0,
+      0.2,
+      1,
+      0.62
+     ],
+     "mov": "zoom_in"
+    },
+    {
+     "img": "paginas/p-125.jpg",
+     "caja_rel": [
+      0,
+      0,
+      1,
+      0.45
+     ],
+     "mov": "zoom_in"
+    }
+   ]
+  },
+  {
+   "texto": "Una noche al año puede luchar por su alma…",
+   "img": "paginas/p-125.jpg",
+   "caja_rel": [
+    0,
+    0.45,
+    1,
+    0.7
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "y si pierde, su pueblo sufre.",
+   "img": "paginas/p-125.jpg",
+   "caja_rel": [
+    0,
+    0.7,
+    1,
+    1
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Y el giro final:",
+   "img": "paginas/p-126.jpg",
+   "caja_rel": [
+    0,
+    0.35,
+    1,
+    0.8
+   ],
+   "mov": "zoom_in"
+  },
+  {
+   "texto": "el Doom que contó toda esta historia… era un ROBOT.",
+   "img": "paginas/p-127.jpg",
+   "caja_rel": [
+    0,
+    0.25,
+    1,
+    0.75
+   ],
+   "mov": "zoom_in",
+   "impacto": true
+  },
+  {
+   "texto": "Un Doombot con sus recuerdos.",
+   "img": "paginas/p-128.jpg",
+   "caja_rel": [
+    0,
+    0.45,
+    1,
+    0.8
+   ],
+   "mov": "pan_der"
+  },
+  {
+   "texto": "Y la periodista que descubrió el secreto… quedó encerrada para siempre en sus calabozos.",
+   "vinetas": [
+    {
+     "img": "paginas/p-129.jpg",
+     "caja_rel": [
+      0,
+      0.25,
+      1,
+      0.78
+     ],
+     "mov": "pan_abajo"
+    },
+    {
+     "img": "paginas/p-129.jpg",
+     "caja_rel": [
+      0,
+      0.78,
+      1,
+      1
+     ],
+     "mov": "zoom_out"
+    }
+   ]
+  },
+  {
+   "texto": "Héroe, tirano o un hijo desesperado…",
+   "img": "paginas/p-135.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "mov": "zoom_out"
+  },
+  {
+   "texto": "¿tú qué crees que es Doctor Doom?",
+   "img": "paginas/p-130.jpg",
+   "caja_rel": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "mov": "zoom_in"
+  }
+ ]
+}
